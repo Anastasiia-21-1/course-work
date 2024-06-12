@@ -1,0 +1,1 @@
+CREATE TABLE "public"."users" ("id" serial NOT NULL, "first_name" text NOT NULL, "last_name" Text NOT NULL, "email" text NOT NULL, "password" text NOT NULL, PRIMARY KEY ("id") , UNIQUE ("id"), UNIQUE ("email"));COMMENT ON TABLE "public"."users" IS E'Users table';
