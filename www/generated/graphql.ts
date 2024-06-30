@@ -15,7 +15,9 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  bigint: { input: any; output: any; }
   timestamptz: { input: any; output: any; }
+  uuid: { input: any; output: any; }
 };
 
 /** Cities for founds */
@@ -263,6 +265,505 @@ export type String_Comparison_Exp = {
   _similar?: InputMaybe<Scalars['String']['input']>;
 };
 
+/** columns and relationships of "accounts" */
+export type Accounts = {
+  __typename?: 'accounts';
+  access_token?: Maybe<Scalars['String']['output']>;
+  expires_at?: Maybe<Scalars['bigint']['output']>;
+  id: Scalars['uuid']['output'];
+  id_token?: Maybe<Scalars['String']['output']>;
+  oauth_token?: Maybe<Scalars['String']['output']>;
+  oauth_token_secret?: Maybe<Scalars['String']['output']>;
+  provider: Scalars['String']['output'];
+  providerAccountId: Scalars['String']['output'];
+  refresh_token?: Maybe<Scalars['String']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Int']['output']>;
+  scope?: Maybe<Scalars['String']['output']>;
+  session_state?: Maybe<Scalars['String']['output']>;
+  token_type?: Maybe<Scalars['String']['output']>;
+  type: Scalars['String']['output'];
+  /** An object relationship */
+  user: Users;
+  userId: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "accounts" */
+export type Accounts_Aggregate = {
+  __typename?: 'accounts_aggregate';
+  aggregate?: Maybe<Accounts_Aggregate_Fields>;
+  nodes: Array<Accounts>;
+};
+
+export type Accounts_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Accounts_Aggregate_Bool_Exp_Count>;
+};
+
+export type Accounts_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Accounts_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Accounts_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "accounts" */
+export type Accounts_Aggregate_Fields = {
+  __typename?: 'accounts_aggregate_fields';
+  avg?: Maybe<Accounts_Avg_Fields>;
+  count: Scalars['Int']['output'];
+  max?: Maybe<Accounts_Max_Fields>;
+  min?: Maybe<Accounts_Min_Fields>;
+  stddev?: Maybe<Accounts_Stddev_Fields>;
+  stddev_pop?: Maybe<Accounts_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Accounts_Stddev_Samp_Fields>;
+  sum?: Maybe<Accounts_Sum_Fields>;
+  var_pop?: Maybe<Accounts_Var_Pop_Fields>;
+  var_samp?: Maybe<Accounts_Var_Samp_Fields>;
+  variance?: Maybe<Accounts_Variance_Fields>;
+};
+
+
+/** aggregate fields of "accounts" */
+export type Accounts_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Accounts_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "accounts" */
+export type Accounts_Aggregate_Order_By = {
+  avg?: InputMaybe<Accounts_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Accounts_Max_Order_By>;
+  min?: InputMaybe<Accounts_Min_Order_By>;
+  stddev?: InputMaybe<Accounts_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Accounts_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Accounts_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Accounts_Sum_Order_By>;
+  var_pop?: InputMaybe<Accounts_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Accounts_Var_Samp_Order_By>;
+  variance?: InputMaybe<Accounts_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "accounts" */
+export type Accounts_Arr_Rel_Insert_Input = {
+  data: Array<Accounts_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Accounts_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Accounts_Avg_Fields = {
+  __typename?: 'accounts_avg_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "accounts" */
+export type Accounts_Avg_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "accounts". All fields are combined with a logical 'AND'. */
+export type Accounts_Bool_Exp = {
+  _and?: InputMaybe<Array<Accounts_Bool_Exp>>;
+  _not?: InputMaybe<Accounts_Bool_Exp>;
+  _or?: InputMaybe<Array<Accounts_Bool_Exp>>;
+  access_token?: InputMaybe<String_Comparison_Exp>;
+  expires_at?: InputMaybe<Bigint_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  id_token?: InputMaybe<String_Comparison_Exp>;
+  oauth_token?: InputMaybe<String_Comparison_Exp>;
+  oauth_token_secret?: InputMaybe<String_Comparison_Exp>;
+  provider?: InputMaybe<String_Comparison_Exp>;
+  providerAccountId?: InputMaybe<String_Comparison_Exp>;
+  refresh_token?: InputMaybe<String_Comparison_Exp>;
+  refresh_token_expires_in?: InputMaybe<Int_Comparison_Exp>;
+  scope?: InputMaybe<String_Comparison_Exp>;
+  session_state?: InputMaybe<String_Comparison_Exp>;
+  token_type?: InputMaybe<String_Comparison_Exp>;
+  type?: InputMaybe<String_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  userId?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "accounts" */
+export enum Accounts_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  AccountsPkey = 'accounts_pkey'
+}
+
+/** input type for incrementing numeric columns in table "accounts" */
+export type Accounts_Inc_Input = {
+  expires_at?: InputMaybe<Scalars['bigint']['input']>;
+  refresh_token_expires_in?: InputMaybe<Scalars['Int']['input']>;
+};
+
+/** input type for inserting data into table "accounts" */
+export type Accounts_Insert_Input = {
+  access_token?: InputMaybe<Scalars['String']['input']>;
+  expires_at?: InputMaybe<Scalars['bigint']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  id_token?: InputMaybe<Scalars['String']['input']>;
+  oauth_token?: InputMaybe<Scalars['String']['input']>;
+  oauth_token_secret?: InputMaybe<Scalars['String']['input']>;
+  provider?: InputMaybe<Scalars['String']['input']>;
+  providerAccountId?: InputMaybe<Scalars['String']['input']>;
+  refresh_token?: InputMaybe<Scalars['String']['input']>;
+  refresh_token_expires_in?: InputMaybe<Scalars['Int']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  session_state?: InputMaybe<Scalars['String']['input']>;
+  token_type?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  userId?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Accounts_Max_Fields = {
+  __typename?: 'accounts_max_fields';
+  access_token?: Maybe<Scalars['String']['output']>;
+  expires_at?: Maybe<Scalars['bigint']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  id_token?: Maybe<Scalars['String']['output']>;
+  oauth_token?: Maybe<Scalars['String']['output']>;
+  oauth_token_secret?: Maybe<Scalars['String']['output']>;
+  provider?: Maybe<Scalars['String']['output']>;
+  providerAccountId?: Maybe<Scalars['String']['output']>;
+  refresh_token?: Maybe<Scalars['String']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Int']['output']>;
+  scope?: Maybe<Scalars['String']['output']>;
+  session_state?: Maybe<Scalars['String']['output']>;
+  token_type?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "accounts" */
+export type Accounts_Max_Order_By = {
+  access_token?: InputMaybe<Order_By>;
+  expires_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  id_token?: InputMaybe<Order_By>;
+  oauth_token?: InputMaybe<Order_By>;
+  oauth_token_secret?: InputMaybe<Order_By>;
+  provider?: InputMaybe<Order_By>;
+  providerAccountId?: InputMaybe<Order_By>;
+  refresh_token?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+  scope?: InputMaybe<Order_By>;
+  session_state?: InputMaybe<Order_By>;
+  token_type?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Accounts_Min_Fields = {
+  __typename?: 'accounts_min_fields';
+  access_token?: Maybe<Scalars['String']['output']>;
+  expires_at?: Maybe<Scalars['bigint']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  id_token?: Maybe<Scalars['String']['output']>;
+  oauth_token?: Maybe<Scalars['String']['output']>;
+  oauth_token_secret?: Maybe<Scalars['String']['output']>;
+  provider?: Maybe<Scalars['String']['output']>;
+  providerAccountId?: Maybe<Scalars['String']['output']>;
+  refresh_token?: Maybe<Scalars['String']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Int']['output']>;
+  scope?: Maybe<Scalars['String']['output']>;
+  session_state?: Maybe<Scalars['String']['output']>;
+  token_type?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "accounts" */
+export type Accounts_Min_Order_By = {
+  access_token?: InputMaybe<Order_By>;
+  expires_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  id_token?: InputMaybe<Order_By>;
+  oauth_token?: InputMaybe<Order_By>;
+  oauth_token_secret?: InputMaybe<Order_By>;
+  provider?: InputMaybe<Order_By>;
+  providerAccountId?: InputMaybe<Order_By>;
+  refresh_token?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+  scope?: InputMaybe<Order_By>;
+  session_state?: InputMaybe<Order_By>;
+  token_type?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "accounts" */
+export type Accounts_Mutation_Response = {
+  __typename?: 'accounts_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Accounts>;
+};
+
+/** on_conflict condition type for table "accounts" */
+export type Accounts_On_Conflict = {
+  constraint: Accounts_Constraint;
+  update_columns?: Array<Accounts_Update_Column>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "accounts". */
+export type Accounts_Order_By = {
+  access_token?: InputMaybe<Order_By>;
+  expires_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  id_token?: InputMaybe<Order_By>;
+  oauth_token?: InputMaybe<Order_By>;
+  oauth_token_secret?: InputMaybe<Order_By>;
+  provider?: InputMaybe<Order_By>;
+  providerAccountId?: InputMaybe<Order_By>;
+  refresh_token?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+  scope?: InputMaybe<Order_By>;
+  session_state?: InputMaybe<Order_By>;
+  token_type?: InputMaybe<Order_By>;
+  type?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: accounts */
+export type Accounts_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "accounts" */
+export enum Accounts_Select_Column {
+  /** column name */
+  AccessToken = 'access_token',
+  /** column name */
+  ExpiresAt = 'expires_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IdToken = 'id_token',
+  /** column name */
+  OauthToken = 'oauth_token',
+  /** column name */
+  OauthTokenSecret = 'oauth_token_secret',
+  /** column name */
+  Provider = 'provider',
+  /** column name */
+  ProviderAccountId = 'providerAccountId',
+  /** column name */
+  RefreshToken = 'refresh_token',
+  /** column name */
+  RefreshTokenExpiresIn = 'refresh_token_expires_in',
+  /** column name */
+  Scope = 'scope',
+  /** column name */
+  SessionState = 'session_state',
+  /** column name */
+  TokenType = 'token_type',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "accounts" */
+export type Accounts_Set_Input = {
+  access_token?: InputMaybe<Scalars['String']['input']>;
+  expires_at?: InputMaybe<Scalars['bigint']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  id_token?: InputMaybe<Scalars['String']['input']>;
+  oauth_token?: InputMaybe<Scalars['String']['input']>;
+  oauth_token_secret?: InputMaybe<Scalars['String']['input']>;
+  provider?: InputMaybe<Scalars['String']['input']>;
+  providerAccountId?: InputMaybe<Scalars['String']['input']>;
+  refresh_token?: InputMaybe<Scalars['String']['input']>;
+  refresh_token_expires_in?: InputMaybe<Scalars['Int']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  session_state?: InputMaybe<Scalars['String']['input']>;
+  token_type?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Accounts_Stddev_Fields = {
+  __typename?: 'accounts_stddev_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "accounts" */
+export type Accounts_Stddev_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Accounts_Stddev_Pop_Fields = {
+  __typename?: 'accounts_stddev_pop_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "accounts" */
+export type Accounts_Stddev_Pop_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Accounts_Stddev_Samp_Fields = {
+  __typename?: 'accounts_stddev_samp_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "accounts" */
+export type Accounts_Stddev_Samp_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** Streaming cursor of the table "accounts" */
+export type Accounts_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Accounts_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Accounts_Stream_Cursor_Value_Input = {
+  access_token?: InputMaybe<Scalars['String']['input']>;
+  expires_at?: InputMaybe<Scalars['bigint']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  id_token?: InputMaybe<Scalars['String']['input']>;
+  oauth_token?: InputMaybe<Scalars['String']['input']>;
+  oauth_token_secret?: InputMaybe<Scalars['String']['input']>;
+  provider?: InputMaybe<Scalars['String']['input']>;
+  providerAccountId?: InputMaybe<Scalars['String']['input']>;
+  refresh_token?: InputMaybe<Scalars['String']['input']>;
+  refresh_token_expires_in?: InputMaybe<Scalars['Int']['input']>;
+  scope?: InputMaybe<Scalars['String']['input']>;
+  session_state?: InputMaybe<Scalars['String']['input']>;
+  token_type?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate sum on columns */
+export type Accounts_Sum_Fields = {
+  __typename?: 'accounts_sum_fields';
+  expires_at?: Maybe<Scalars['bigint']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "accounts" */
+export type Accounts_Sum_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "accounts" */
+export enum Accounts_Update_Column {
+  /** column name */
+  AccessToken = 'access_token',
+  /** column name */
+  ExpiresAt = 'expires_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  IdToken = 'id_token',
+  /** column name */
+  OauthToken = 'oauth_token',
+  /** column name */
+  OauthTokenSecret = 'oauth_token_secret',
+  /** column name */
+  Provider = 'provider',
+  /** column name */
+  ProviderAccountId = 'providerAccountId',
+  /** column name */
+  RefreshToken = 'refresh_token',
+  /** column name */
+  RefreshTokenExpiresIn = 'refresh_token_expires_in',
+  /** column name */
+  Scope = 'scope',
+  /** column name */
+  SessionState = 'session_state',
+  /** column name */
+  TokenType = 'token_type',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UserId = 'userId'
+}
+
+export type Accounts_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Accounts_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Accounts_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Accounts_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Accounts_Var_Pop_Fields = {
+  __typename?: 'accounts_var_pop_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "accounts" */
+export type Accounts_Var_Pop_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Accounts_Var_Samp_Fields = {
+  __typename?: 'accounts_var_samp_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "accounts" */
+export type Accounts_Var_Samp_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Accounts_Variance_Fields = {
+  __typename?: 'accounts_variance_fields';
+  expires_at?: Maybe<Scalars['Float']['output']>;
+  refresh_token_expires_in?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "accounts" */
+export type Accounts_Variance_Order_By = {
+  expires_at?: InputMaybe<Order_By>;
+  refresh_token_expires_in?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
+export type Bigint_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['bigint']['input']>;
+  _gt?: InputMaybe<Scalars['bigint']['input']>;
+  _gte?: InputMaybe<Scalars['bigint']['input']>;
+  _in?: InputMaybe<Array<Scalars['bigint']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['bigint']['input']>;
+  _lte?: InputMaybe<Scalars['bigint']['input']>;
+  _neq?: InputMaybe<Scalars['bigint']['input']>;
+  _nin?: InputMaybe<Array<Scalars['bigint']['input']>>;
+};
+
 /** Category of found */
 export type Category = {
   __typename?: 'category';
@@ -485,17 +986,15 @@ export enum Cursor_Ordering {
 /** columns and relationships of "finds" */
 export type Finds = {
   __typename?: 'finds';
-  created_at: Scalars['timestamptz']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['Int']['output'];
+  id: Scalars['uuid']['output'];
   location?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
-  title: Scalars['String']['output'];
-  updated_at: Scalars['timestamptz']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
-  user: Users;
-  user_id: Scalars['Int']['output'];
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** aggregated selection of "finds" */
@@ -505,20 +1004,23 @@ export type Finds_Aggregate = {
   nodes: Array<Finds>;
 };
 
+export type Finds_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Finds_Aggregate_Bool_Exp_Count>;
+};
+
+export type Finds_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Finds_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Finds_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "finds" */
 export type Finds_Aggregate_Fields = {
   __typename?: 'finds_aggregate_fields';
-  avg?: Maybe<Finds_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Finds_Max_Fields>;
   min?: Maybe<Finds_Min_Fields>;
-  stddev?: Maybe<Finds_Stddev_Fields>;
-  stddev_pop?: Maybe<Finds_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Finds_Stddev_Samp_Fields>;
-  sum?: Maybe<Finds_Sum_Fields>;
-  var_pop?: Maybe<Finds_Var_Pop_Fields>;
-  var_samp?: Maybe<Finds_Var_Samp_Fields>;
-  variance?: Maybe<Finds_Variance_Fields>;
 };
 
 
@@ -528,11 +1030,18 @@ export type Finds_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** aggregate avg on columns */
-export type Finds_Avg_Fields = {
-  __typename?: 'finds_avg_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
+/** order by aggregate values of table "finds" */
+export type Finds_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Finds_Max_Order_By>;
+  min?: InputMaybe<Finds_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "finds" */
+export type Finds_Arr_Rel_Insert_Input = {
+  data: Array<Finds_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Finds_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "finds". All fields are combined with a logical 'AND'. */
@@ -540,16 +1049,14 @@ export type Finds_Bool_Exp = {
   _and?: InputMaybe<Array<Finds_Bool_Exp>>;
   _not?: InputMaybe<Finds_Bool_Exp>;
   _or?: InputMaybe<Array<Finds_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
   location?: InputMaybe<String_Comparison_Exp>;
   photo?: InputMaybe<String_Comparison_Exp>;
   time?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<Int_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "finds" */
@@ -558,52 +1065,62 @@ export enum Finds_Constraint {
   FindsPkey = 'finds_pkey'
 }
 
-/** input type for incrementing numeric columns in table "finds" */
-export type Finds_Inc_Input = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
-};
-
 /** input type for inserting data into table "finds" */
 export type Finds_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Finds_Max_Fields = {
   __typename?: 'finds_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "finds" */
+export type Finds_Max_Order_By = {
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  time?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Finds_Min_Fields = {
   __typename?: 'finds_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "finds" */
+export type Finds_Min_Order_By = {
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  time?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "finds" */
@@ -624,27 +1141,23 @@ export type Finds_On_Conflict = {
 
 /** Ordering options when selecting data from "finds". */
 export type Finds_Order_By = {
-  created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
   photo?: InputMaybe<Order_By>;
   time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: finds */
 export type Finds_Pk_Columns_Input = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "finds" */
 export enum Finds_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
   /** column name */
@@ -658,43 +1171,18 @@ export enum Finds_Select_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
   UserId = 'user_id'
 }
 
 /** input type for updating data in table "finds" */
 export type Finds_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Finds_Stddev_Fields = {
-  __typename?: 'finds_stddev_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Finds_Stddev_Pop_Fields = {
-  __typename?: 'finds_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Finds_Stddev_Samp_Fields = {
-  __typename?: 'finds_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "finds" */
@@ -707,28 +1195,17 @@ export type Finds_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Finds_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Finds_Sum_Fields = {
-  __typename?: 'finds_sum_fields';
-  id?: Maybe<Scalars['Int']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "finds" */
 export enum Finds_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
   /** column name */
@@ -742,55 +1219,28 @@ export enum Finds_Update_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
   UserId = 'user_id'
 }
 
 export type Finds_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Finds_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Finds_Set_Input>;
   /** filter the rows which have to be updated */
   where: Finds_Bool_Exp;
 };
 
-/** aggregate var_pop on columns */
-export type Finds_Var_Pop_Fields = {
-  __typename?: 'finds_var_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate var_samp on columns */
-export type Finds_Var_Samp_Fields = {
-  __typename?: 'finds_var_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate variance on columns */
-export type Finds_Variance_Fields = {
-  __typename?: 'finds_variance_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
 /** columns and relationships of "losts" */
 export type Losts = {
   __typename?: 'losts';
-  created_at: Scalars['timestamptz']['output'];
   description?: Maybe<Scalars['String']['output']>;
-  id: Scalars['Int']['output'];
+  id: Scalars['uuid']['output'];
   location?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
-  title: Scalars['String']['output'];
-  updated_at: Scalars['timestamptz']['output'];
+  title?: Maybe<Scalars['String']['output']>;
   /** An object relationship */
-  user: Users;
-  user_id: Scalars['Int']['output'];
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
 };
 
 /** aggregated selection of "losts" */
@@ -800,20 +1250,23 @@ export type Losts_Aggregate = {
   nodes: Array<Losts>;
 };
 
+export type Losts_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Losts_Aggregate_Bool_Exp_Count>;
+};
+
+export type Losts_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Losts_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Losts_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
 /** aggregate fields of "losts" */
 export type Losts_Aggregate_Fields = {
   __typename?: 'losts_aggregate_fields';
-  avg?: Maybe<Losts_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Losts_Max_Fields>;
   min?: Maybe<Losts_Min_Fields>;
-  stddev?: Maybe<Losts_Stddev_Fields>;
-  stddev_pop?: Maybe<Losts_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Losts_Stddev_Samp_Fields>;
-  sum?: Maybe<Losts_Sum_Fields>;
-  var_pop?: Maybe<Losts_Var_Pop_Fields>;
-  var_samp?: Maybe<Losts_Var_Samp_Fields>;
-  variance?: Maybe<Losts_Variance_Fields>;
 };
 
 
@@ -823,11 +1276,18 @@ export type Losts_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** aggregate avg on columns */
-export type Losts_Avg_Fields = {
-  __typename?: 'losts_avg_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
+/** order by aggregate values of table "losts" */
+export type Losts_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Losts_Max_Order_By>;
+  min?: InputMaybe<Losts_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "losts" */
+export type Losts_Arr_Rel_Insert_Input = {
+  data: Array<Losts_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Losts_On_Conflict>;
 };
 
 /** Boolean expression to filter rows from the table "losts". All fields are combined with a logical 'AND'. */
@@ -835,16 +1295,14 @@ export type Losts_Bool_Exp = {
   _and?: InputMaybe<Array<Losts_Bool_Exp>>;
   _not?: InputMaybe<Losts_Bool_Exp>;
   _or?: InputMaybe<Array<Losts_Bool_Exp>>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
   location?: InputMaybe<String_Comparison_Exp>;
   photo?: InputMaybe<String_Comparison_Exp>;
   time?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<Int_Comparison_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
 
 /** unique or primary key constraints on table "losts" */
@@ -853,52 +1311,62 @@ export enum Losts_Constraint {
   LostsPkey = 'losts_pkey'
 }
 
-/** input type for incrementing numeric columns in table "losts" */
-export type Losts_Inc_Input = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
-};
-
 /** input type for inserting data into table "losts" */
 export type Losts_Insert_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** aggregate max on columns */
 export type Losts_Max_Fields = {
   __typename?: 'losts_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "losts" */
+export type Losts_Max_Order_By = {
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  time?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Losts_Min_Fields = {
   __typename?: 'losts_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']['output']>;
   description?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
   photo?: Maybe<Scalars['String']['output']>;
   time?: Maybe<Scalars['String']['output']>;
   title?: Maybe<Scalars['String']['output']>;
-  updated_at?: Maybe<Scalars['timestamptz']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "losts" */
+export type Losts_Min_Order_By = {
+  description?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  location?: InputMaybe<Order_By>;
+  photo?: InputMaybe<Order_By>;
+  time?: InputMaybe<Order_By>;
+  title?: InputMaybe<Order_By>;
+  user_id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "losts" */
@@ -919,27 +1387,23 @@ export type Losts_On_Conflict = {
 
 /** Ordering options when selecting data from "losts". */
 export type Losts_Order_By = {
-  created_at?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
   photo?: InputMaybe<Order_By>;
   time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
 /** primary key columns input for table: losts */
 export type Losts_Pk_Columns_Input = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "losts" */
 export enum Losts_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
   /** column name */
@@ -953,43 +1417,18 @@ export enum Losts_Select_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
   UserId = 'user_id'
 }
 
 /** input type for updating data in table "losts" */
 export type Losts_Set_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Losts_Stddev_Fields = {
-  __typename?: 'losts_stddev_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Losts_Stddev_Pop_Fields = {
-  __typename?: 'losts_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Losts_Stddev_Samp_Fields = {
-  __typename?: 'losts_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** Streaming cursor of the table "losts" */
@@ -1002,28 +1441,17 @@ export type Losts_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Losts_Stream_Cursor_Value_Input = {
-  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
   photo?: InputMaybe<Scalars['String']['input']>;
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
-  user_id?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Losts_Sum_Fields = {
-  __typename?: 'losts_sum_fields';
-  id?: Maybe<Scalars['Int']['output']>;
-  user_id?: Maybe<Scalars['Int']['output']>;
+  user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
 /** update columns of table "losts" */
 export enum Losts_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
   /** column name */
@@ -1037,39 +1465,14 @@ export enum Losts_Update_Column {
   /** column name */
   Title = 'title',
   /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
   UserId = 'user_id'
 }
 
 export type Losts_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Losts_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Losts_Set_Input>;
   /** filter the rows which have to be updated */
   where: Losts_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Losts_Var_Pop_Fields = {
-  __typename?: 'losts_var_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate var_samp on columns */
-export type Losts_Var_Samp_Fields = {
-  __typename?: 'losts_var_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate variance on columns */
-export type Losts_Variance_Fields = {
-  __typename?: 'losts_variance_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-  user_id?: Maybe<Scalars['Float']['output']>;
 };
 
 /** mutation root */
@@ -1079,6 +1482,10 @@ export type Mutation_Root = {
   delete_City?: Maybe<City_Mutation_Response>;
   /** delete single row from the table: "City" */
   delete_City_by_pk?: Maybe<City>;
+  /** delete data from the table: "accounts" */
+  delete_accounts?: Maybe<Accounts_Mutation_Response>;
+  /** delete single row from the table: "accounts" */
+  delete_accounts_by_pk?: Maybe<Accounts>;
   /** delete data from the table: "category" */
   delete_category?: Maybe<Category_Mutation_Response>;
   /** delete single row from the table: "category" */
@@ -1091,14 +1498,26 @@ export type Mutation_Root = {
   delete_losts?: Maybe<Losts_Mutation_Response>;
   /** delete single row from the table: "losts" */
   delete_losts_by_pk?: Maybe<Losts>;
+  /** delete data from the table: "sessions" */
+  delete_sessions?: Maybe<Sessions_Mutation_Response>;
+  /** delete single row from the table: "sessions" */
+  delete_sessions_by_pk?: Maybe<Sessions>;
   /** delete data from the table: "users" */
   delete_users?: Maybe<Users_Mutation_Response>;
   /** delete single row from the table: "users" */
   delete_users_by_pk?: Maybe<Users>;
+  /** delete data from the table: "verification_tokens" */
+  delete_verification_tokens?: Maybe<Verification_Tokens_Mutation_Response>;
+  /** delete single row from the table: "verification_tokens" */
+  delete_verification_tokens_by_pk?: Maybe<Verification_Tokens>;
   /** insert data into the table: "City" */
   insert_City?: Maybe<City_Mutation_Response>;
   /** insert a single row into the table: "City" */
   insert_City_one?: Maybe<City>;
+  /** insert data into the table: "accounts" */
+  insert_accounts?: Maybe<Accounts_Mutation_Response>;
+  /** insert a single row into the table: "accounts" */
+  insert_accounts_one?: Maybe<Accounts>;
   /** insert data into the table: "category" */
   insert_category?: Maybe<Category_Mutation_Response>;
   /** insert a single row into the table: "category" */
@@ -1111,16 +1530,30 @@ export type Mutation_Root = {
   insert_losts?: Maybe<Losts_Mutation_Response>;
   /** insert a single row into the table: "losts" */
   insert_losts_one?: Maybe<Losts>;
+  /** insert data into the table: "sessions" */
+  insert_sessions?: Maybe<Sessions_Mutation_Response>;
+  /** insert a single row into the table: "sessions" */
+  insert_sessions_one?: Maybe<Sessions>;
   /** insert data into the table: "users" */
   insert_users?: Maybe<Users_Mutation_Response>;
   /** insert a single row into the table: "users" */
   insert_users_one?: Maybe<Users>;
+  /** insert data into the table: "verification_tokens" */
+  insert_verification_tokens?: Maybe<Verification_Tokens_Mutation_Response>;
+  /** insert a single row into the table: "verification_tokens" */
+  insert_verification_tokens_one?: Maybe<Verification_Tokens>;
   /** update data of the table: "City" */
   update_City?: Maybe<City_Mutation_Response>;
   /** update single row of the table: "City" */
   update_City_by_pk?: Maybe<City>;
   /** update multiples rows of table: "City" */
   update_City_many?: Maybe<Array<Maybe<City_Mutation_Response>>>;
+  /** update data of the table: "accounts" */
+  update_accounts?: Maybe<Accounts_Mutation_Response>;
+  /** update single row of the table: "accounts" */
+  update_accounts_by_pk?: Maybe<Accounts>;
+  /** update multiples rows of table: "accounts" */
+  update_accounts_many?: Maybe<Array<Maybe<Accounts_Mutation_Response>>>;
   /** update data of the table: "category" */
   update_category?: Maybe<Category_Mutation_Response>;
   /** update single row of the table: "category" */
@@ -1139,12 +1572,24 @@ export type Mutation_Root = {
   update_losts_by_pk?: Maybe<Losts>;
   /** update multiples rows of table: "losts" */
   update_losts_many?: Maybe<Array<Maybe<Losts_Mutation_Response>>>;
+  /** update data of the table: "sessions" */
+  update_sessions?: Maybe<Sessions_Mutation_Response>;
+  /** update single row of the table: "sessions" */
+  update_sessions_by_pk?: Maybe<Sessions>;
+  /** update multiples rows of table: "sessions" */
+  update_sessions_many?: Maybe<Array<Maybe<Sessions_Mutation_Response>>>;
   /** update data of the table: "users" */
   update_users?: Maybe<Users_Mutation_Response>;
   /** update single row of the table: "users" */
   update_users_by_pk?: Maybe<Users>;
   /** update multiples rows of table: "users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
+  /** update data of the table: "verification_tokens" */
+  update_verification_tokens?: Maybe<Verification_Tokens_Mutation_Response>;
+  /** update single row of the table: "verification_tokens" */
+  update_verification_tokens_by_pk?: Maybe<Verification_Tokens>;
+  /** update multiples rows of table: "verification_tokens" */
+  update_verification_tokens_many?: Maybe<Array<Maybe<Verification_Tokens_Mutation_Response>>>;
 };
 
 
@@ -1157,6 +1602,18 @@ export type Mutation_RootDelete_CityArgs = {
 /** mutation root */
 export type Mutation_RootDelete_City_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_AccountsArgs = {
+  where: Accounts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Accounts_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1180,7 +1637,7 @@ export type Mutation_RootDelete_FindsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Finds_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1192,7 +1649,19 @@ export type Mutation_RootDelete_LostsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Losts_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_SessionsArgs = {
+  where: Sessions_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Sessions_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1204,7 +1673,19 @@ export type Mutation_RootDelete_UsersArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Users_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Verification_TokensArgs = {
+  where: Verification_Tokens_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Verification_Tokens_By_PkArgs = {
+  token: Scalars['String']['input'];
 };
 
 
@@ -1219,6 +1700,20 @@ export type Mutation_RootInsert_CityArgs = {
 export type Mutation_RootInsert_City_OneArgs = {
   object: City_Insert_Input;
   on_conflict?: InputMaybe<City_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_AccountsArgs = {
+  objects: Array<Accounts_Insert_Input>;
+  on_conflict?: InputMaybe<Accounts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Accounts_OneArgs = {
+  object: Accounts_Insert_Input;
+  on_conflict?: InputMaybe<Accounts_On_Conflict>;
 };
 
 
@@ -1265,6 +1760,20 @@ export type Mutation_RootInsert_Losts_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_SessionsArgs = {
+  objects: Array<Sessions_Insert_Input>;
+  on_conflict?: InputMaybe<Sessions_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Sessions_OneArgs = {
+  object: Sessions_Insert_Input;
+  on_conflict?: InputMaybe<Sessions_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_UsersArgs = {
   objects: Array<Users_Insert_Input>;
   on_conflict?: InputMaybe<Users_On_Conflict>;
@@ -1275,6 +1784,20 @@ export type Mutation_RootInsert_UsersArgs = {
 export type Mutation_RootInsert_Users_OneArgs = {
   object: Users_Insert_Input;
   on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Verification_TokensArgs = {
+  objects: Array<Verification_Tokens_Insert_Input>;
+  on_conflict?: InputMaybe<Verification_Tokens_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Verification_Tokens_OneArgs = {
+  object: Verification_Tokens_Insert_Input;
+  on_conflict?: InputMaybe<Verification_Tokens_On_Conflict>;
 };
 
 
@@ -1297,6 +1820,28 @@ export type Mutation_RootUpdate_City_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_City_ManyArgs = {
   updates: Array<City_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AccountsArgs = {
+  _inc?: InputMaybe<Accounts_Inc_Input>;
+  _set?: InputMaybe<Accounts_Set_Input>;
+  where: Accounts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Accounts_By_PkArgs = {
+  _inc?: InputMaybe<Accounts_Inc_Input>;
+  _set?: InputMaybe<Accounts_Set_Input>;
+  pk_columns: Accounts_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Accounts_ManyArgs = {
+  updates: Array<Accounts_Updates>;
 };
 
 
@@ -1324,7 +1869,6 @@ export type Mutation_RootUpdate_Category_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_FindsArgs = {
-  _inc?: InputMaybe<Finds_Inc_Input>;
   _set?: InputMaybe<Finds_Set_Input>;
   where: Finds_Bool_Exp;
 };
@@ -1332,7 +1876,6 @@ export type Mutation_RootUpdate_FindsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Finds_By_PkArgs = {
-  _inc?: InputMaybe<Finds_Inc_Input>;
   _set?: InputMaybe<Finds_Set_Input>;
   pk_columns: Finds_Pk_Columns_Input;
 };
@@ -1346,7 +1889,6 @@ export type Mutation_RootUpdate_Finds_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_LostsArgs = {
-  _inc?: InputMaybe<Losts_Inc_Input>;
   _set?: InputMaybe<Losts_Set_Input>;
   where: Losts_Bool_Exp;
 };
@@ -1354,7 +1896,6 @@ export type Mutation_RootUpdate_LostsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Losts_By_PkArgs = {
-  _inc?: InputMaybe<Losts_Inc_Input>;
   _set?: InputMaybe<Losts_Set_Input>;
   pk_columns: Losts_Pk_Columns_Input;
 };
@@ -1367,8 +1908,27 @@ export type Mutation_RootUpdate_Losts_ManyArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_SessionsArgs = {
+  _set?: InputMaybe<Sessions_Set_Input>;
+  where: Sessions_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sessions_By_PkArgs = {
+  _set?: InputMaybe<Sessions_Set_Input>;
+  pk_columns: Sessions_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Sessions_ManyArgs = {
+  updates: Array<Sessions_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_UsersArgs = {
-  _inc?: InputMaybe<Users_Inc_Input>;
   _set?: InputMaybe<Users_Set_Input>;
   where: Users_Bool_Exp;
 };
@@ -1376,7 +1936,6 @@ export type Mutation_RootUpdate_UsersArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Users_By_PkArgs = {
-  _inc?: InputMaybe<Users_Inc_Input>;
   _set?: InputMaybe<Users_Set_Input>;
   pk_columns: Users_Pk_Columns_Input;
 };
@@ -1385,6 +1944,26 @@ export type Mutation_RootUpdate_Users_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Verification_TokensArgs = {
+  _set?: InputMaybe<Verification_Tokens_Set_Input>;
+  where: Verification_Tokens_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Verification_Tokens_By_PkArgs = {
+  _set?: InputMaybe<Verification_Tokens_Set_Input>;
+  pk_columns: Verification_Tokens_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Verification_Tokens_ManyArgs = {
+  updates: Array<Verification_Tokens_Updates>;
 };
 
 /** column ordering options */
@@ -1411,30 +1990,48 @@ export type Query_Root = {
   City_aggregate: City_Aggregate;
   /** fetch data from the table: "City" using primary key columns */
   City_by_pk?: Maybe<City>;
+  /** An array relationship */
+  accounts: Array<Accounts>;
+  /** An aggregate relationship */
+  accounts_aggregate: Accounts_Aggregate;
+  /** fetch data from the table: "accounts" using primary key columns */
+  accounts_by_pk?: Maybe<Accounts>;
   /** fetch data from the table: "category" */
   category: Array<Category>;
   /** fetch aggregated fields from the table: "category" */
   category_aggregate: Category_Aggregate;
   /** fetch data from the table: "category" using primary key columns */
   category_by_pk?: Maybe<Category>;
-  /** fetch data from the table: "finds" */
+  /** An array relationship */
   finds: Array<Finds>;
-  /** fetch aggregated fields from the table: "finds" */
+  /** An aggregate relationship */
   finds_aggregate: Finds_Aggregate;
   /** fetch data from the table: "finds" using primary key columns */
   finds_by_pk?: Maybe<Finds>;
-  /** fetch data from the table: "losts" */
+  /** An array relationship */
   losts: Array<Losts>;
-  /** fetch aggregated fields from the table: "losts" */
+  /** An aggregate relationship */
   losts_aggregate: Losts_Aggregate;
   /** fetch data from the table: "losts" using primary key columns */
   losts_by_pk?: Maybe<Losts>;
+  /** An array relationship */
+  sessions: Array<Sessions>;
+  /** An aggregate relationship */
+  sessions_aggregate: Sessions_Aggregate;
+  /** fetch data from the table: "sessions" using primary key columns */
+  sessions_by_pk?: Maybe<Sessions>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
   users_aggregate: Users_Aggregate;
   /** fetch data from the table: "users" using primary key columns */
   users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "verification_tokens" */
+  verification_tokens: Array<Verification_Tokens>;
+  /** fetch aggregated fields from the table: "verification_tokens" */
+  verification_tokens_aggregate: Verification_Tokens_Aggregate;
+  /** fetch data from the table: "verification_tokens" using primary key columns */
+  verification_tokens_by_pk?: Maybe<Verification_Tokens>;
 };
 
 
@@ -1458,6 +2055,29 @@ export type Query_RootCity_AggregateArgs = {
 
 export type Query_RootCity_By_PkArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type Query_RootAccountsArgs = {
+  distinct_on?: InputMaybe<Array<Accounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Accounts_Order_By>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+
+export type Query_RootAccounts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Accounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Accounts_Order_By>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+
+export type Query_RootAccounts_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1503,7 +2123,7 @@ export type Query_RootFinds_AggregateArgs = {
 
 
 export type Query_RootFinds_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1526,7 +2146,30 @@ export type Query_RootLosts_AggregateArgs = {
 
 
 export type Query_RootLosts_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootSessionsArgs = {
+  distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sessions_Order_By>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+
+export type Query_RootSessions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sessions_Order_By>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+
+export type Query_RootSessions_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1549,7 +2192,229 @@ export type Query_RootUsers_AggregateArgs = {
 
 
 export type Query_RootUsers_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Query_RootVerification_TokensArgs = {
+  distinct_on?: InputMaybe<Array<Verification_Tokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Verification_Tokens_Order_By>>;
+  where?: InputMaybe<Verification_Tokens_Bool_Exp>;
+};
+
+
+export type Query_RootVerification_Tokens_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Verification_Tokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Verification_Tokens_Order_By>>;
+  where?: InputMaybe<Verification_Tokens_Bool_Exp>;
+};
+
+
+export type Query_RootVerification_Tokens_By_PkArgs = {
+  token: Scalars['String']['input'];
+};
+
+/** columns and relationships of "sessions" */
+export type Sessions = {
+  __typename?: 'sessions';
+  expires?: Maybe<Scalars['timestamptz']['output']>;
+  id: Scalars['uuid']['output'];
+  sessionToken: Scalars['String']['output'];
+  userId: Scalars['uuid']['output'];
+};
+
+/** aggregated selection of "sessions" */
+export type Sessions_Aggregate = {
+  __typename?: 'sessions_aggregate';
+  aggregate?: Maybe<Sessions_Aggregate_Fields>;
+  nodes: Array<Sessions>;
+};
+
+export type Sessions_Aggregate_Bool_Exp = {
+  count?: InputMaybe<Sessions_Aggregate_Bool_Exp_Count>;
+};
+
+export type Sessions_Aggregate_Bool_Exp_Count = {
+  arguments?: InputMaybe<Array<Sessions_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+  filter?: InputMaybe<Sessions_Bool_Exp>;
+  predicate: Int_Comparison_Exp;
+};
+
+/** aggregate fields of "sessions" */
+export type Sessions_Aggregate_Fields = {
+  __typename?: 'sessions_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Sessions_Max_Fields>;
+  min?: Maybe<Sessions_Min_Fields>;
+};
+
+
+/** aggregate fields of "sessions" */
+export type Sessions_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Sessions_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** order by aggregate values of table "sessions" */
+export type Sessions_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Sessions_Max_Order_By>;
+  min?: InputMaybe<Sessions_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "sessions" */
+export type Sessions_Arr_Rel_Insert_Input = {
+  data: Array<Sessions_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Sessions_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "sessions". All fields are combined with a logical 'AND'. */
+export type Sessions_Bool_Exp = {
+  _and?: InputMaybe<Array<Sessions_Bool_Exp>>;
+  _not?: InputMaybe<Sessions_Bool_Exp>;
+  _or?: InputMaybe<Array<Sessions_Bool_Exp>>;
+  expires?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  sessionToken?: InputMaybe<String_Comparison_Exp>;
+  userId?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "sessions" */
+export enum Sessions_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  SessionsPkey = 'sessions_pkey'
+}
+
+/** input type for inserting data into table "sessions" */
+export type Sessions_Insert_Input = {
+  expires?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  sessionToken?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate max on columns */
+export type Sessions_Max_Fields = {
+  __typename?: 'sessions_max_fields';
+  expires?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  sessionToken?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by max() on columns of table "sessions" */
+export type Sessions_Max_Order_By = {
+  expires?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  sessionToken?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Sessions_Min_Fields = {
+  __typename?: 'sessions_min_fields';
+  expires?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  sessionToken?: Maybe<Scalars['String']['output']>;
+  userId?: Maybe<Scalars['uuid']['output']>;
+};
+
+/** order by min() on columns of table "sessions" */
+export type Sessions_Min_Order_By = {
+  expires?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  sessionToken?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "sessions" */
+export type Sessions_Mutation_Response = {
+  __typename?: 'sessions_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Sessions>;
+};
+
+/** on_conflict condition type for table "sessions" */
+export type Sessions_On_Conflict = {
+  constraint: Sessions_Constraint;
+  update_columns?: Array<Sessions_Update_Column>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "sessions". */
+export type Sessions_Order_By = {
+  expires?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  sessionToken?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: sessions */
+export type Sessions_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
+};
+
+/** select columns of table "sessions" */
+export enum Sessions_Select_Column {
+  /** column name */
+  Expires = 'expires',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  SessionToken = 'sessionToken',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "sessions" */
+export type Sessions_Set_Input = {
+  expires?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  sessionToken?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** Streaming cursor of the table "sessions" */
+export type Sessions_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Sessions_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Sessions_Stream_Cursor_Value_Input = {
+  expires?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  sessionToken?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** update columns of table "sessions" */
+export enum Sessions_Update_Column {
+  /** column name */
+  Expires = 'expires',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  SessionToken = 'sessionToken',
+  /** column name */
+  UserId = 'userId'
+}
+
+export type Sessions_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Sessions_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Sessions_Bool_Exp;
 };
 
 export type Subscription_Root = {
@@ -1562,6 +2427,14 @@ export type Subscription_Root = {
   City_by_pk?: Maybe<City>;
   /** fetch data from the table in a streaming manner: "City" */
   City_stream: Array<City>;
+  /** An array relationship */
+  accounts: Array<Accounts>;
+  /** An aggregate relationship */
+  accounts_aggregate: Accounts_Aggregate;
+  /** fetch data from the table: "accounts" using primary key columns */
+  accounts_by_pk?: Maybe<Accounts>;
+  /** fetch data from the table in a streaming manner: "accounts" */
+  accounts_stream: Array<Accounts>;
   /** fetch data from the table: "category" */
   category: Array<Category>;
   /** fetch aggregated fields from the table: "category" */
@@ -1570,22 +2443,30 @@ export type Subscription_Root = {
   category_by_pk?: Maybe<Category>;
   /** fetch data from the table in a streaming manner: "category" */
   category_stream: Array<Category>;
-  /** fetch data from the table: "finds" */
+  /** An array relationship */
   finds: Array<Finds>;
-  /** fetch aggregated fields from the table: "finds" */
+  /** An aggregate relationship */
   finds_aggregate: Finds_Aggregate;
   /** fetch data from the table: "finds" using primary key columns */
   finds_by_pk?: Maybe<Finds>;
   /** fetch data from the table in a streaming manner: "finds" */
   finds_stream: Array<Finds>;
-  /** fetch data from the table: "losts" */
+  /** An array relationship */
   losts: Array<Losts>;
-  /** fetch aggregated fields from the table: "losts" */
+  /** An aggregate relationship */
   losts_aggregate: Losts_Aggregate;
   /** fetch data from the table: "losts" using primary key columns */
   losts_by_pk?: Maybe<Losts>;
   /** fetch data from the table in a streaming manner: "losts" */
   losts_stream: Array<Losts>;
+  /** An array relationship */
+  sessions: Array<Sessions>;
+  /** An aggregate relationship */
+  sessions_aggregate: Sessions_Aggregate;
+  /** fetch data from the table: "sessions" using primary key columns */
+  sessions_by_pk?: Maybe<Sessions>;
+  /** fetch data from the table in a streaming manner: "sessions" */
+  sessions_stream: Array<Sessions>;
   /** fetch data from the table: "users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "users" */
@@ -1594,6 +2475,14 @@ export type Subscription_Root = {
   users_by_pk?: Maybe<Users>;
   /** fetch data from the table in a streaming manner: "users" */
   users_stream: Array<Users>;
+  /** fetch data from the table: "verification_tokens" */
+  verification_tokens: Array<Verification_Tokens>;
+  /** fetch aggregated fields from the table: "verification_tokens" */
+  verification_tokens_aggregate: Verification_Tokens_Aggregate;
+  /** fetch data from the table: "verification_tokens" using primary key columns */
+  verification_tokens_by_pk?: Maybe<Verification_Tokens>;
+  /** fetch data from the table in a streaming manner: "verification_tokens" */
+  verification_tokens_stream: Array<Verification_Tokens>;
 };
 
 
@@ -1624,6 +2513,36 @@ export type Subscription_RootCity_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<City_Stream_Cursor_Input>>;
   where?: InputMaybe<City_Bool_Exp>;
+};
+
+
+export type Subscription_RootAccountsArgs = {
+  distinct_on?: InputMaybe<Array<Accounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Accounts_Order_By>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+
+export type Subscription_RootAccounts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Accounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Accounts_Order_By>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+
+export type Subscription_RootAccounts_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootAccounts_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Accounts_Stream_Cursor_Input>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
 };
 
 
@@ -1676,7 +2595,7 @@ export type Subscription_RootFinds_AggregateArgs = {
 
 
 export type Subscription_RootFinds_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1706,7 +2625,7 @@ export type Subscription_RootLosts_AggregateArgs = {
 
 
 export type Subscription_RootLosts_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1714,6 +2633,36 @@ export type Subscription_RootLosts_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Losts_Stream_Cursor_Input>>;
   where?: InputMaybe<Losts_Bool_Exp>;
+};
+
+
+export type Subscription_RootSessionsArgs = {
+  distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sessions_Order_By>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+
+export type Subscription_RootSessions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sessions_Order_By>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+
+export type Subscription_RootSessions_By_PkArgs = {
+  id: Scalars['uuid']['input'];
+};
+
+
+export type Subscription_RootSessions_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Sessions_Stream_Cursor_Input>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
 };
 
 
@@ -1736,7 +2685,7 @@ export type Subscription_RootUsers_AggregateArgs = {
 
 
 export type Subscription_RootUsers_By_PkArgs = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 
@@ -1744,6 +2693,36 @@ export type Subscription_RootUsers_StreamArgs = {
   batch_size: Scalars['Int']['input'];
   cursor: Array<InputMaybe<Users_Stream_Cursor_Input>>;
   where?: InputMaybe<Users_Bool_Exp>;
+};
+
+
+export type Subscription_RootVerification_TokensArgs = {
+  distinct_on?: InputMaybe<Array<Verification_Tokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Verification_Tokens_Order_By>>;
+  where?: InputMaybe<Verification_Tokens_Bool_Exp>;
+};
+
+
+export type Subscription_RootVerification_Tokens_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Verification_Tokens_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Verification_Tokens_Order_By>>;
+  where?: InputMaybe<Verification_Tokens_Bool_Exp>;
+};
+
+
+export type Subscription_RootVerification_Tokens_By_PkArgs = {
+  token: Scalars['String']['input'];
+};
+
+
+export type Subscription_RootVerification_Tokens_StreamArgs = {
+  batch_size: Scalars['Int']['input'];
+  cursor: Array<InputMaybe<Verification_Tokens_Stream_Cursor_Input>>;
+  where?: InputMaybe<Verification_Tokens_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
@@ -1762,11 +2741,109 @@ export type Timestamptz_Comparison_Exp = {
 /** Users table */
 export type Users = {
   __typename?: 'users';
+  /** An array relationship */
+  accounts: Array<Accounts>;
+  /** An aggregate relationship */
+  accounts_aggregate: Accounts_Aggregate;
   email: Scalars['String']['output'];
+  emailVerified?: Maybe<Scalars['timestamptz']['output']>;
+  /** An array relationship */
+  finds: Array<Finds>;
+  /** An aggregate relationship */
+  finds_aggregate: Finds_Aggregate;
   first_name: Scalars['String']['output'];
-  id: Scalars['Int']['output'];
+  id: Scalars['uuid']['output'];
+  image?: Maybe<Scalars['String']['output']>;
   last_name: Scalars['String']['output'];
-  password: Scalars['String']['output'];
+  /** An array relationship */
+  losts: Array<Losts>;
+  /** An aggregate relationship */
+  losts_aggregate: Losts_Aggregate;
+  name?: Maybe<Scalars['String']['output']>;
+  /** An array relationship */
+  sessions: Array<Sessions>;
+  /** An aggregate relationship */
+  sessions_aggregate: Sessions_Aggregate;
+};
+
+
+/** Users table */
+export type UsersAccountsArgs = {
+  distinct_on?: InputMaybe<Array<Accounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Accounts_Order_By>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersAccounts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Accounts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Accounts_Order_By>>;
+  where?: InputMaybe<Accounts_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersFindsArgs = {
+  distinct_on?: InputMaybe<Array<Finds_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Finds_Order_By>>;
+  where?: InputMaybe<Finds_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersFinds_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Finds_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Finds_Order_By>>;
+  where?: InputMaybe<Finds_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersLostsArgs = {
+  distinct_on?: InputMaybe<Array<Losts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Losts_Order_By>>;
+  where?: InputMaybe<Losts_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersLosts_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Losts_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Losts_Order_By>>;
+  where?: InputMaybe<Losts_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersSessionsArgs = {
+  distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sessions_Order_By>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
+};
+
+
+/** Users table */
+export type UsersSessions_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Sessions_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  order_by?: InputMaybe<Array<Sessions_Order_By>>;
+  where?: InputMaybe<Sessions_Bool_Exp>;
 };
 
 /** aggregated selection of "users" */
@@ -1779,17 +2856,9 @@ export type Users_Aggregate = {
 /** aggregate fields of "users" */
 export type Users_Aggregate_Fields = {
   __typename?: 'users_aggregate_fields';
-  avg?: Maybe<Users_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Users_Max_Fields>;
   min?: Maybe<Users_Min_Fields>;
-  stddev?: Maybe<Users_Stddev_Fields>;
-  stddev_pop?: Maybe<Users_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Users_Stddev_Samp_Fields>;
-  sum?: Maybe<Users_Sum_Fields>;
-  var_pop?: Maybe<Users_Var_Pop_Fields>;
-  var_samp?: Maybe<Users_Var_Samp_Fields>;
-  variance?: Maybe<Users_Variance_Fields>;
 };
 
 
@@ -1799,22 +2868,26 @@ export type Users_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** aggregate avg on columns */
-export type Users_Avg_Fields = {
-  __typename?: 'users_avg_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
 export type Users_Bool_Exp = {
   _and?: InputMaybe<Array<Users_Bool_Exp>>;
   _not?: InputMaybe<Users_Bool_Exp>;
   _or?: InputMaybe<Array<Users_Bool_Exp>>;
+  accounts?: InputMaybe<Accounts_Bool_Exp>;
+  accounts_aggregate?: InputMaybe<Accounts_Aggregate_Bool_Exp>;
   email?: InputMaybe<String_Comparison_Exp>;
+  emailVerified?: InputMaybe<Timestamptz_Comparison_Exp>;
+  finds?: InputMaybe<Finds_Bool_Exp>;
+  finds_aggregate?: InputMaybe<Finds_Aggregate_Bool_Exp>;
   first_name?: InputMaybe<String_Comparison_Exp>;
-  id?: InputMaybe<Int_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  image?: InputMaybe<String_Comparison_Exp>;
   last_name?: InputMaybe<String_Comparison_Exp>;
-  password?: InputMaybe<String_Comparison_Exp>;
+  losts?: InputMaybe<Losts_Bool_Exp>;
+  losts_aggregate?: InputMaybe<Losts_Aggregate_Bool_Exp>;
+  name?: InputMaybe<String_Comparison_Exp>;
+  sessions?: InputMaybe<Sessions_Bool_Exp>;
+  sessions_aggregate?: InputMaybe<Sessions_Aggregate_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "users" */
@@ -1825,38 +2898,43 @@ export enum Users_Constraint {
   UsersPkey = 'users_pkey'
 }
 
-/** input type for incrementing numeric columns in table "users" */
-export type Users_Inc_Input = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-};
-
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  accounts?: InputMaybe<Accounts_Arr_Rel_Insert_Input>;
   email?: InputMaybe<Scalars['String']['input']>;
+  emailVerified?: InputMaybe<Scalars['timestamptz']['input']>;
+  finds?: InputMaybe<Finds_Arr_Rel_Insert_Input>;
   first_name?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   last_name?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
+  losts?: InputMaybe<Losts_Arr_Rel_Insert_Input>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  sessions?: InputMaybe<Sessions_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
 export type Users_Max_Fields = {
   __typename?: 'users_max_fields';
   email?: Maybe<Scalars['String']['output']>;
+  emailVerified?: Maybe<Scalars['timestamptz']['output']>;
   first_name?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
   last_name?: Maybe<Scalars['String']['output']>;
-  password?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
   email?: Maybe<Scalars['String']['output']>;
+  emailVerified?: Maybe<Scalars['timestamptz']['output']>;
   first_name?: Maybe<Scalars['String']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
   last_name?: Maybe<Scalars['String']['output']>;
-  password?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 /** response of any mutation on the table "users" */
@@ -1884,16 +2962,22 @@ export type Users_On_Conflict = {
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
+  accounts_aggregate?: InputMaybe<Accounts_Aggregate_Order_By>;
   email?: InputMaybe<Order_By>;
+  emailVerified?: InputMaybe<Order_By>;
+  finds_aggregate?: InputMaybe<Finds_Aggregate_Order_By>;
   first_name?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  image?: InputMaybe<Order_By>;
   last_name?: InputMaybe<Order_By>;
-  password?: InputMaybe<Order_By>;
+  losts_aggregate?: InputMaybe<Losts_Aggregate_Order_By>;
+  name?: InputMaybe<Order_By>;
+  sessions_aggregate?: InputMaybe<Sessions_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: users */
 export type Users_Pk_Columns_Input = {
-  id: Scalars['Int']['input'];
+  id: Scalars['uuid']['input'];
 };
 
 /** select columns of table "users" */
@@ -1901,40 +2985,28 @@ export enum Users_Select_Column {
   /** column name */
   Email = 'email',
   /** column name */
+  EmailVerified = 'emailVerified',
+  /** column name */
   FirstName = 'first_name',
   /** column name */
   Id = 'id',
   /** column name */
+  Image = 'image',
+  /** column name */
   LastName = 'last_name',
   /** column name */
-  Password = 'password'
+  Name = 'name'
 }
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
   email?: InputMaybe<Scalars['String']['input']>;
+  emailVerified?: InputMaybe<Scalars['timestamptz']['input']>;
   first_name?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   last_name?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate stddev on columns */
-export type Users_Stddev_Fields = {
-  __typename?: 'users_stddev_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Users_Stddev_Pop_Fields = {
-  __typename?: 'users_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Users_Stddev_Samp_Fields = {
-  __typename?: 'users_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Streaming cursor of the table "users" */
@@ -1948,16 +3020,12 @@ export type Users_Stream_Cursor_Input = {
 /** Initial value of the column from where the streaming should start */
 export type Users_Stream_Cursor_Value_Input = {
   email?: InputMaybe<Scalars['String']['input']>;
+  emailVerified?: InputMaybe<Scalars['timestamptz']['input']>;
   first_name?: InputMaybe<Scalars['String']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
   last_name?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-};
-
-/** aggregate sum on columns */
-export type Users_Sum_Fields = {
-  __typename?: 'users_sum_fields';
-  id?: Maybe<Scalars['Int']['output']>;
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** update columns of table "users" */
@@ -1965,40 +3033,183 @@ export enum Users_Update_Column {
   /** column name */
   Email = 'email',
   /** column name */
+  EmailVerified = 'emailVerified',
+  /** column name */
   FirstName = 'first_name',
   /** column name */
   Id = 'id',
   /** column name */
+  Image = 'image',
+  /** column name */
   LastName = 'last_name',
   /** column name */
-  Password = 'password'
+  Name = 'name'
 }
 
 export type Users_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Users_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Users_Set_Input>;
   /** filter the rows which have to be updated */
   where: Users_Bool_Exp;
 };
 
-/** aggregate var_pop on columns */
-export type Users_Var_Pop_Fields = {
-  __typename?: 'users_var_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
+/** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
+export type Uuid_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['uuid']['input']>;
+  _gt?: InputMaybe<Scalars['uuid']['input']>;
+  _gte?: InputMaybe<Scalars['uuid']['input']>;
+  _in?: InputMaybe<Array<Scalars['uuid']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['uuid']['input']>;
+  _lte?: InputMaybe<Scalars['uuid']['input']>;
+  _neq?: InputMaybe<Scalars['uuid']['input']>;
+  _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
 };
 
-/** aggregate var_samp on columns */
-export type Users_Var_Samp_Fields = {
-  __typename?: 'users_var_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
+/** columns and relationships of "verification_tokens" */
+export type Verification_Tokens = {
+  __typename?: 'verification_tokens';
+  expires?: Maybe<Scalars['timestamptz']['output']>;
+  identifier: Scalars['String']['output'];
+  token: Scalars['String']['output'];
 };
 
-/** aggregate variance on columns */
-export type Users_Variance_Fields = {
-  __typename?: 'users_variance_fields';
-  id?: Maybe<Scalars['Float']['output']>;
+/** aggregated selection of "verification_tokens" */
+export type Verification_Tokens_Aggregate = {
+  __typename?: 'verification_tokens_aggregate';
+  aggregate?: Maybe<Verification_Tokens_Aggregate_Fields>;
+  nodes: Array<Verification_Tokens>;
+};
+
+/** aggregate fields of "verification_tokens" */
+export type Verification_Tokens_Aggregate_Fields = {
+  __typename?: 'verification_tokens_aggregate_fields';
+  count: Scalars['Int']['output'];
+  max?: Maybe<Verification_Tokens_Max_Fields>;
+  min?: Maybe<Verification_Tokens_Min_Fields>;
+};
+
+
+/** aggregate fields of "verification_tokens" */
+export type Verification_Tokens_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Verification_Tokens_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Boolean expression to filter rows from the table "verification_tokens". All fields are combined with a logical 'AND'. */
+export type Verification_Tokens_Bool_Exp = {
+  _and?: InputMaybe<Array<Verification_Tokens_Bool_Exp>>;
+  _not?: InputMaybe<Verification_Tokens_Bool_Exp>;
+  _or?: InputMaybe<Array<Verification_Tokens_Bool_Exp>>;
+  expires?: InputMaybe<Timestamptz_Comparison_Exp>;
+  identifier?: InputMaybe<String_Comparison_Exp>;
+  token?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "verification_tokens" */
+export enum Verification_Tokens_Constraint {
+  /** unique or primary key constraint on columns "token" */
+  VerificationTokensPkey = 'verification_tokens_pkey'
+}
+
+/** input type for inserting data into table "verification_tokens" */
+export type Verification_Tokens_Insert_Input = {
+  expires?: InputMaybe<Scalars['timestamptz']['input']>;
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** aggregate max on columns */
+export type Verification_Tokens_Max_Fields = {
+  __typename?: 'verification_tokens_max_fields';
+  expires?: Maybe<Scalars['timestamptz']['output']>;
+  identifier?: Maybe<Scalars['String']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
+};
+
+/** aggregate min on columns */
+export type Verification_Tokens_Min_Fields = {
+  __typename?: 'verification_tokens_min_fields';
+  expires?: Maybe<Scalars['timestamptz']['output']>;
+  identifier?: Maybe<Scalars['String']['output']>;
+  token?: Maybe<Scalars['String']['output']>;
+};
+
+/** response of any mutation on the table "verification_tokens" */
+export type Verification_Tokens_Mutation_Response = {
+  __typename?: 'verification_tokens_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int']['output'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Verification_Tokens>;
+};
+
+/** on_conflict condition type for table "verification_tokens" */
+export type Verification_Tokens_On_Conflict = {
+  constraint: Verification_Tokens_Constraint;
+  update_columns?: Array<Verification_Tokens_Update_Column>;
+  where?: InputMaybe<Verification_Tokens_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "verification_tokens". */
+export type Verification_Tokens_Order_By = {
+  expires?: InputMaybe<Order_By>;
+  identifier?: InputMaybe<Order_By>;
+  token?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: verification_tokens */
+export type Verification_Tokens_Pk_Columns_Input = {
+  token: Scalars['String']['input'];
+};
+
+/** select columns of table "verification_tokens" */
+export enum Verification_Tokens_Select_Column {
+  /** column name */
+  Expires = 'expires',
+  /** column name */
+  Identifier = 'identifier',
+  /** column name */
+  Token = 'token'
+}
+
+/** input type for updating data in table "verification_tokens" */
+export type Verification_Tokens_Set_Input = {
+  expires?: InputMaybe<Scalars['timestamptz']['input']>;
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** Streaming cursor of the table "verification_tokens" */
+export type Verification_Tokens_Stream_Cursor_Input = {
+  /** Stream column input with initial value */
+  initial_value: Verification_Tokens_Stream_Cursor_Value_Input;
+  /** cursor ordering */
+  ordering?: InputMaybe<Cursor_Ordering>;
+};
+
+/** Initial value of the column from where the streaming should start */
+export type Verification_Tokens_Stream_Cursor_Value_Input = {
+  expires?: InputMaybe<Scalars['timestamptz']['input']>;
+  identifier?: InputMaybe<Scalars['String']['input']>;
+  token?: InputMaybe<Scalars['String']['input']>;
+};
+
+/** update columns of table "verification_tokens" */
+export enum Verification_Tokens_Update_Column {
+  /** column name */
+  Expires = 'expires',
+  /** column name */
+  Identifier = 'identifier',
+  /** column name */
+  Token = 'token'
+}
+
+export type Verification_Tokens_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Verification_Tokens_Set_Input>;
+  /** filter the rows which have to be updated */
+  where: Verification_Tokens_Bool_Exp;
 };
 
 export type GetCitiesQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2009,27 +3220,27 @@ export type GetCitiesQuery = { __typename?: 'query_root', City: Array<{ __typena
 export type GetFindsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFindsWithUsersQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', created_at: any, description?: string | null, id: number, location?: string | null, photo?: string | null, time?: string | null, title: string, updated_at: any, user_id: number, user: { __typename?: 'users', email: string, first_name: string, id: number, last_name: string, password: string } }> };
+export type GetFindsWithUsersQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', description?: string | null, id: any, location?: string | null, photo?: string | null, time?: string | null, title?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
 
 export type GetFindsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', title: string, user_id: number, photo?: string | null, description?: string | null, location?: string | null }> };
+export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null }> };
 
 export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title: string, user_id: number, photo?: string | null, description?: string | null, location?: string | null }> };
+export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null }> };
 
 export type GetLostsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', created_at: any, description?: string | null, id: number, location?: string | null, photo?: string | null, time?: string | null, title: string, updated_at: any, user_id: number, user: { __typename?: 'users', email: string, first_name: string, id: number, last_name: string, password: string } }> };
+export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, description?: string | null, photo?: string | null, time?: string | null, location?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', first_name: string, last_name: string, email: string, password: string }> };
+export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', first_name: string, last_name: string, email: string }> };
 
 
 export const GetCities = gql`
@@ -2043,21 +3254,18 @@ export const GetCities = gql`
 export const GetFindsWithUsers = gql`
     query GetFindsWithUsers {
   finds {
-    created_at
     description
     id
     location
     photo
     time
     title
-    updated_at
     user_id
     user {
       email
       first_name
       id
       last_name
-      password
     }
   }
 }
@@ -2091,21 +3299,18 @@ export const GetLosts = gql`
 export const GetLostsWithUsers = gql`
     query GetLostsWithUsers {
   losts {
-    created_at
-    description
     id
-    location
+    title
+    description
     photo
     time
-    title
-    updated_at
+    location
     user_id
     user {
       email
       first_name
       id
       last_name
-      password
     }
   }
 }
@@ -2116,7 +3321,6 @@ export const GetUsers = gql`
     first_name
     last_name
     email
-    password
   }
 }
     `;
@@ -2518,6 +3722,797 @@ export default {
         "fields": [
           {
             "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts",
+        "fields": [
+          {
+            "name": "access_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "id_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "oauth_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "oauth_token_secret",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "provider",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "providerAccountId",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "scope",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "session_state",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "token_type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "type",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "users",
+                "ofType": null
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_aggregate_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "accounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_aggregate_fields",
+        "fields": [
+          {
+            "name": "avg",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_avg_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "count",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_max_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_min_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_stddev_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_stddev_pop_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_stddev_samp_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "sum",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_sum_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "var_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_var_pop_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "var_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_var_samp_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "variance",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_variance_fields",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_avg_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_max_fields",
+        "fields": [
+          {
+            "name": "access_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "oauth_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "oauth_token_secret",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "provider",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "providerAccountId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "scope",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "session_state",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "token_type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_min_fields",
+        "fields": [
+          {
+            "name": "access_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "oauth_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "oauth_token_secret",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "provider",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "providerAccountId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "scope",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "session_state",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "token_type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "type",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "accounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_stddev_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_stddev_pop_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_stddev_samp_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_sum_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_var_pop_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_var_samp_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "accounts_variance_fields",
+        "fields": [
+          {
+            "name": "expires_at",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "refresh_token_expires_in",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -2950,17 +4945,6 @@ export default {
         "name": "finds",
         "fields": [
           {
-            "name": "created_at",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
             "name": "description",
             "type": {
               "kind": "SCALAR",
@@ -3006,45 +4990,25 @@ export default {
           {
             "name": "title",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           },
           {
             "name": "user",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "users",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "users",
+              "ofType": null
             },
             "args": []
           },
           {
             "name": "user_id",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }
@@ -3089,15 +5053,6 @@ export default {
         "kind": "OBJECT",
         "name": "finds_aggregate_fields",
         "fields": [
-          {
-            "name": "avg",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_avg_fields",
-              "ofType": null
-            },
-            "args": []
-          },
           {
             "name": "count",
             "type": {
@@ -3147,92 +5102,6 @@ export default {
               "ofType": null
             },
             "args": []
-          },
-          {
-            "name": "stddev",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_stddev_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "stddev_pop",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_stddev_pop_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "stddev_samp",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_stddev_samp_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "sum",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_sum_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "var_pop",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_var_pop_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "var_samp",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_var_samp_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "variance",
-            "type": {
-              "kind": "OBJECT",
-              "name": "finds_variance_fields",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_avg_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
           }
         ],
         "interfaces": []
@@ -3241,14 +5110,6 @@ export default {
         "kind": "OBJECT",
         "name": "finds_max_fields",
         "fields": [
-          {
-            "name": "created_at",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
           {
             "name": "description",
             "type": {
@@ -3291,14 +5152,6 @@ export default {
           },
           {
             "name": "title",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -3321,14 +5174,6 @@ export default {
         "name": "finds_min_fields",
         "fields": [
           {
-            "name": "created_at",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "description",
             "type": {
               "kind": "SCALAR",
@@ -3370,14 +5215,6 @@ export default {
           },
           {
             "name": "title",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -3433,180 +5270,8 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "finds_stddev_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_stddev_pop_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_stddev_samp_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_sum_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_var_pop_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_var_samp_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "finds_variance_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
         "name": "losts",
         "fields": [
-          {
-            "name": "created_at",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
           {
             "name": "description",
             "type": {
@@ -3653,45 +5318,25 @@ export default {
           {
             "name": "title",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
-            "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           },
           {
             "name": "user",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "users",
-                "ofType": null
-              }
+              "kind": "OBJECT",
+              "name": "users",
+              "ofType": null
             },
             "args": []
           },
           {
             "name": "user_id",
             "type": {
-              "kind": "NON_NULL",
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
-              }
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }
@@ -3736,15 +5381,6 @@ export default {
         "kind": "OBJECT",
         "name": "losts_aggregate_fields",
         "fields": [
-          {
-            "name": "avg",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_avg_fields",
-              "ofType": null
-            },
-            "args": []
-          },
           {
             "name": "count",
             "type": {
@@ -3794,92 +5430,6 @@ export default {
               "ofType": null
             },
             "args": []
-          },
-          {
-            "name": "stddev",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_stddev_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "stddev_pop",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_stddev_pop_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "stddev_samp",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_stddev_samp_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "sum",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_sum_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "var_pop",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_var_pop_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "var_samp",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_var_samp_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "variance",
-            "type": {
-              "kind": "OBJECT",
-              "name": "losts_variance_fields",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_avg_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
           }
         ],
         "interfaces": []
@@ -3888,14 +5438,6 @@ export default {
         "kind": "OBJECT",
         "name": "losts_max_fields",
         "fields": [
-          {
-            "name": "created_at",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
           {
             "name": "description",
             "type": {
@@ -3938,14 +5480,6 @@ export default {
           },
           {
             "name": "title",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -3968,14 +5502,6 @@ export default {
         "name": "losts_min_fields",
         "fields": [
           {
-            "name": "created_at",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
             "name": "description",
             "type": {
               "kind": "SCALAR",
@@ -4017,14 +5543,6 @@ export default {
           },
           {
             "name": "title",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "updated_at",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -4080,167 +5598,6 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "losts_stddev_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_stddev_pop_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_stddev_samp_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_sum_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_var_pop_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_var_samp_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "losts_variance_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          },
-          {
-            "name": "user_id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
         "name": "mutation_root",
         "fields": [
           {
@@ -4268,6 +5625,46 @@ export default {
             "type": {
               "kind": "OBJECT",
               "name": "City",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_accounts",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_accounts_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts",
               "ofType": null
             },
             "args": [
@@ -4404,6 +5801,46 @@ export default {
             ]
           },
           {
+            "name": "delete_sessions",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_sessions_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "delete_users",
             "type": {
               "kind": "OBJECT",
@@ -4433,6 +5870,46 @@ export default {
             "args": [
               {
                 "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_verification_tokens",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "delete_verification_tokens_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "token",
                 "type": {
                   "kind": "NON_NULL",
                   "ofType": {
@@ -4481,6 +5958,66 @@ export default {
             "type": {
               "kind": "OBJECT",
               "name": "City",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_accounts",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_accounts_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts",
               "ofType": null
             },
             "args": [
@@ -4684,6 +6221,66 @@ export default {
             ]
           },
           {
+            "name": "insert_sessions",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_sessions_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
             "name": "insert_users",
             "type": {
               "kind": "OBJECT",
@@ -4721,6 +6318,66 @@ export default {
             "type": {
               "kind": "OBJECT",
               "name": "users",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "object",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_verification_tokens",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "objects",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              },
+              {
+                "name": "on_conflict",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "insert_verification_tokens_one",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens",
               "ofType": null
             },
             "args": [
@@ -4818,6 +6475,103 @@ export default {
               "ofType": {
                 "kind": "OBJECT",
                 "name": "City_mutation_response",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "updates",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_accounts",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_accounts_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_accounts_many",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "accounts_mutation_response",
                 "ofType": null
               }
             },
@@ -4946,13 +6700,6 @@ export default {
             },
             "args": [
               {
-                "name": "_inc",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
                 "name": "_set",
                 "type": {
                   "kind": "SCALAR",
@@ -4979,13 +6726,6 @@ export default {
               "ofType": null
             },
             "args": [
-              {
-                "name": "_inc",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
               {
                 "name": "_set",
                 "type": {
@@ -5043,13 +6783,6 @@ export default {
             },
             "args": [
               {
-                "name": "_inc",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
                 "name": "_set",
                 "type": {
                   "kind": "SCALAR",
@@ -5076,13 +6809,6 @@ export default {
               "ofType": null
             },
             "args": [
-              {
-                "name": "_inc",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
               {
                 "name": "_set",
                 "type": {
@@ -5132,6 +6858,89 @@ export default {
             ]
           },
           {
+            "name": "update_sessions",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_sessions_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_sessions_many",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "sessions_mutation_response",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "updates",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "update_users",
             "type": {
               "kind": "OBJECT",
@@ -5139,13 +6948,6 @@ export default {
               "ofType": null
             },
             "args": [
-              {
-                "name": "_inc",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
               {
                 "name": "_set",
                 "type": {
@@ -5174,13 +6976,6 @@ export default {
             },
             "args": [
               {
-                "name": "_inc",
-                "type": {
-                  "kind": "SCALAR",
-                  "name": "Any"
-                }
-              },
-              {
                 "name": "_set",
                 "type": {
                   "kind": "SCALAR",
@@ -5206,6 +7001,89 @@ export default {
               "ofType": {
                 "kind": "OBJECT",
                 "name": "users_mutation_response",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "updates",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "ofType": {
+                        "kind": "SCALAR",
+                        "name": "Any"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_verification_tokens",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens_mutation_response",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_verification_tokens_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "_set",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "pk_columns",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "update_verification_tokens_many",
+            "type": {
+              "kind": "LIST",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "verification_tokens_mutation_response",
                 "ofType": null
               }
             },
@@ -5366,6 +7244,152 @@ export default {
             "type": {
               "kind": "OBJECT",
               "name": "City",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "accounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "accounts_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts",
               "ofType": null
             },
             "args": [
@@ -5820,6 +7844,152 @@ export default {
             ]
           },
           {
+            "name": "sessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "sessions",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "sessions_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "sessions_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "sessions_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
             "name": "users",
             "type": {
               "kind": "NON_NULL",
@@ -5964,6 +8134,405 @@ export default {
                 }
               }
             ]
+          },
+          {
+            "name": "verification_tokens",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "verification_tokens",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "verification_tokens_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "verification_tokens_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "verification_tokens_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "sessions",
+        "fields": [
+          {
+            "name": "expires",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "sessionToken",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "sessions_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions_aggregate_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "sessions",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "sessions_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions_max_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions_min_fields",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "sessions_max_fields",
+        "fields": [
+          {
+            "name": "expires",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "sessionToken",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "sessions_min_fields",
+        "fields": [
+          {
+            "name": "expires",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "sessionToken",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "userId",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "sessions_mutation_response",
+        "fields": [
+          {
+            "name": "affected_rows",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "returning",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "sessions",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -6129,6 +8698,201 @@ export default {
                   "ofType": {
                     "kind": "OBJECT",
                     "name": "City",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "batch_size",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "cursor",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "accounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "accounts_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "accounts",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts_stream",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "accounts",
                     "ofType": null
                   }
                 }
@@ -6753,6 +9517,201 @@ export default {
             ]
           },
           {
+            "name": "sessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "sessions",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "sessions_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "sessions_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "sessions_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "sessions",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "id",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "sessions_stream",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "sessions",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "batch_size",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "cursor",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
             "name": "users",
             "type": {
               "kind": "NON_NULL",
@@ -6946,6 +9905,201 @@ export default {
                 }
               }
             ]
+          },
+          {
+            "name": "verification_tokens",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "verification_tokens",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "verification_tokens_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "verification_tokens_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "verification_tokens_by_pk",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens",
+              "ofType": null
+            },
+            "args": [
+              {
+                "name": "token",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "name": "verification_tokens_stream",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "verification_tokens",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "batch_size",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "Any"
+                  }
+                }
+              },
+              {
+                "name": "cursor",
+                "type": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "LIST",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
           }
         ],
         "interfaces": []
@@ -6954,6 +10108,132 @@ export default {
         "kind": "OBJECT",
         "name": "users",
         "fields": [
+          {
+            "name": "accounts",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "accounts",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "accounts_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "accounts_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
           {
             "name": "email",
             "type": {
@@ -6964,6 +10244,140 @@ export default {
               }
             },
             "args": []
+          },
+          {
+            "name": "emailVerified",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "finds",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "finds",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "finds_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "finds_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
           },
           {
             "name": "first_name",
@@ -6988,6 +10402,14 @@ export default {
             "args": []
           },
           {
+            "name": "image",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "last_name",
             "type": {
               "kind": "NON_NULL",
@@ -6999,15 +10421,264 @@ export default {
             "args": []
           },
           {
-            "name": "password",
+            "name": "losts",
             "type": {
               "kind": "NON_NULL",
               "ofType": {
-                "kind": "SCALAR",
-                "name": "Any"
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "losts",
+                    "ofType": null
+                  }
+                }
               }
             },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "losts_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "losts_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "name",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
             "args": []
+          },
+          {
+            "name": "sessions",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "sessions",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "sessions_aggregate",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "sessions_aggregate",
+                "ofType": null
+              }
+            },
+            "args": [
+              {
+                "name": "distinct_on",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "limit",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "offset",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
+                "name": "order_by",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "where",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
           }
         ],
         "interfaces": []
@@ -7050,15 +10721,6 @@ export default {
         "kind": "OBJECT",
         "name": "users_aggregate_fields",
         "fields": [
-          {
-            "name": "avg",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_avg_fields",
-              "ofType": null
-            },
-            "args": []
-          },
           {
             "name": "count",
             "type": {
@@ -7108,84 +10770,6 @@ export default {
               "ofType": null
             },
             "args": []
-          },
-          {
-            "name": "stddev",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_stddev_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "stddev_pop",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_stddev_pop_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "stddev_samp",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_stddev_samp_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "sum",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_sum_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "var_pop",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_var_pop_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "var_samp",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_var_samp_fields",
-              "ofType": null
-            },
-            "args": []
-          },
-          {
-            "name": "variance",
-            "type": {
-              "kind": "OBJECT",
-              "name": "users_variance_fields",
-              "ofType": null
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "users_avg_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
           }
         ],
         "interfaces": []
@@ -7196,6 +10780,14 @@ export default {
         "fields": [
           {
             "name": "email",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "emailVerified",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7219,6 +10811,14 @@ export default {
             "args": []
           },
           {
+            "name": "image",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "last_name",
             "type": {
               "kind": "SCALAR",
@@ -7227,7 +10827,7 @@ export default {
             "args": []
           },
           {
-            "name": "password",
+            "name": "name",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7250,6 +10850,14 @@ export default {
             "args": []
           },
           {
+            "name": "emailVerified",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "first_name",
             "type": {
               "kind": "SCALAR",
@@ -7266,6 +10874,14 @@ export default {
             "args": []
           },
           {
+            "name": "image",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "last_name",
             "type": {
               "kind": "SCALAR",
@@ -7274,7 +10890,7 @@ export default {
             "args": []
           },
           {
-            "name": "password",
+            "name": "name",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7322,10 +10938,154 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_stddev_fields",
+        "name": "verification_tokens",
         "fields": [
           {
-            "name": "id",
+            "name": "expires",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "identifier",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "token",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "verification_tokens_aggregate",
+        "fields": [
+          {
+            "name": "aggregate",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens_aggregate_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "nodes",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "verification_tokens",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "verification_tokens_aggregate_fields",
+        "fields": [
+          {
+            "name": "count",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
+            },
+            "args": [
+              {
+                "name": "columns",
+                "type": {
+                  "kind": "LIST",
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "Any"
+                    }
+                  }
+                }
+              },
+              {
+                "name": "distinct",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens_max_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "min",
+            "type": {
+              "kind": "OBJECT",
+              "name": "verification_tokens_min_fields",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "verification_tokens_max_fields",
+        "fields": [
+          {
+            "name": "expires",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "identifier",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "token",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7337,10 +11097,26 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_stddev_pop_fields",
+        "name": "verification_tokens_min_fields",
         "fields": [
           {
-            "name": "id",
+            "name": "expires",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "identifier",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "token",
             "type": {
               "kind": "SCALAR",
               "name": "Any"
@@ -7352,73 +11128,34 @@ export default {
       },
       {
         "kind": "OBJECT",
-        "name": "users_stddev_samp_fields",
+        "name": "verification_tokens_mutation_response",
         "fields": [
           {
-            "name": "id",
+            "name": "affected_rows",
             "type": {
-              "kind": "SCALAR",
-              "name": "Any"
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Any"
+              }
             },
             "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "users_sum_fields",
-        "fields": [
+          },
           {
-            "name": "id",
+            "name": "returning",
             "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "users_var_pop_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "users_var_samp_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
-            },
-            "args": []
-          }
-        ],
-        "interfaces": []
-      },
-      {
-        "kind": "OBJECT",
-        "name": "users_variance_fields",
-        "fields": [
-          {
-            "name": "id",
-            "type": {
-              "kind": "SCALAR",
-              "name": "Any"
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "LIST",
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "verification_tokens",
+                    "ofType": null
+                  }
+                }
+              }
             },
             "args": []
           }
@@ -7449,21 +11186,18 @@ export function useGetCitiesQuery(options?: Omit<Urql.UseQueryArgs<GetCitiesQuer
 export const GetFindsWithUsersDocument = gql`
     query GetFindsWithUsers {
   finds {
-    created_at
     description
     id
     location
     photo
     time
     title
-    updated_at
     user_id
     user {
       email
       first_name
       id
       last_name
-      password
     }
   }
 }
@@ -7509,21 +11243,18 @@ export function useGetLostsQuery(options?: Omit<Urql.UseQueryArgs<GetLostsQueryV
 export const GetLostsWithUsersDocument = gql`
     query GetLostsWithUsers {
   losts {
-    created_at
-    description
     id
-    location
+    title
+    description
     photo
     time
-    title
-    updated_at
+    location
     user_id
     user {
       email
       first_name
       id
       last_name
-      password
     }
   }
 }
@@ -7538,7 +11269,6 @@ export const GetUsersDocument = gql`
     first_name
     last_name
     email
-    password
   }
 }
     `;

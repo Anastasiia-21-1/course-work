@@ -6,6 +6,7 @@ import {PropsWithChildren} from "react";
 import {client} from "@/utils/client"
 import {Provider} from "urql";
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import {SessionProvider} from "next-auth/react";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -19,7 +20,9 @@ export default function RootLayout({children}: PropsWithChildren) {
         <body className={inter.className}>
         <Provider value={client}>
             <MantineProvider>
-                {children}
+                <SessionProvider>
+                    {children}
+                </SessionProvider>
             </MantineProvider>
         </Provider>
         </body>

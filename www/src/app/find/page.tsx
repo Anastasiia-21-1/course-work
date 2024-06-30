@@ -6,7 +6,7 @@ export default function FindPage() {
     const {data, fetching} = useGetFinds()
 
     if (fetching) {
-        return Loading
+        return <Loading/>
     }
 
     return (
