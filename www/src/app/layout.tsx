@@ -1,25 +1,28 @@
 'use client'
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import '@mantine/core/styles.css';
+import {Inter} from "next/font/google";
 import "./globals.css";
-import {ReactNode} from "react";
+import {PropsWithChildren} from "react";
 import {client} from "@/utils/client"
 import {Provider} from "urql";
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
+export default function RootLayout({children}: PropsWithChildren) {
+    return (
+        <html lang="en">
+        <head>
+            <title></title>
+            <ColorSchemeScript/>
+        </head>
+        <body className={inter.className}>
         <Provider value={client}>
-          {children}
+            <MantineProvider>
+                {children}
+            </MantineProvider>
         </Provider>
-      </body>
-    </html>
-  );
+        </body>
+        </html>
+    );
 }

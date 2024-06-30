@@ -1,15 +1,15 @@
-import {client} from "@/utils/client";
-import {GetUsers, GetUsersQuery, GetUsersQueryVariables} from "../../generated/graphql";
+import {Button} from "@mantine/core";
+import Link from "next/link";
 
-export default async function Home() {
-
-    const {data} = await client.query<GetUsersQuery, GetUsersQueryVariables>(GetUsers).toPromise()
-
-
+export default async function HomePage() {
     return (
         <div>
-            App
-            {JSON.stringify(data)}
+            <Button component={Link} href="/lost">
+                Знайти втрату
+            </Button>
+            <Button component={Link} href="/find">
+                Заявити про знахідку
+            </Button>
         </div>
     );
 }

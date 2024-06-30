@@ -1,1 +1,3 @@
+- "!include public_City.yaml"
+- "!include public_category.yaml"
 - "!include public_users.yaml"
