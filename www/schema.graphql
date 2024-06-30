@@ -542,6 +542,9 @@ type finds {
   time: String
   title: String!
   updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
   user_id: Int!
 }
 
@@ -591,6 +594,7 @@ input finds_bool_exp {
   time: String_comparison_exp
   title: String_comparison_exp
   updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -624,6 +628,7 @@ input finds_insert_input {
   time: String
   title: String
   updated_at: timestamptz
+  user: users_obj_rel_insert_input
   user_id: Int
 }
 
@@ -683,6 +688,7 @@ input finds_order_by {
   time: order_by
   title: order_by
   updated_at: order_by
+  user: users_order_by
   user_id: order_by
 }
 
@@ -859,6 +865,9 @@ type losts {
   time: String
   title: String!
   updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
   user_id: Int!
 }
 
@@ -908,6 +917,7 @@ input losts_bool_exp {
   time: String_comparison_exp
   title: String_comparison_exp
   updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
   user_id: Int_comparison_exp
 }
 
@@ -941,6 +951,7 @@ input losts_insert_input {
   time: String
   title: String
   updated_at: timestamptz
+  user: users_obj_rel_insert_input
   user_id: Int
 }
 
@@ -1000,6 +1011,7 @@ input losts_order_by {
   time: order_by
   title: order_by
   updated_at: order_by
+  user: users_order_by
   user_id: order_by
 }
 
@@ -2167,6 +2179,16 @@ type users_mutation_response {
 
   """data from the rows affected by the mutation"""
   returning: [users!]!
+}
+
+"""
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+
+  """upsert condition"""
+  on_conflict: users_on_conflict
 }
 
 """

@@ -493,6 +493,8 @@ export type Finds = {
   time?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['Int']['output'];
 };
 
@@ -546,6 +548,7 @@ export type Finds_Bool_Exp = {
   time?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Int_Comparison_Exp>;
 };
 
@@ -571,6 +574,7 @@ export type Finds_Insert_Input = {
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -628,6 +632,7 @@ export type Finds_Order_By = {
   time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -783,6 +788,8 @@ export type Losts = {
   time?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   updated_at: Scalars['timestamptz']['output'];
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['Int']['output'];
 };
 
@@ -836,6 +843,7 @@ export type Losts_Bool_Exp = {
   time?: InputMaybe<String_Comparison_Exp>;
   title?: InputMaybe<String_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Int_Comparison_Exp>;
 };
 
@@ -861,6 +869,7 @@ export type Losts_Insert_Input = {
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -918,6 +927,7 @@ export type Losts_Order_By = {
   time?: InputMaybe<Order_By>;
   title?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -1858,6 +1868,13 @@ export type Users_Mutation_Response = {
   returning: Array<Users>;
 };
 
+/** input type for inserting object relation for remote table "users" */
+export type Users_Obj_Rel_Insert_Input = {
+  data: Users_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Users_On_Conflict>;
+};
+
 /** on_conflict condition type for table "users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
@@ -1984,10 +2001,30 @@ export type Users_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
+export type GetCitiesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCitiesQuery = { __typename?: 'query_root', City: Array<{ __typename?: 'City', id: number, name: string }> };
+
+export type GetFindsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFindsWithUsersQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', created_at: any, description?: string | null, id: number, location?: string | null, photo?: string | null, time?: string | null, title: string, updated_at: any, user_id: number, user: { __typename?: 'users', email: string, first_name: string, id: number, last_name: string, password: string } }> };
+
 export type GetFindsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', title: string }> };
+export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', title: string, user_id: number, photo?: string | null, description?: string | null, location?: string | null }> };
+
+export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title: string, user_id: number, photo?: string | null, description?: string | null, location?: string | null }> };
+
+export type GetLostsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', created_at: any, description?: string | null, id: number, location?: string | null, photo?: string | null, time?: string | null, title: string, updated_at: any, user_id: number, user: { __typename?: 'users', email: string, first_name: string, id: number, last_name: string, password: string } }> };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1995,10 +2032,81 @@ export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', first_name: string, last_name: string, email: string, password: string }> };
 
 
+export const GetCities = gql`
+    query GetCities {
+  City {
+    id
+    name
+  }
+}
+    `;
+export const GetFindsWithUsers = gql`
+    query GetFindsWithUsers {
+  finds {
+    created_at
+    description
+    id
+    location
+    photo
+    time
+    title
+    updated_at
+    user_id
+    user {
+      email
+      first_name
+      id
+      last_name
+      password
+    }
+  }
+}
+    `;
 export const GetFinds = gql`
     query GetFinds {
   finds {
     title
+    user_id
+    photo
+    title
+    description
+    location
+    title
+  }
+}
+    `;
+export const GetLosts = gql`
+    query GetLosts {
+  losts {
+    title
+    user_id
+    photo
+    title
+    description
+    location
+    title
+  }
+}
+    `;
+export const GetLostsWithUsers = gql`
+    query GetLostsWithUsers {
+  losts {
+    created_at
+    description
+    id
+    location
+    photo
+    time
+    title
+    updated_at
+    user_id
+    user {
+      email
+      first_name
+      id
+      last_name
+      password
+    }
   }
 }
     `;
@@ -2918,6 +3026,18 @@ export default {
             "args": []
           },
           {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "users",
+                "ofType": null
+              }
+            },
+            "args": []
+          },
+          {
             "name": "user_id",
             "type": {
               "kind": "NON_NULL",
@@ -3548,6 +3668,18 @@ export default {
               "ofType": {
                 "kind": "SCALAR",
                 "name": "Any"
+              }
+            },
+            "args": []
+          },
+          {
+            "name": "user",
+            "type": {
+              "kind": "NON_NULL",
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "users",
+                "ofType": null
               }
             },
             "args": []
@@ -7302,9 +7434,53 @@ export default {
   }
 } as unknown as IntrospectionQuery;
 
+export const GetCitiesDocument = gql`
+    query GetCities {
+  City {
+    id
+    name
+  }
+}
+    `;
+
+export function useGetCitiesQuery(options?: Omit<Urql.UseQueryArgs<GetCitiesQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetCitiesQuery, GetCitiesQueryVariables>({ query: GetCitiesDocument, ...options });
+};
+export const GetFindsWithUsersDocument = gql`
+    query GetFindsWithUsers {
+  finds {
+    created_at
+    description
+    id
+    location
+    photo
+    time
+    title
+    updated_at
+    user_id
+    user {
+      email
+      first_name
+      id
+      last_name
+      password
+    }
+  }
+}
+    `;
+
+export function useGetFindsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetFindsWithUsersQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetFindsWithUsersQuery, GetFindsWithUsersQueryVariables>({ query: GetFindsWithUsersDocument, ...options });
+};
 export const GetFindsDocument = gql`
     query GetFinds {
   finds {
+    title
+    user_id
+    photo
+    title
+    description
+    location
     title
   }
 }
@@ -7312,6 +7488,49 @@ export const GetFindsDocument = gql`
 
 export function useGetFindsQuery(options?: Omit<Urql.UseQueryArgs<GetFindsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetFindsQuery, GetFindsQueryVariables>({ query: GetFindsDocument, ...options });
+};
+export const GetLostsDocument = gql`
+    query GetLosts {
+  losts {
+    title
+    user_id
+    photo
+    title
+    description
+    location
+    title
+  }
+}
+    `;
+
+export function useGetLostsQuery(options?: Omit<Urql.UseQueryArgs<GetLostsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetLostsQuery, GetLostsQueryVariables>({ query: GetLostsDocument, ...options });
+};
+export const GetLostsWithUsersDocument = gql`
+    query GetLostsWithUsers {
+  losts {
+    created_at
+    description
+    id
+    location
+    photo
+    time
+    title
+    updated_at
+    user_id
+    user {
+      email
+      first_name
+      id
+      last_name
+      password
+    }
+  }
+}
+    `;
+
+export function useGetLostsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetLostsWithUsersQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables>({ query: GetLostsWithUsersDocument, ...options });
 };
 export const GetUsersDocument = gql`
     query GetUsers {

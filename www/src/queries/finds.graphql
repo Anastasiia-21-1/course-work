@@ -1,0 +1,32 @@
+query GetFindsWithUsers {
+    finds {
+        created_at
+        description
+        id
+        location
+        photo
+        time
+        title
+        updated_at
+        user_id
+        user {
+            email
+            first_name
+            id
+            last_name
+            password
+        }
+    }
+}
+
+query GetFinds {
+    finds {
+        title
+        user_id
+        photo
+        title
+        description
+        location
+        title
+    }
+}

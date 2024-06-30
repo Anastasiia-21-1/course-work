@@ -9,7 +9,7 @@
     "lint": "next lint",
     "codegen": "graphql-codegen -r dotenv/config --config codegen.yml dotenv_config_path=./.env.local",
     "schemegen": "node generate-scheme.js",
-    "syncgraphql": "npm run codegen && npm run schemegen"
+    "syncgraphql": "npm run schemegen && npm run codegen"
   },
   "dependencies": {
     "@mantine/core": "^7.10.2",
