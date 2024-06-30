@@ -1984,12 +1984,24 @@ export type Users_Variance_Fields = {
   id?: Maybe<Scalars['Float']['output']>;
 };
 
+export type GetFindsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', title: string }> };
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', first_name: string, last_name: string, email: string, password: string }> };
 
 
+export const GetFinds = gql`
+    query GetFinds {
+  finds {
+    title
+  }
+}
+    `;
 export const GetUsers = gql`
     query GetUsers {
   users {
@@ -7290,6 +7302,17 @@ export default {
   }
 } as unknown as IntrospectionQuery;
 
+export const GetFindsDocument = gql`
+    query GetFinds {
+  finds {
+    title
+  }
+}
+    `;
+
+export function useGetFindsQuery(options?: Omit<Urql.UseQueryArgs<GetFindsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetFindsQuery, GetFindsQueryVariables>({ query: GetFindsDocument, ...options });
+};
 export const GetUsersDocument = gql`
     query GetUsers {
   users {
