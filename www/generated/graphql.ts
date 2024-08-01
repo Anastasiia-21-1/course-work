@@ -114,6 +114,13 @@ export type City_Mutation_Response = {
   returning: Array<City>;
 };
 
+/** input type for inserting object relation for remote table "City" */
+export type City_Obj_Rel_Insert_Input = {
+  data: City_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<City_On_Conflict>;
+};
+
 /** on_conflict condition type for table "City" */
 export type City_On_Conflict = {
   constraint: City_Constraint;
@@ -863,6 +870,13 @@ export type Category_Mutation_Response = {
   returning: Array<Category>;
 };
 
+/** input type for inserting object relation for remote table "category" */
+export type Category_Obj_Rel_Insert_Input = {
+  data: Category_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Category_On_Conflict>;
+};
+
 /** on_conflict condition type for table "category" */
 export type Category_On_Conflict = {
   constraint: Category_Constraint;
@@ -986,6 +1000,12 @@ export enum Cursor_Ordering {
 /** columns and relationships of "finds" */
 export type Finds = {
   __typename?: 'finds';
+  /** An object relationship */
+  City?: Maybe<City>;
+  /** An object relationship */
+  category?: Maybe<Category>;
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
   location?: Maybe<Scalars['String']['output']>;
@@ -1018,9 +1038,17 @@ export type Finds_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "finds" */
 export type Finds_Aggregate_Fields = {
   __typename?: 'finds_aggregate_fields';
+  avg?: Maybe<Finds_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Finds_Max_Fields>;
   min?: Maybe<Finds_Min_Fields>;
+  stddev?: Maybe<Finds_Stddev_Fields>;
+  stddev_pop?: Maybe<Finds_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Finds_Stddev_Samp_Fields>;
+  sum?: Maybe<Finds_Sum_Fields>;
+  var_pop?: Maybe<Finds_Var_Pop_Fields>;
+  var_samp?: Maybe<Finds_Var_Samp_Fields>;
+  variance?: Maybe<Finds_Variance_Fields>;
 };
 
 
@@ -1032,9 +1060,17 @@ export type Finds_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "finds" */
 export type Finds_Aggregate_Order_By = {
+  avg?: InputMaybe<Finds_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Finds_Max_Order_By>;
   min?: InputMaybe<Finds_Min_Order_By>;
+  stddev?: InputMaybe<Finds_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Finds_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Finds_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Finds_Sum_Order_By>;
+  var_pop?: InputMaybe<Finds_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Finds_Var_Samp_Order_By>;
+  variance?: InputMaybe<Finds_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "finds" */
@@ -1044,11 +1080,28 @@ export type Finds_Arr_Rel_Insert_Input = {
   on_conflict?: InputMaybe<Finds_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Finds_Avg_Fields = {
+  __typename?: 'finds_avg_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "finds" */
+export type Finds_Avg_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "finds". All fields are combined with a logical 'AND'. */
 export type Finds_Bool_Exp = {
+  City?: InputMaybe<City_Bool_Exp>;
   _and?: InputMaybe<Array<Finds_Bool_Exp>>;
   _not?: InputMaybe<Finds_Bool_Exp>;
   _or?: InputMaybe<Array<Finds_Bool_Exp>>;
+  category?: InputMaybe<Category_Bool_Exp>;
+  category_id?: InputMaybe<Int_Comparison_Exp>;
+  city_id?: InputMaybe<Int_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   location?: InputMaybe<String_Comparison_Exp>;
@@ -1065,8 +1118,18 @@ export enum Finds_Constraint {
   FindsPkey = 'finds_pkey'
 }
 
+/** input type for incrementing numeric columns in table "finds" */
+export type Finds_Inc_Input = {
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
 /** input type for inserting data into table "finds" */
 export type Finds_Insert_Input = {
+  City?: InputMaybe<City_Obj_Rel_Insert_Input>;
+  category?: InputMaybe<Category_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
@@ -1080,6 +1143,8 @@ export type Finds_Insert_Input = {
 /** aggregate max on columns */
 export type Finds_Max_Fields = {
   __typename?: 'finds_max_fields';
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -1091,6 +1156,8 @@ export type Finds_Max_Fields = {
 
 /** order by max() on columns of table "finds" */
 export type Finds_Max_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
@@ -1103,6 +1170,8 @@ export type Finds_Max_Order_By = {
 /** aggregate min on columns */
 export type Finds_Min_Fields = {
   __typename?: 'finds_min_fields';
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -1114,6 +1183,8 @@ export type Finds_Min_Fields = {
 
 /** order by min() on columns of table "finds" */
 export type Finds_Min_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
@@ -1141,6 +1212,10 @@ export type Finds_On_Conflict = {
 
 /** Ordering options when selecting data from "finds". */
 export type Finds_Order_By = {
+  City?: InputMaybe<City_Order_By>;
+  category?: InputMaybe<Category_Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
@@ -1159,6 +1234,10 @@ export type Finds_Pk_Columns_Input = {
 /** select columns of table "finds" */
 export enum Finds_Select_Column {
   /** column name */
+  CategoryId = 'category_id',
+  /** column name */
+  CityId = 'city_id',
+  /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
@@ -1176,6 +1255,8 @@ export enum Finds_Select_Column {
 
 /** input type for updating data in table "finds" */
 export type Finds_Set_Input = {
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
@@ -1183,6 +1264,45 @@ export type Finds_Set_Input = {
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Finds_Stddev_Fields = {
+  __typename?: 'finds_stddev_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "finds" */
+export type Finds_Stddev_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Finds_Stddev_Pop_Fields = {
+  __typename?: 'finds_stddev_pop_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "finds" */
+export type Finds_Stddev_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Finds_Stddev_Samp_Fields = {
+  __typename?: 'finds_stddev_samp_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "finds" */
+export type Finds_Stddev_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "finds" */
@@ -1195,6 +1315,8 @@ export type Finds_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Finds_Stream_Cursor_Value_Input = {
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
@@ -1204,8 +1326,25 @@ export type Finds_Stream_Cursor_Value_Input = {
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
+/** aggregate sum on columns */
+export type Finds_Sum_Fields = {
+  __typename?: 'finds_sum_fields';
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "finds" */
+export type Finds_Sum_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "finds" */
 export enum Finds_Update_Column {
+  /** column name */
+  CategoryId = 'category_id',
+  /** column name */
+  CityId = 'city_id',
   /** column name */
   Description = 'description',
   /** column name */
@@ -1223,15 +1362,62 @@ export enum Finds_Update_Column {
 }
 
 export type Finds_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Finds_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Finds_Set_Input>;
   /** filter the rows which have to be updated */
   where: Finds_Bool_Exp;
 };
 
+/** aggregate var_pop on columns */
+export type Finds_Var_Pop_Fields = {
+  __typename?: 'finds_var_pop_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "finds" */
+export type Finds_Var_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Finds_Var_Samp_Fields = {
+  __typename?: 'finds_var_samp_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "finds" */
+export type Finds_Var_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Finds_Variance_Fields = {
+  __typename?: 'finds_variance_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "finds" */
+export type Finds_Variance_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
 /** columns and relationships of "losts" */
 export type Losts = {
   __typename?: 'losts';
+  /** An object relationship */
+  City?: Maybe<City>;
+  /** An object relationship */
+  category?: Maybe<Category>;
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['uuid']['output'];
   location?: Maybe<Scalars['String']['output']>;
@@ -1264,9 +1450,17 @@ export type Losts_Aggregate_Bool_Exp_Count = {
 /** aggregate fields of "losts" */
 export type Losts_Aggregate_Fields = {
   __typename?: 'losts_aggregate_fields';
+  avg?: Maybe<Losts_Avg_Fields>;
   count: Scalars['Int']['output'];
   max?: Maybe<Losts_Max_Fields>;
   min?: Maybe<Losts_Min_Fields>;
+  stddev?: Maybe<Losts_Stddev_Fields>;
+  stddev_pop?: Maybe<Losts_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Losts_Stddev_Samp_Fields>;
+  sum?: Maybe<Losts_Sum_Fields>;
+  var_pop?: Maybe<Losts_Var_Pop_Fields>;
+  var_samp?: Maybe<Losts_Var_Samp_Fields>;
+  variance?: Maybe<Losts_Variance_Fields>;
 };
 
 
@@ -1278,9 +1472,17 @@ export type Losts_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "losts" */
 export type Losts_Aggregate_Order_By = {
+  avg?: InputMaybe<Losts_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Losts_Max_Order_By>;
   min?: InputMaybe<Losts_Min_Order_By>;
+  stddev?: InputMaybe<Losts_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Losts_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Losts_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Losts_Sum_Order_By>;
+  var_pop?: InputMaybe<Losts_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Losts_Var_Samp_Order_By>;
+  variance?: InputMaybe<Losts_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "losts" */
@@ -1290,11 +1492,28 @@ export type Losts_Arr_Rel_Insert_Input = {
   on_conflict?: InputMaybe<Losts_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Losts_Avg_Fields = {
+  __typename?: 'losts_avg_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by avg() on columns of table "losts" */
+export type Losts_Avg_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "losts". All fields are combined with a logical 'AND'. */
 export type Losts_Bool_Exp = {
+  City?: InputMaybe<City_Bool_Exp>;
   _and?: InputMaybe<Array<Losts_Bool_Exp>>;
   _not?: InputMaybe<Losts_Bool_Exp>;
   _or?: InputMaybe<Array<Losts_Bool_Exp>>;
+  category?: InputMaybe<Category_Bool_Exp>;
+  category_id?: InputMaybe<Int_Comparison_Exp>;
+  city_id?: InputMaybe<Int_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   location?: InputMaybe<String_Comparison_Exp>;
@@ -1311,8 +1530,18 @@ export enum Losts_Constraint {
   LostsPkey = 'losts_pkey'
 }
 
+/** input type for incrementing numeric columns in table "losts" */
+export type Losts_Inc_Input = {
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
+};
+
 /** input type for inserting data into table "losts" */
 export type Losts_Insert_Input = {
+  City?: InputMaybe<City_Obj_Rel_Insert_Input>;
+  category?: InputMaybe<Category_Obj_Rel_Insert_Input>;
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
@@ -1326,6 +1555,8 @@ export type Losts_Insert_Input = {
 /** aggregate max on columns */
 export type Losts_Max_Fields = {
   __typename?: 'losts_max_fields';
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -1337,6 +1568,8 @@ export type Losts_Max_Fields = {
 
 /** order by max() on columns of table "losts" */
 export type Losts_Max_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
@@ -1349,6 +1582,8 @@ export type Losts_Max_Order_By = {
 /** aggregate min on columns */
 export type Losts_Min_Fields = {
   __typename?: 'losts_min_fields';
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
   location?: Maybe<Scalars['String']['output']>;
@@ -1360,6 +1595,8 @@ export type Losts_Min_Fields = {
 
 /** order by min() on columns of table "losts" */
 export type Losts_Min_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
@@ -1387,6 +1624,10 @@ export type Losts_On_Conflict = {
 
 /** Ordering options when selecting data from "losts". */
 export type Losts_Order_By = {
+  City?: InputMaybe<City_Order_By>;
+  category?: InputMaybe<Category_Order_By>;
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   location?: InputMaybe<Order_By>;
@@ -1405,6 +1646,10 @@ export type Losts_Pk_Columns_Input = {
 /** select columns of table "losts" */
 export enum Losts_Select_Column {
   /** column name */
+  CategoryId = 'category_id',
+  /** column name */
+  CityId = 'city_id',
+  /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
@@ -1422,6 +1667,8 @@ export enum Losts_Select_Column {
 
 /** input type for updating data in table "losts" */
 export type Losts_Set_Input = {
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
@@ -1429,6 +1676,45 @@ export type Losts_Set_Input = {
   time?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
   user_id?: InputMaybe<Scalars['uuid']['input']>;
+};
+
+/** aggregate stddev on columns */
+export type Losts_Stddev_Fields = {
+  __typename?: 'losts_stddev_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev() on columns of table "losts" */
+export type Losts_Stddev_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Losts_Stddev_Pop_Fields = {
+  __typename?: 'losts_stddev_pop_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_pop() on columns of table "losts" */
+export type Losts_Stddev_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Losts_Stddev_Samp_Fields = {
+  __typename?: 'losts_stddev_samp_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by stddev_samp() on columns of table "losts" */
+export type Losts_Stddev_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
 };
 
 /** Streaming cursor of the table "losts" */
@@ -1441,6 +1727,8 @@ export type Losts_Stream_Cursor_Input = {
 
 /** Initial value of the column from where the streaming should start */
 export type Losts_Stream_Cursor_Value_Input = {
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
   location?: InputMaybe<Scalars['String']['input']>;
@@ -1450,8 +1738,25 @@ export type Losts_Stream_Cursor_Value_Input = {
   user_id?: InputMaybe<Scalars['uuid']['input']>;
 };
 
+/** aggregate sum on columns */
+export type Losts_Sum_Fields = {
+  __typename?: 'losts_sum_fields';
+  category_id?: Maybe<Scalars['Int']['output']>;
+  city_id?: Maybe<Scalars['Int']['output']>;
+};
+
+/** order by sum() on columns of table "losts" */
+export type Losts_Sum_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "losts" */
 export enum Losts_Update_Column {
+  /** column name */
+  CategoryId = 'category_id',
+  /** column name */
+  CityId = 'city_id',
   /** column name */
   Description = 'description',
   /** column name */
@@ -1469,10 +1774,51 @@ export enum Losts_Update_Column {
 }
 
 export type Losts_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Losts_Inc_Input>;
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<Losts_Set_Input>;
   /** filter the rows which have to be updated */
   where: Losts_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type Losts_Var_Pop_Fields = {
+  __typename?: 'losts_var_pop_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_pop() on columns of table "losts" */
+export type Losts_Var_Pop_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Losts_Var_Samp_Fields = {
+  __typename?: 'losts_var_samp_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by var_samp() on columns of table "losts" */
+export type Losts_Var_Samp_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Losts_Variance_Fields = {
+  __typename?: 'losts_variance_fields';
+  category_id?: Maybe<Scalars['Float']['output']>;
+  city_id?: Maybe<Scalars['Float']['output']>;
+};
+
+/** order by variance() on columns of table "losts" */
+export type Losts_Variance_Order_By = {
+  category_id?: InputMaybe<Order_By>;
+  city_id?: InputMaybe<Order_By>;
 };
 
 /** mutation root */
@@ -1869,6 +2215,7 @@ export type Mutation_RootUpdate_Category_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_FindsArgs = {
+  _inc?: InputMaybe<Finds_Inc_Input>;
   _set?: InputMaybe<Finds_Set_Input>;
   where: Finds_Bool_Exp;
 };
@@ -1876,6 +2223,7 @@ export type Mutation_RootUpdate_FindsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Finds_By_PkArgs = {
+  _inc?: InputMaybe<Finds_Inc_Input>;
   _set?: InputMaybe<Finds_Set_Input>;
   pk_columns: Finds_Pk_Columns_Input;
 };
@@ -1889,6 +2237,7 @@ export type Mutation_RootUpdate_Finds_ManyArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_LostsArgs = {
+  _inc?: InputMaybe<Losts_Inc_Input>;
   _set?: InputMaybe<Losts_Set_Input>;
   where: Losts_Bool_Exp;
 };
@@ -1896,6 +2245,7 @@ export type Mutation_RootUpdate_LostsArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Losts_By_PkArgs = {
+  _inc?: InputMaybe<Losts_Inc_Input>;
   _set?: InputMaybe<Losts_Set_Input>;
   pk_columns: Losts_Pk_Columns_Input;
 };
@@ -3212,6 +3562,19 @@ export type Verification_Tokens_Updates = {
   where: Verification_Tokens_Bool_Exp;
 };
 
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCategoriesQuery = { __typename?: 'query_root', category: Array<{ __typename?: 'category', id: number, name: string, icon?: string | null }> };
+
+export type AddCategoryMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  icon?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type AddCategoryMutation = { __typename?: 'mutation_root', insert_category_one?: { __typename?: 'category', icon?: string | null, name: string } | null };
+
 export type GetCitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3220,12 +3583,25 @@ export type GetCitiesQuery = { __typename?: 'query_root', City: Array<{ __typena
 export type GetFindsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFindsWithUsersQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', description?: string | null, id: any, location?: string | null, photo?: string | null, time?: string | null, title?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
+export type GetFindsWithUsersQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', id: any, description?: string | null, location?: string | null, photo?: string | null, time?: string | null, title?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
 
 export type GetFindsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null }> };
+export type GetFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, time?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+
+export type AddFindMutationVariables = Exact<{
+  title: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  photo?: InputMaybe<Scalars['String']['input']>;
+  time?: InputMaybe<Scalars['String']['input']>;
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type AddFindMutation = { __typename?: 'mutation_root', insert_finds_one?: { __typename?: 'finds', title?: string | null, description?: string | null, location?: string | null, photo?: string | null, time?: string | null, category_id?: number | null, city_id?: number | null } | null };
 
 export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3237,12 +3613,42 @@ export type GetLostsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, description?: string | null, photo?: string | null, time?: string | null, location?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
 
+export type AddLostMutationVariables = Exact<{
+  title: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  location?: InputMaybe<Scalars['String']['input']>;
+  photo?: InputMaybe<Scalars['String']['input']>;
+  time?: InputMaybe<Scalars['String']['input']>;
+  category_id?: InputMaybe<Scalars['Int']['input']>;
+  city_id?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type AddLostMutation = { __typename?: 'mutation_root', insert_losts_one?: { __typename?: 'losts', title?: string | null, description?: string | null, location?: string | null, photo?: string | null, time?: string | null, category_id?: number | null, city_id?: number | null } | null };
+
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', first_name: string, last_name: string, email: string }> };
 
 
+export const GetCategories = gql`
+    query GetCategories {
+  category {
+    id
+    name
+    icon
+  }
+}
+    `;
+export const AddCategory = gql`
+    mutation AddCategory($name: String!, $icon: String) {
+  insert_category_one(object: {name: $name, icon: $icon}) {
+    icon
+    name
+  }
+}
+    `;
 export const GetCities = gql`
     query GetCities {
   City {
@@ -3254,8 +3660,8 @@ export const GetCities = gql`
 export const GetFindsWithUsers = gql`
     query GetFindsWithUsers {
   finds {
-    description
     id
+    description
     location
     photo
     time
@@ -3273,13 +3679,33 @@ export const GetFindsWithUsers = gql`
 export const GetFinds = gql`
     query GetFinds {
   finds {
+    id
     title
     user_id
     photo
     title
     description
     location
+    time
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+export const AddFind = gql`
+    mutation AddFind($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {
+  insert_finds_one(
+    object: {title: $title, description: $description, location: $location, photo: $photo, time: $time, category_id: $category_id, city_id: $city_id}
+  ) {
     title
+    description
+    location
+    photo
+    time
+    category_id
+    city_id
   }
 }
     `;
@@ -3312,6 +3738,21 @@ export const GetLostsWithUsers = gql`
       id
       last_name
     }
+  }
+}
+    `;
+export const AddLost = gql`
+    mutation AddLost($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {
+  insert_losts_one(
+    object: {title: $title, description: $description, location: $location, photo: $photo, time: $time, category_id: $category_id, city_id: $city_id}
+  ) {
+    title
+    description
+    location
+    photo
+    time
+    category_id
+    city_id
   }
 }
     `;
@@ -4945,6 +5386,40 @@ export default {
         "name": "finds",
         "fields": [
           {
+            "name": "City",
+            "type": {
+              "kind": "OBJECT",
+              "name": "City",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "category",
+            "type": {
+              "kind": "OBJECT",
+              "name": "category",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
             "name": "description",
             "type": {
               "kind": "SCALAR",
@@ -5054,6 +5529,15 @@ export default {
         "name": "finds_aggregate_fields",
         "fields": [
           {
+            "name": "avg",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_avg_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
             "name": "count",
             "type": {
               "kind": "NON_NULL",
@@ -5102,6 +5586,92 @@ export default {
               "ofType": null
             },
             "args": []
+          },
+          {
+            "name": "stddev",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_stddev_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_stddev_pop_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_stddev_samp_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "sum",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_sum_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "var_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_var_pop_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "var_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_var_samp_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "variance",
+            "type": {
+              "kind": "OBJECT",
+              "name": "finds_variance_fields",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_avg_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -5110,6 +5680,22 @@ export default {
         "kind": "OBJECT",
         "name": "finds_max_fields",
         "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
           {
             "name": "description",
             "type": {
@@ -5173,6 +5759,22 @@ export default {
         "kind": "OBJECT",
         "name": "finds_min_fields",
         "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
           {
             "name": "description",
             "type": {
@@ -5270,8 +5872,203 @@ export default {
       },
       {
         "kind": "OBJECT",
+        "name": "finds_stddev_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_stddev_pop_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_stddev_samp_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_sum_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_var_pop_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_var_samp_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "finds_variance_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
         "name": "losts",
         "fields": [
+          {
+            "name": "City",
+            "type": {
+              "kind": "OBJECT",
+              "name": "City",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "category",
+            "type": {
+              "kind": "OBJECT",
+              "name": "category",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
           {
             "name": "description",
             "type": {
@@ -5382,6 +6179,15 @@ export default {
         "name": "losts_aggregate_fields",
         "fields": [
           {
+            "name": "avg",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_avg_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
             "name": "count",
             "type": {
               "kind": "NON_NULL",
@@ -5430,6 +6236,92 @@ export default {
               "ofType": null
             },
             "args": []
+          },
+          {
+            "name": "stddev",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_stddev_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_stddev_pop_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "stddev_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_stddev_samp_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "sum",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_sum_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "var_pop",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_var_pop_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "var_samp",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_var_samp_fields",
+              "ofType": null
+            },
+            "args": []
+          },
+          {
+            "name": "variance",
+            "type": {
+              "kind": "OBJECT",
+              "name": "losts_variance_fields",
+              "ofType": null
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_avg_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
           }
         ],
         "interfaces": []
@@ -5438,6 +6330,22 @@ export default {
         "kind": "OBJECT",
         "name": "losts_max_fields",
         "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
           {
             "name": "description",
             "type": {
@@ -5501,6 +6409,22 @@ export default {
         "kind": "OBJECT",
         "name": "losts_min_fields",
         "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
           {
             "name": "description",
             "type": {
@@ -5590,6 +6514,167 @@ export default {
                   }
                 }
               }
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_stddev_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_stddev_pop_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_stddev_samp_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_sum_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_var_pop_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_var_samp_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          }
+        ],
+        "interfaces": []
+      },
+      {
+        "kind": "OBJECT",
+        "name": "losts_variance_fields",
+        "fields": [
+          {
+            "name": "category_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
+            },
+            "args": []
+          },
+          {
+            "name": "city_id",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Any"
             },
             "args": []
           }
@@ -6700,6 +7785,13 @@ export default {
             },
             "args": [
               {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
                 "name": "_set",
                 "type": {
                   "kind": "SCALAR",
@@ -6726,6 +7818,13 @@ export default {
               "ofType": null
             },
             "args": [
+              {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
               {
                 "name": "_set",
                 "type": {
@@ -6783,6 +7882,13 @@ export default {
             },
             "args": [
               {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
+              {
                 "name": "_set",
                 "type": {
                   "kind": "SCALAR",
@@ -6809,6 +7915,13 @@ export default {
               "ofType": null
             },
             "args": [
+              {
+                "name": "_inc",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Any"
+                }
+              },
               {
                 "name": "_set",
                 "type": {
@@ -11171,6 +12284,31 @@ export default {
   }
 } as unknown as IntrospectionQuery;
 
+export const GetCategoriesDocument = gql`
+    query GetCategories {
+  category {
+    id
+    name
+    icon
+  }
+}
+    `;
+
+export function useGetCategoriesQuery(options?: Omit<Urql.UseQueryArgs<GetCategoriesQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetCategoriesQuery, GetCategoriesQueryVariables>({ query: GetCategoriesDocument, ...options });
+};
+export const AddCategoryDocument = gql`
+    mutation AddCategory($name: String!, $icon: String) {
+  insert_category_one(object: {name: $name, icon: $icon}) {
+    icon
+    name
+  }
+}
+    `;
+
+export function useAddCategoryMutation() {
+  return Urql.useMutation<AddCategoryMutation, AddCategoryMutationVariables>(AddCategoryDocument);
+};
 export const GetCitiesDocument = gql`
     query GetCities {
   City {
@@ -11186,8 +12324,8 @@ export function useGetCitiesQuery(options?: Omit<Urql.UseQueryArgs<GetCitiesQuer
 export const GetFindsWithUsersDocument = gql`
     query GetFindsWithUsers {
   finds {
-    description
     id
+    description
     location
     photo
     time
@@ -11209,19 +12347,43 @@ export function useGetFindsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetFi
 export const GetFindsDocument = gql`
     query GetFinds {
   finds {
+    id
     title
     user_id
     photo
     title
     description
     location
-    title
+    time
+    City {
+      id
+      name
+    }
   }
 }
     `;
 
 export function useGetFindsQuery(options?: Omit<Urql.UseQueryArgs<GetFindsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetFindsQuery, GetFindsQueryVariables>({ query: GetFindsDocument, ...options });
+};
+export const AddFindDocument = gql`
+    mutation AddFind($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {
+  insert_finds_one(
+    object: {title: $title, description: $description, location: $location, photo: $photo, time: $time, category_id: $category_id, city_id: $city_id}
+  ) {
+    title
+    description
+    location
+    photo
+    time
+    category_id
+    city_id
+  }
+}
+    `;
+
+export function useAddFindMutation() {
+  return Urql.useMutation<AddFindMutation, AddFindMutationVariables>(AddFindDocument);
 };
 export const GetLostsDocument = gql`
     query GetLosts {
@@ -11262,6 +12424,25 @@ export const GetLostsWithUsersDocument = gql`
 
 export function useGetLostsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetLostsWithUsersQueryVariables>, 'query'>) {
   return Urql.useQuery<GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables>({ query: GetLostsWithUsersDocument, ...options });
+};
+export const AddLostDocument = gql`
+    mutation AddLost($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {
+  insert_losts_one(
+    object: {title: $title, description: $description, location: $location, photo: $photo, time: $time, category_id: $category_id, city_id: $city_id}
+  ) {
+    title
+    description
+    location
+    photo
+    time
+    category_id
+    city_id
+  }
+}
+    `;
+
+export function useAddLostMutation() {
+  return Urql.useMutation<AddLostMutation, AddLostMutationVariables>(AddLostDocument);
 };
 export const GetUsersDocument = gql`
     query GetUsers {

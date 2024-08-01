@@ -114,6 +114,16 @@ type City_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "City"
+"""
+input City_obj_rel_insert_input {
+  data: City_insert_input!
+
+  """upsert condition"""
+  on_conflict: City_on_conflict
+}
+
+"""
 on_conflict condition type for table "City"
 """
 input City_on_conflict {
@@ -968,6 +978,16 @@ type category_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "category"
+"""
+input category_obj_rel_insert_input {
+  data: category_insert_input!
+
+  """upsert condition"""
+  on_conflict: category_on_conflict
+}
+
+"""
 on_conflict condition type for table "category"
 """
 input category_on_conflict {
@@ -1102,6 +1122,13 @@ enum cursor_ordering {
 columns and relationships of "finds"
 """
 type finds {
+  """An object relationship"""
+  City: City
+
+  """An object relationship"""
+  category: category
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid!
   location: String
@@ -1137,18 +1164,34 @@ input finds_aggregate_bool_exp_count {
 aggregate fields of "finds"
 """
 type finds_aggregate_fields {
+  avg: finds_avg_fields
   count(columns: [finds_select_column!], distinct: Boolean): Int!
   max: finds_max_fields
   min: finds_min_fields
+  stddev: finds_stddev_fields
+  stddev_pop: finds_stddev_pop_fields
+  stddev_samp: finds_stddev_samp_fields
+  sum: finds_sum_fields
+  var_pop: finds_var_pop_fields
+  var_samp: finds_var_samp_fields
+  variance: finds_variance_fields
 }
 
 """
 order by aggregate values of table "finds"
 """
 input finds_aggregate_order_by {
+  avg: finds_avg_order_by
   count: order_by
   max: finds_max_order_by
   min: finds_min_order_by
+  stddev: finds_stddev_order_by
+  stddev_pop: finds_stddev_pop_order_by
+  stddev_samp: finds_stddev_samp_order_by
+  sum: finds_sum_order_by
+  var_pop: finds_var_pop_order_by
+  var_samp: finds_var_samp_order_by
+  variance: finds_variance_order_by
 }
 
 """
@@ -1161,13 +1204,31 @@ input finds_arr_rel_insert_input {
   on_conflict: finds_on_conflict
 }
 
+"""aggregate avg on columns"""
+type finds_avg_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by avg() on columns of table "finds"
+"""
+input finds_avg_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
 """
 Boolean expression to filter rows from the table "finds". All fields are combined with a logical 'AND'.
 """
 input finds_bool_exp {
+  City: City_bool_exp
   _and: [finds_bool_exp!]
   _not: finds_bool_exp
   _or: [finds_bool_exp!]
+  category: category_bool_exp
+  category_id: Int_comparison_exp
+  city_id: Int_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
   location: String_comparison_exp
@@ -1189,9 +1250,21 @@ enum finds_constraint {
 }
 
 """
+input type for incrementing numeric columns in table "finds"
+"""
+input finds_inc_input {
+  category_id: Int
+  city_id: Int
+}
+
+"""
 input type for inserting data into table "finds"
 """
 input finds_insert_input {
+  City: City_obj_rel_insert_input
+  category: category_obj_rel_insert_input
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1204,6 +1277,8 @@ input finds_insert_input {
 
 """aggregate max on columns"""
 type finds_max_fields {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1217,6 +1292,8 @@ type finds_max_fields {
 order by max() on columns of table "finds"
 """
 input finds_max_order_by {
+  category_id: order_by
+  city_id: order_by
   description: order_by
   id: order_by
   location: order_by
@@ -1228,6 +1305,8 @@ input finds_max_order_by {
 
 """aggregate min on columns"""
 type finds_min_fields {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1241,6 +1320,8 @@ type finds_min_fields {
 order by min() on columns of table "finds"
 """
 input finds_min_order_by {
+  category_id: order_by
+  city_id: order_by
   description: order_by
   id: order_by
   location: order_by
@@ -1272,6 +1353,10 @@ input finds_on_conflict {
 
 """Ordering options when selecting data from "finds"."""
 input finds_order_by {
+  City: City_order_by
+  category: category_order_by
+  category_id: order_by
+  city_id: order_by
   description: order_by
   id: order_by
   location: order_by
@@ -1291,6 +1376,12 @@ input finds_pk_columns_input {
 select columns of table "finds"
 """
 enum finds_select_column {
+  """column name"""
+  category_id
+
+  """column name"""
+  city_id
+
   """column name"""
   description
 
@@ -1317,6 +1408,8 @@ enum finds_select_column {
 input type for updating data in table "finds"
 """
 input finds_set_input {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1324,6 +1417,48 @@ input finds_set_input {
   time: String
   title: String
   user_id: uuid
+}
+
+"""aggregate stddev on columns"""
+type finds_stddev_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by stddev() on columns of table "finds"
+"""
+input finds_stddev_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type finds_stddev_pop_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "finds"
+"""
+input finds_stddev_pop_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type finds_stddev_samp_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "finds"
+"""
+input finds_stddev_samp_order_by {
+  category_id: order_by
+  city_id: order_by
 }
 
 """
@@ -1339,6 +1474,8 @@ input finds_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input finds_stream_cursor_value_input {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1348,10 +1485,30 @@ input finds_stream_cursor_value_input {
   user_id: uuid
 }
 
+"""aggregate sum on columns"""
+type finds_sum_fields {
+  category_id: Int
+  city_id: Int
+}
+
+"""
+order by sum() on columns of table "finds"
+"""
+input finds_sum_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
 """
 update columns of table "finds"
 """
 enum finds_update_column {
+  """column name"""
+  category_id
+
+  """column name"""
+  city_id
+
   """column name"""
   description
 
@@ -1375,6 +1532,9 @@ enum finds_update_column {
 }
 
 input finds_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: finds_inc_input
+
   """sets the columns of the filtered rows to the given values"""
   _set: finds_set_input
 
@@ -1382,10 +1542,59 @@ input finds_updates {
   where: finds_bool_exp!
 }
 
+"""aggregate var_pop on columns"""
+type finds_var_pop_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by var_pop() on columns of table "finds"
+"""
+input finds_var_pop_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type finds_var_samp_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by var_samp() on columns of table "finds"
+"""
+input finds_var_samp_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate variance on columns"""
+type finds_variance_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by variance() on columns of table "finds"
+"""
+input finds_variance_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
 """
 columns and relationships of "losts"
 """
 type losts {
+  """An object relationship"""
+  City: City
+
+  """An object relationship"""
+  category: category
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid!
   location: String
@@ -1421,18 +1630,34 @@ input losts_aggregate_bool_exp_count {
 aggregate fields of "losts"
 """
 type losts_aggregate_fields {
+  avg: losts_avg_fields
   count(columns: [losts_select_column!], distinct: Boolean): Int!
   max: losts_max_fields
   min: losts_min_fields
+  stddev: losts_stddev_fields
+  stddev_pop: losts_stddev_pop_fields
+  stddev_samp: losts_stddev_samp_fields
+  sum: losts_sum_fields
+  var_pop: losts_var_pop_fields
+  var_samp: losts_var_samp_fields
+  variance: losts_variance_fields
 }
 
 """
 order by aggregate values of table "losts"
 """
 input losts_aggregate_order_by {
+  avg: losts_avg_order_by
   count: order_by
   max: losts_max_order_by
   min: losts_min_order_by
+  stddev: losts_stddev_order_by
+  stddev_pop: losts_stddev_pop_order_by
+  stddev_samp: losts_stddev_samp_order_by
+  sum: losts_sum_order_by
+  var_pop: losts_var_pop_order_by
+  var_samp: losts_var_samp_order_by
+  variance: losts_variance_order_by
 }
 
 """
@@ -1445,13 +1670,31 @@ input losts_arr_rel_insert_input {
   on_conflict: losts_on_conflict
 }
 
+"""aggregate avg on columns"""
+type losts_avg_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by avg() on columns of table "losts"
+"""
+input losts_avg_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
 """
 Boolean expression to filter rows from the table "losts". All fields are combined with a logical 'AND'.
 """
 input losts_bool_exp {
+  City: City_bool_exp
   _and: [losts_bool_exp!]
   _not: losts_bool_exp
   _or: [losts_bool_exp!]
+  category: category_bool_exp
+  category_id: Int_comparison_exp
+  city_id: Int_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
   location: String_comparison_exp
@@ -1473,9 +1716,21 @@ enum losts_constraint {
 }
 
 """
+input type for incrementing numeric columns in table "losts"
+"""
+input losts_inc_input {
+  category_id: Int
+  city_id: Int
+}
+
+"""
 input type for inserting data into table "losts"
 """
 input losts_insert_input {
+  City: City_obj_rel_insert_input
+  category: category_obj_rel_insert_input
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1488,6 +1743,8 @@ input losts_insert_input {
 
 """aggregate max on columns"""
 type losts_max_fields {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1501,6 +1758,8 @@ type losts_max_fields {
 order by max() on columns of table "losts"
 """
 input losts_max_order_by {
+  category_id: order_by
+  city_id: order_by
   description: order_by
   id: order_by
   location: order_by
@@ -1512,6 +1771,8 @@ input losts_max_order_by {
 
 """aggregate min on columns"""
 type losts_min_fields {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1525,6 +1786,8 @@ type losts_min_fields {
 order by min() on columns of table "losts"
 """
 input losts_min_order_by {
+  category_id: order_by
+  city_id: order_by
   description: order_by
   id: order_by
   location: order_by
@@ -1556,6 +1819,10 @@ input losts_on_conflict {
 
 """Ordering options when selecting data from "losts"."""
 input losts_order_by {
+  City: City_order_by
+  category: category_order_by
+  category_id: order_by
+  city_id: order_by
   description: order_by
   id: order_by
   location: order_by
@@ -1575,6 +1842,12 @@ input losts_pk_columns_input {
 select columns of table "losts"
 """
 enum losts_select_column {
+  """column name"""
+  category_id
+
+  """column name"""
+  city_id
+
   """column name"""
   description
 
@@ -1601,6 +1874,8 @@ enum losts_select_column {
 input type for updating data in table "losts"
 """
 input losts_set_input {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1608,6 +1883,48 @@ input losts_set_input {
   time: String
   title: String
   user_id: uuid
+}
+
+"""aggregate stddev on columns"""
+type losts_stddev_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by stddev() on columns of table "losts"
+"""
+input losts_stddev_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type losts_stddev_pop_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "losts"
+"""
+input losts_stddev_pop_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type losts_stddev_samp_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "losts"
+"""
+input losts_stddev_samp_order_by {
+  category_id: order_by
+  city_id: order_by
 }
 
 """
@@ -1623,6 +1940,8 @@ input losts_stream_cursor_input {
 
 """Initial value of the column from where the streaming should start"""
 input losts_stream_cursor_value_input {
+  category_id: Int
+  city_id: Int
   description: String
   id: uuid
   location: String
@@ -1632,10 +1951,30 @@ input losts_stream_cursor_value_input {
   user_id: uuid
 }
 
+"""aggregate sum on columns"""
+type losts_sum_fields {
+  category_id: Int
+  city_id: Int
+}
+
+"""
+order by sum() on columns of table "losts"
+"""
+input losts_sum_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
 """
 update columns of table "losts"
 """
 enum losts_update_column {
+  """column name"""
+  category_id
+
+  """column name"""
+  city_id
+
   """column name"""
   description
 
@@ -1659,11 +1998,56 @@ enum losts_update_column {
 }
 
 input losts_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: losts_inc_input
+
   """sets the columns of the filtered rows to the given values"""
   _set: losts_set_input
 
   """filter the rows which have to be updated"""
   where: losts_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type losts_var_pop_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by var_pop() on columns of table "losts"
+"""
+input losts_var_pop_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type losts_var_samp_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by var_samp() on columns of table "losts"
+"""
+input losts_var_samp_order_by {
+  category_id: order_by
+  city_id: order_by
+}
+
+"""aggregate variance on columns"""
+type losts_variance_fields {
+  category_id: Float
+  city_id: Float
+}
+
+"""
+order by variance() on columns of table "losts"
+"""
+input losts_variance_order_by {
+  category_id: order_by
+  city_id: order_by
 }
 
 """mutation root"""
@@ -2054,6 +2438,9 @@ type mutation_root {
   update data of the table: "finds"
   """
   update_finds(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: finds_inc_input
+
     """sets the columns of the filtered rows to the given values"""
     _set: finds_set_input
 
@@ -2065,6 +2452,9 @@ type mutation_root {
   update single row of the table: "finds"
   """
   update_finds_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: finds_inc_input
+
     """sets the columns of the filtered rows to the given values"""
     _set: finds_set_input
     pk_columns: finds_pk_columns_input!
@@ -2082,6 +2472,9 @@ type mutation_root {
   update data of the table: "losts"
   """
   update_losts(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: losts_inc_input
+
     """sets the columns of the filtered rows to the given values"""
     _set: losts_set_input
 
@@ -2093,6 +2486,9 @@ type mutation_root {
   update single row of the table: "losts"
   """
   update_losts_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: losts_inc_input
+
     """sets the columns of the filtered rows to the given values"""
     _set: losts_set_input
     pk_columns: losts_pk_columns_input!

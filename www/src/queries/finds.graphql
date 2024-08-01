@@ -1,7 +1,7 @@
 query GetFindsWithUsers {
     finds {
-        description
         id
+        description
         location
         photo
         time
@@ -18,12 +18,29 @@ query GetFindsWithUsers {
 
 query GetFinds {
     finds {
+        id
         title
         user_id
         photo
         title
         description
         location
+        time
+        City {
+            id
+            name
+        }
+    }
+}
+
+mutation AddFind($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {
+    insert_finds_one(object: {title: $title, description: $description, location: $location, photo: $photo, time: $time, category_id: $category_id, city_id: $city_id}) {
         title
+        description
+        location
+        photo
+        time
+        category_id
+        city_id
     }
 }

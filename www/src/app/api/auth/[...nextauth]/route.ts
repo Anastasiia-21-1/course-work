@@ -5,10 +5,7 @@ import {JWT} from "next-auth/jwt";
 import {HasuraAdapter} from "next-auth-hasura-adapter";
 import * as jsonwebtoken from "jsonwebtoken";
 
-// For more information on each option (and a full list of options) go to
-// https://next-auth.js.org/configuration/options
 export const authOptions: NextAuthOptions = {
-    // https://next-auth.js.org/configuration/providers/oauth
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_CLIENT_ID!,

@@ -1,7 +1,7 @@
 'use client'
 import '@mantine/core/styles.css';
 import {Inter} from "next/font/google";
-import "./globals.css";
+import "@/style/globals.css";
 import {PropsWithChildren} from "react";
 import {client} from "@/utils/client"
 import {Provider} from "urql";

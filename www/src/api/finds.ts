@@ -1,8 +1,14 @@
-import {useQuery} from "urql";
+import {useMutation, useQuery} from "urql";
 import {
+    AddFind,
+    AddFindMutation,
+    AddFindMutationVariables,
     GetFinds,
     GetFindsQuery,
-    GetFindsQueryVariables, GetFindsWithUsers, GetFindsWithUsersQuery, GetFindsWithUsersQueryVariables,
+    GetFindsQueryVariables,
+    GetFindsWithUsers,
+    GetFindsWithUsersQuery,
+    GetFindsWithUsersQueryVariables,
 } from "../../generated/graphql";
 
 export function useGetFinds() {
@@ -19,4 +25,10 @@ export function useGetFindsWithUsers() {
     })
 
     return result
+}
+
+export function useInsertFind() {
+    const [, mutate] = useMutation<AddFindMutation, AddFindMutationVariables>(AddFind)
+
+    return mutate
 }

@@ -1,6 +1,6 @@
 'use client'
 import {useGetFinds} from "@/api/finds";
-import {Loading} from "@/compents/Loading";
+import {Loading} from "@/components/Loading";
 
 export default function FindPage() {
     const {data, fetching} = useGetFinds()

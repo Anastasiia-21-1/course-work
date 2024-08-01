@@ -27,3 +27,15 @@ query GetLostsWithUsers {
         }
     }
 }
+
+mutation AddLost($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {
+    insert_losts_one(object: {title: $title, description: $description, location: $location, photo: $photo, time: $time, category_id: $category_id, city_id: $city_id}) {
+        title
+        description
+        location
+        photo
+        time
+        category_id
+        city_id
+    }
+}

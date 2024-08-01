@@ -1,5 +1,8 @@
-import {useQuery} from "urql";
+import {useMutation, useQuery} from "urql";
 import {
+    AddLost,
+    AddLostMutation,
+    AddLostMutationVariables,
     GetLosts,
     GetLostsQuery,
     GetLostsQueryVariables, GetLostsWithUsers, GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables,
@@ -19,4 +22,10 @@ export function useGetLostsWithUsers() {
     })
 
     return result
+}
+
+export function useInsertLost() {
+    const [, mutate] = useMutation<AddLostMutation, AddLostMutationVariables>(AddLost)
+
+    return mutate
 }
