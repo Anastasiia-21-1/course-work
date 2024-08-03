@@ -3610,15 +3610,22 @@ export type AddFindMutationVariables = Exact<{
 
 export type AddFindMutation = { __typename?: 'mutation_root', insert_finds_one?: { __typename?: 'finds', title?: string | null, description?: string | null, location?: string | null, photo?: string | null, time?: string | null, category_id?: number | null, city_id?: number | null } | null };
 
-export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null }> };
-
 export type GetLostsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, description?: string | null, photo?: string | null, time?: string | null, location?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
+
+export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+
+export type GetUserLostsQueryVariables = Exact<{
+  userId: Scalars['uuid']['input'];
+}>;
+
+
+export type GetUserLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, time?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
 
 export type AddLostMutationVariables = Exact<{
   title: Scalars['String']['input'];
@@ -3733,19 +3740,6 @@ export const AddFind = gql`
   }
 }
     `;
-export const GetLosts = gql`
-    query GetLosts {
-  losts {
-    title
-    user_id
-    photo
-    title
-    description
-    location
-    title
-  }
-}
-    `;
 export const GetLostsWithUsers = gql`
     query GetLostsWithUsers {
   losts {
@@ -3761,6 +3755,40 @@ export const GetLostsWithUsers = gql`
       first_name
       id
       last_name
+    }
+  }
+}
+    `;
+export const GetLosts = gql`
+    query GetLosts {
+  losts {
+    title
+    user_id
+    photo
+    title
+    description
+    location
+    title
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+export const GetUserLosts = gql`
+    query GetUserLosts($userId: uuid!) {
+  losts(where: {user_id: {_eq: $userId}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
     }
   }
 }
@@ -12430,23 +12458,6 @@ export const AddFindDocument = gql`
 export function useAddFindMutation() {
   return Urql.useMutation<AddFindMutation, AddFindMutationVariables>(AddFindDocument);
 };
-export const GetLostsDocument = gql`
-    query GetLosts {
-  losts {
-    title
-    user_id
-    photo
-    title
-    description
-    location
-    title
-  }
-}
-    `;
-
-export function useGetLostsQuery(options?: Omit<Urql.UseQueryArgs<GetLostsQueryVariables>, 'query'>) {
-  return Urql.useQuery<GetLostsQuery, GetLostsQueryVariables>({ query: GetLostsDocument, ...options });
-};
 export const GetLostsWithUsersDocument = gql`
     query GetLostsWithUsers {
   losts {
@@ -12469,6 +12480,48 @@ export const GetLostsWithUsersDocument = gql`
 
 export function useGetLostsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetLostsWithUsersQueryVariables>, 'query'>) {
   return Urql.useQuery<GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables>({ query: GetLostsWithUsersDocument, ...options });
+};
+export const GetLostsDocument = gql`
+    query GetLosts {
+  losts {
+    title
+    user_id
+    photo
+    title
+    description
+    location
+    title
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetLostsQuery(options?: Omit<Urql.UseQueryArgs<GetLostsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetLostsQuery, GetLostsQueryVariables>({ query: GetLostsDocument, ...options });
+};
+export const GetUserLostsDocument = gql`
+    query GetUserLosts($userId: uuid!) {
+  losts(where: {user_id: {_eq: $userId}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetUserLostsQuery(options: Omit<Urql.UseQueryArgs<GetUserLostsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetUserLostsQuery, GetUserLostsQueryVariables>({ query: GetUserLostsDocument, ...options });
 };
 export const AddLostDocument = gql`
     mutation AddLost($title: String!, $description: String, $location: String, $photo: String, $time: String, $category_id: Int, $city_id: Int) {

@@ -25,6 +25,10 @@ query GetLosts {
         description
         location
         title
+        City {
+            id
+            name
+        }
     }
 }
 
