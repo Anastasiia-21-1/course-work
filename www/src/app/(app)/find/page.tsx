@@ -1,6 +1,6 @@
 'use client'
 import {useGetFinds} from "@/api/finds";
-import {Loading} from "@/components/Loading";
+import {Loading} from "@/components/layout/Loading";
 import {FindCard} from "@/components/find/FindCard";
 import { Container } from "@/components/layout/Container";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";

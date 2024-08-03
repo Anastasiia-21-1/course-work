@@ -1,7 +1,10 @@
 'use client'
 import {useGetLosts} from "@/api/losts";
-import {Loading} from "@/components/Loading";
+import {Loading} from "@/components/layout/Loading";
 import {useSession} from "next-auth/react";
+import {LostCard} from "@/components/lost/LostCard";
+import {ItemsContainer} from "@/components/layout/ItemsContainer";
+import {Container} from "@/components/layout/Container";
 
 export default function LostPage() {
     const {data, fetching} = useGetLosts()
@@ -13,9 +16,12 @@ export default function LostPage() {
     }
 
     return (
-        <div>
-            {JSON.stringify(session, null, 2)}
-            {JSON.stringify(data, null, 2)}
-        </div>
+        <Container>
+            <ItemsContainer>
+                {data?.losts.map((el) => {
+                    return <LostCard {...el} />
+                })}
+            </ItemsContainer>
+        </Container>
     )
 }

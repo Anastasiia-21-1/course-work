@@ -20,21 +20,17 @@ import {
 import {useDisclosure} from '@mantine/hooks';
 import {
     IconArrowDownLeftCircle,
-    IconArrowDownRightCircle, IconArrowUpLeftCircle, IconArrowUpRightCircle,
-    IconBook,
-    IconChartPie3,
+    IconArrowDownRightCircle,
+    IconArrowUpLeftCircle,
+    IconArrowUpRightCircle,
     IconChevronDown,
-    IconCode,
-    IconCoin, IconCurlyLoop,
-    IconFingerprint,
-    IconNotification,
 } from '@tabler/icons-react';
 import classes from '@/style/Header.module.css';
 import {useSession} from "next-auth/react";
-import {UserMenu} from "@/components/UserMenu";
+import {UserMenu} from "@/components/layout/UserMenu";
 import Link from "next/link";
 
-const mockdata = [
+const allLinks = [
     {
         icon: IconArrowDownRightCircle,
         title: 'Втрати',
@@ -78,7 +74,7 @@ export function Header() {
 
     const {data: session, status} = useSession()
 
-    const links = mockdata.map((item) => (
+    const links = allLinks.map((item) => (
         <UnstyledButton className={classes.subLink} key={item.title}>
             <Group wrap="nowrap" align="flex-start">
                 <ThemeIcon size={34} variant="default" radius="md">
@@ -101,7 +97,7 @@ export function Header() {
             <header className={classes.header}>
                 <Group justify="space-between" h="100%">
                     <Group h="100%" gap={0} visibleFrom="sm">
-                        <a href="/" className={classes.link}>
+                        <a href="/www/public" className={classes.link}>
                             Головна
                         </a>
                         <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>

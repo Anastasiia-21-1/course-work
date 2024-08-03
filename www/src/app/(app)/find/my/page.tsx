@@ -1,18 +1,27 @@
 'use client'
-import {useGetFinds} from "@/api/finds";
-import {Loading} from "@/components/Loading";
+import {useGetFindsByUser} from "@/api/finds";
+import {Loading} from "@/components/layout/Loading";
+import {Container} from "@/components/layout/Container";
+import {ItemsContainer} from "@/components/layout/ItemsContainer";
+import {FindCard} from "@/components/find/FindCard";
+import {useSession} from "next-auth/react";
 
 export default function FindPage() {
-    const {data, fetching} = useGetFinds()
+    const {data: session, status} = useSession()
+
+    const {data, fetching} = useGetFindsByUser(session?.user?.id!)
 
     if (fetching) {
         return <Loading/>
     }
 
     return (
-        <div>
-            {JSON.stringify(data, null, 2)}
-        </div>
+        <Container>
+            <ItemsContainer>
+                {data?.finds.map((el) => {
+                    return <FindCard {...el} />
+                })}
+            </ItemsContainer>
+        </Container>
     )
 }
-

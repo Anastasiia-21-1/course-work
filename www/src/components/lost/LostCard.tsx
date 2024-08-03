@@ -1,6 +1,6 @@
 import {Button, Card, Center, Group, Image, Text} from '@mantine/core';
 import {IconBuilding, IconClock, IconMap} from '@tabler/icons-react';
-import classes from './FindCard.module.css';
+import classes from './LostCard.module.css';
 
 interface Props {
     title?: string | null
@@ -13,7 +13,7 @@ interface Props {
     } | null
 }
 
-export function FindCard({title, photo, description, location, time, City}: Props) {
+export function LostCard({title, photo, description, location, time, City}: Props) {
     const badges = [
         {label: time, icon: IconClock},
         {label: location, icon: IconMap},

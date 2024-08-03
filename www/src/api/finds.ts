@@ -8,12 +8,21 @@ import {
     GetFindsQueryVariables,
     GetFindsWithUsers,
     GetFindsWithUsersQuery,
-    GetFindsWithUsersQueryVariables,
+    GetFindsWithUsersQueryVariables, GetUserFinds, GetUserFindsQuery, GetUserFindsQueryVariables,
 } from "../../generated/graphql";
 
 export function useGetFinds() {
     const [result] = useQuery<GetFindsQuery, GetFindsQueryVariables>({
         query: GetFinds
+    })
+
+    return result
+}
+
+export function useGetFindsByUser(id: string) {
+    const [result] = useQuery<GetUserFindsQuery, GetUserFindsQueryVariables>({
+        query: GetUserFinds,
+        variables: {userId: id}
     })
 
     return result

@@ -1,15 +1,3 @@
-query GetLosts {
-    losts {
-        title
-        user_id
-        photo
-        title
-        description
-        location
-        title
-    }
-}
-
 query GetLostsWithUsers {
     losts {
         id
@@ -24,6 +12,34 @@ query GetLostsWithUsers {
             first_name
             id
             last_name
+        }
+    }
+}
+
+query GetLosts {
+    losts {
+        title
+        user_id
+        photo
+        title
+        description
+        location
+        title
+    }
+}
+
+query GetUserLosts($userId: uuid!) {
+    losts(where: { user_id: {_eq: $userId }}) {
+        id
+        title
+        user_id
+        photo
+        description
+        location
+        time
+        City {
+            id
+            name
         }
     }
 }

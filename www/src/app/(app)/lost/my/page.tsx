@@ -1,6 +1,6 @@
 'use client'
 import {useGetLosts} from "@/api/losts";
-import {Loading} from "@/components/Loading";
+import {Loading} from "@/components/layout/Loading";
 import {useSession} from "next-auth/react";
 
 export default function LostPage() {

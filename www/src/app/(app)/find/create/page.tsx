@@ -31,7 +31,6 @@ export default function CreateFindPage() {
         resolver: zodResolver(schema),
     })
     const onSubmit: FormSubmitHandler<CreateFindForm> = async ({data}) => {
-        console.log({data})
         const result = await mutation({
             title: data.title,
             description: data.description,
@@ -40,7 +39,6 @@ export default function CreateFindPage() {
             category_id: +data.category,
             city_id: +data.city,
         })
-        console.log({result})
         router.push('/find')
     }
 

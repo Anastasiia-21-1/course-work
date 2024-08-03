@@ -3585,6 +3585,13 @@ export type GetFindsWithUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetFindsWithUsersQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', id: any, description?: string | null, location?: string | null, photo?: string | null, time?: string | null, title?: string | null, user_id?: any | null, user?: { __typename?: 'users', email: string, first_name: string, id: any, last_name: string } | null }> };
 
+export type GetUserFindsQueryVariables = Exact<{
+  userId: Scalars['uuid']['input'];
+}>;
+
+
+export type GetUserFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, time?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+
 export type GetFindsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3672,6 +3679,23 @@ export const GetFindsWithUsers = gql`
       first_name
       id
       last_name
+    }
+  }
+}
+    `;
+export const GetUserFinds = gql`
+    query GetUserFinds($userId: uuid!) {
+  finds(where: {user_id: {_eq: $userId}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
     }
   }
 }
@@ -12343,6 +12367,27 @@ export const GetFindsWithUsersDocument = gql`
 
 export function useGetFindsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetFindsWithUsersQueryVariables>, 'query'>) {
   return Urql.useQuery<GetFindsWithUsersQuery, GetFindsWithUsersQueryVariables>({ query: GetFindsWithUsersDocument, ...options });
+};
+export const GetUserFindsDocument = gql`
+    query GetUserFinds($userId: uuid!) {
+  finds(where: {user_id: {_eq: $userId}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetUserFindsQuery(options: Omit<Urql.UseQueryArgs<GetUserFindsQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetUserFindsQuery, GetUserFindsQueryVariables>({ query: GetUserFindsDocument, ...options });
 };
 export const GetFindsDocument = gql`
     query GetFinds {
