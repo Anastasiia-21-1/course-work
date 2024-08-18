@@ -5,10 +5,10 @@ import {AppContainer} from "@/components/layout/AppContainer";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
 import {FindCard} from "@/components/find/FindCard";
 import {useSession} from "next-auth/react";
-import {authGuard} from "@/utils/auth";
+import {useAuthGuard} from "@/utils/auth";
 
 export default function FindPage() {
-    authGuard()
+    useAuthGuard()
     const {data: session, status} = useSession()
 
     const {data, fetching} = useGetFindsByUser(session?.user?.id!)

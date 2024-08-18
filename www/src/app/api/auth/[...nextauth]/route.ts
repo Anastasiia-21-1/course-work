@@ -1,11 +1,11 @@
-import NextAuth, {NextAuthOptions} from "next-auth"
+import NextAuth from "next-auth"
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import {JWT} from "next-auth/jwt";
 import {HasuraAdapter} from "next-auth-hasura-adapter";
 import * as jsonwebtoken from "jsonwebtoken";
 
-export const authOptions: NextAuthOptions = {
+const handler = NextAuth({
     providers: [
         GithubProvider({
             clientId: process.env.GITHUB_CLIENT_ID!,
@@ -27,12 +27,12 @@ export const authOptions: NextAuthOptions = {
     },
     session: {strategy: "jwt"},
     jwt: {
-        encode: ({secret, token}) => {
+        encode: ({secret, token}: any) => {
             return jsonwebtoken.sign(token!, secret, {
                 algorithm: "HS256",
             });
         },
-        decode: async ({secret, token}) => {
+        decode: async ({secret, token}: any) => {
             const decodedToken = jsonwebtoken.verify(token!, secret, {
                 algorithms: ["HS256"],
             });
@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         // Add the required Hasura claims
         // https://hasura.io/docs/latest/graphql/core/auth/authentication/jwt/#the-spec
-        async jwt({token}) {
+        async jwt({token}: any) {
             return {
                 ...token,
                 // // @ts-ignore
@@ -59,16 +59,13 @@ export const authOptions: NextAuthOptions = {
                 },
             };
         },
-        session: async ({session, token}) => {
+        session: async ({session, token}: any) => {
             if (session?.user) {
                 session.user.id = token.sub!;
             }
             return session;
         },
     },
-};
-
-const handler = NextAuth(authOptions);
+});
 
 export {handler as GET, handler as POST}
-

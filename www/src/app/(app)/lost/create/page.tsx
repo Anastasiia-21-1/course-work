@@ -8,7 +8,7 @@ import {Button, Container, Group, Paper, Title} from "@mantine/core";
 import {useInsertLost} from "@/api/losts";
 import {useGetCities} from "@/api/cities";
 import {useRouter} from "next/navigation";
-import {authGuard} from "@/utils/auth";
+import {useAuthGuard} from "@/utils/auth";
 
 const schema = z.object({
     title: z.string(),
@@ -23,7 +23,7 @@ const schema = z.object({
 type CreateLostForm = z.infer<typeof schema>
 
 export default function CreateLostPage() {
-    authGuard()
+    useAuthGuard()
     const {data: categories} = useGetCategories()
     const {data: cities} = useGetCities()
     const mutation = useInsertLost()

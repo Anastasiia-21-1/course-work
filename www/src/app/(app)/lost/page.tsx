@@ -5,10 +5,10 @@ import {useSession} from "next-auth/react";
 import {LostCard} from "@/components/lost/LostCard";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
 import {AppContainer} from "@/components/layout/AppContainer";
-import {authGuard} from "@/utils/auth";
+import {useAuthGuard} from "@/utils/auth";
 
 export default function LostPage() {
-    authGuard()
+    useAuthGuard()
     const {data, fetching} = useGetLosts()
 
     const { data: session, status } = useSession()

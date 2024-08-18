@@ -8,7 +8,7 @@ import {getUserByIdRequest, useUpdateUser} from "@/api/users";
 import {useSession} from "next-auth/react";
 import {useEffect} from "react";
 import {notifications} from "@mantine/notifications";
-import {authGuard} from "@/utils/auth";
+import {useAuthGuard} from "@/utils/auth";
 
 const schema = z.object({
     first_name: z.string(),
@@ -20,7 +20,7 @@ const schema = z.object({
 type UpdateProfileForm = z.infer<typeof schema>
 
 export default function SettingsPage() {
-    authGuard()
+    useAuthGuard()
     const {data: session} = useSession()
 
     const {control, reset} = useForm<UpdateProfileForm>({
