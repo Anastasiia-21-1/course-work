@@ -74,8 +74,8 @@ export function Header() {
 
     const {data: session, status} = useSession()
 
-    const links = allLinks.map((item) => (
-        <Link href={item.href}>
+    const links = allLinks.map((item, index) => (
+        <Link href={item.href} key={index}>
             <UnstyledButton className={classes.subLink} key={item.title}>
                 <Group wrap="nowrap" align="flex-start">
                     <ThemeIcon size={34} variant="default" radius="md">
@@ -99,7 +99,7 @@ export function Header() {
             <header className={classes.header}>
                 <Group justify="space-between" h="100%">
                     <Group h="100%" gap={0} visibleFrom="sm">
-                        <a href="/www/public" className={classes.link}>
+                        <a href="/" className={classes.link}>
                             Головна
                         </a>
                         <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
@@ -107,7 +107,7 @@ export function Header() {
                                 <a href="#" className={classes.link}>
                                     <Center inline>
                                         <Box component="span" mr={5}>
-                                            Features
+                                            Категорії
                                         </Box>
                                         <IconChevronDown
                                             style={{width: rem(16), height: rem(16)}}
@@ -157,7 +157,7 @@ export function Header() {
                     <UnstyledButton className={classes.link} onClick={toggleLinks}>
                         <Center inline>
                             <Box component="span" mr={5}>
-                                Features
+                                Категорії
                             </Box>
                             <IconChevronDown
                                 style={{width: rem(16), height: rem(16)}}

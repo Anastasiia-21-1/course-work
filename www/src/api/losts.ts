@@ -5,7 +5,11 @@ import {
     AddLostMutationVariables,
     GetLosts,
     GetLostsQuery,
-    GetLostsQueryVariables, GetLostsWithUsers, GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables,
+    GetLostsQueryVariables,
+    GetLostsWithUsers,
+    GetLostsWithUsersQuery,
+    GetLostsWithUsersQueryVariables, GetUserFinds,
+    GetUserFindsQuery, GetUserFindsQueryVariables, GetUserLosts, GetUserLostsQuery, GetUserLostsQueryVariables,
 } from "../../generated/graphql";
 
 export function useGetLosts() {
@@ -19,6 +23,15 @@ export function useGetLosts() {
 export function useGetLostsWithUsers() {
     const [result] = useQuery<GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables>({
         query: GetLostsWithUsers
+    })
+
+    return result
+}
+
+export function useGetLostsByUser(id: string) {
+    const [result] = useQuery<GetUserLostsQuery, GetUserLostsQueryVariables>({
+        query: GetUserLosts,
+        variables: {userId: id}
     })
 
     return result

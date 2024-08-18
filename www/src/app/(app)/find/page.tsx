@@ -2,7 +2,7 @@
 import {useGetFinds} from "@/api/finds";
 import {Loading} from "@/components/layout/Loading";
 import {FindCard} from "@/components/find/FindCard";
-import { Container } from "@/components/layout/Container";
+import { AppContainer } from "@/components/layout/AppContainer";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
 
 export default function FindPage() {
@@ -13,13 +13,13 @@ export default function FindPage() {
     }
 
     return (
-        <Container>
+        <AppContainer title="Всі знахідки">
             <ItemsContainer>
                 {data?.finds.map((el) => {
-                    return <FindCard {...el} />
+                    return <FindCard key={el.id} {...el} />
                 })}
             </ItemsContainer>
-        </Container>
+        </AppContainer>
     )
 }
 

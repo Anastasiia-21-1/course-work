@@ -4,9 +4,11 @@ import {Loading} from "@/components/layout/Loading";
 import {useSession} from "next-auth/react";
 import {LostCard} from "@/components/lost/LostCard";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
-import {Container} from "@/components/layout/Container";
+import {AppContainer} from "@/components/layout/AppContainer";
+import {authGuard} from "@/utils/auth";
 
 export default function LostPage() {
+    authGuard()
     const {data, fetching} = useGetLosts()
 
     const { data: session, status } = useSession()
@@ -16,12 +18,12 @@ export default function LostPage() {
     }
 
     return (
-        <Container>
+        <AppContainer title="Всі загублені речі">
             <ItemsContainer>
                 {data?.losts.map((el) => {
-                    return <LostCard {...el} />
+                    return <LostCard key={el.title} {...el} />
                 })}
             </ItemsContainer>
-        </Container>
+        </AppContainer>
     )
 }

@@ -8,36 +8,31 @@ import {
     GetFindsQueryVariables,
     GetFindsWithUsers,
     GetFindsWithUsersQuery,
-    GetFindsWithUsersQueryVariables, GetUserFinds, GetUserFindsQuery, GetUserFindsQueryVariables,
+    GetFindsWithUsersQueryVariables,
+    GetUserFinds,
+    GetUserFindsQuery,
+    GetUserFindsQueryVariables,
 } from "../../generated/graphql";
 
 export function useGetFinds() {
-    const [result] = useQuery<GetFindsQuery, GetFindsQueryVariables>({
+    return useQuery<GetFindsQuery, GetFindsQueryVariables>({
         query: GetFinds
-    })
-
-    return result
+    })[0]
 }
 
 export function useGetFindsByUser(id: string) {
-    const [result] = useQuery<GetUserFindsQuery, GetUserFindsQueryVariables>({
+    return useQuery<GetUserFindsQuery, GetUserFindsQueryVariables>({
         query: GetUserFinds,
         variables: {userId: id}
-    })
-
-    return result
+    })[0]
 }
 
 export function useGetFindsWithUsers() {
-    const [result] = useQuery<GetFindsWithUsersQuery, GetFindsWithUsersQueryVariables>({
+    return useQuery<GetFindsWithUsersQuery, GetFindsWithUsersQueryVariables>({
         query: GetFindsWithUsers
-    })
-
-    return result
+    })[0]
 }
 
 export function useInsertFind() {
-    const [, mutate] = useMutation<AddFindMutation, AddFindMutationVariables>(AddFind)
-
-    return mutate
+    return useMutation<AddFindMutation, AddFindMutationVariables>(AddFind)[1]
 }

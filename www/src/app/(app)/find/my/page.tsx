@@ -1,12 +1,14 @@
 'use client'
 import {useGetFindsByUser} from "@/api/finds";
 import {Loading} from "@/components/layout/Loading";
-import {Container} from "@/components/layout/Container";
+import {AppContainer} from "@/components/layout/AppContainer";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
 import {FindCard} from "@/components/find/FindCard";
 import {useSession} from "next-auth/react";
+import {authGuard} from "@/utils/auth";
 
 export default function FindPage() {
+    authGuard()
     const {data: session, status} = useSession()
 
     const {data, fetching} = useGetFindsByUser(session?.user?.id!)
@@ -16,12 +18,12 @@ export default function FindPage() {
     }
 
     return (
-        <Container>
+        <AppContainer title="Мої знахідки">
             <ItemsContainer>
                 {data?.finds.map((el) => {
-                    return <FindCard {...el} />
+                    return <FindCard key={el.id} {...el} />
                 })}
             </ItemsContainer>
-        </Container>
+        </AppContainer>
     )
 }

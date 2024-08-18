@@ -3645,6 +3645,24 @@ export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', first_name: string, last_name: string, email: string }> };
 
+export type GetUserByIdQueryVariables = Exact<{
+  userId: Scalars['uuid']['input'];
+}>;
+
+
+export type GetUserByIdQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', id: any, first_name: string, last_name: string, email: string, image?: string | null } | null };
+
+export type UpdateUserMutationVariables = Exact<{
+  userId: Scalars['uuid']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  image: Scalars['String']['input'];
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'mutation_root', update_users_by_pk?: { __typename?: 'users', id: any, first_name: string, last_name: string, email: string, image?: string | null } | null };
+
 
 export const GetCategories = gql`
     query GetCategories {
@@ -3814,6 +3832,31 @@ export const GetUsers = gql`
     first_name
     last_name
     email
+  }
+}
+    `;
+export const GetUserById = gql`
+    query GetUserById($userId: uuid!) {
+  users_by_pk(id: $userId) {
+    id
+    first_name
+    last_name
+    email
+    image
+  }
+}
+    `;
+export const UpdateUser = gql`
+    mutation UpdateUser($userId: uuid!, $firstName: String!, $lastName: String!, $email: String!, $image: String!) {
+  update_users_by_pk(
+    pk_columns: {id: $userId}
+    _set: {first_name: $firstName, last_name: $lastName, email: $email, image: $image}
+  ) {
+    id
+    first_name
+    last_name
+    email
+    image
   }
 }
     `;
@@ -12554,4 +12597,37 @@ export const GetUsersDocument = gql`
 
 export function useGetUsersQuery(options?: Omit<Urql.UseQueryArgs<GetUsersQueryVariables>, 'query'>) {
   return Urql.useQuery<GetUsersQuery, GetUsersQueryVariables>({ query: GetUsersDocument, ...options });
+};
+export const GetUserByIdDocument = gql`
+    query GetUserById($userId: uuid!) {
+  users_by_pk(id: $userId) {
+    id
+    first_name
+    last_name
+    email
+    image
+  }
+}
+    `;
+
+export function useGetUserByIdQuery(options: Omit<Urql.UseQueryArgs<GetUserByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>({ query: GetUserByIdDocument, ...options });
+};
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($userId: uuid!, $firstName: String!, $lastName: String!, $email: String!, $image: String!) {
+  update_users_by_pk(
+    pk_columns: {id: $userId}
+    _set: {first_name: $firstName, last_name: $lastName, email: $email, image: $image}
+  ) {
+    id
+    first_name
+    last_name
+    email
+    image
+  }
+}
+    `;
+
+export function useUpdateUserMutation() {
+  return Urql.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument);
 };
