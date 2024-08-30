@@ -18,6 +18,7 @@ query GetLostsWithUsers {
 
 query GetLosts {
     losts {
+        id
         title
         user_id
         photo

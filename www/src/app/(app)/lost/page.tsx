@@ -19,6 +19,7 @@ export default function LostPage() {
 
     return (
         <AppContainer title="Всі загублені речі">
+            {JSON.stringify(data?.losts, null, 2)}
             <ItemsContainer>
                 {data?.losts.map((el) => {
                     return <LostCard key={el.title} {...el} />

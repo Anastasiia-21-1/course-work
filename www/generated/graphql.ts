@@ -3618,7 +3618,7 @@ export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{
 export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
 
 export type GetUserLostsQueryVariables = Exact<{
   userId: Scalars['uuid']['input'];
@@ -3780,6 +3780,7 @@ export const GetLostsWithUsers = gql`
 export const GetLosts = gql`
     query GetLosts {
   losts {
+    id
     title
     user_id
     photo
@@ -12527,6 +12528,7 @@ export function useGetLostsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetLo
 export const GetLostsDocument = gql`
     query GetLosts {
   losts {
+    id
     title
     user_id
     photo
