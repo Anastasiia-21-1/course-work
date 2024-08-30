@@ -3,42 +3,46 @@ import {
     AddLost,
     AddLostMutation,
     AddLostMutationVariables,
+    GetLostById,
+    GetLostByIdQuery,
+    GetLostByIdQueryVariables,
     GetLosts,
     GetLostsQuery,
     GetLostsQueryVariables,
     GetLostsWithUsers,
     GetLostsWithUsersQuery,
-    GetLostsWithUsersQueryVariables, GetUserFinds,
-    GetUserFindsQuery, GetUserFindsQueryVariables, GetUserLosts, GetUserLostsQuery, GetUserLostsQueryVariables,
+    GetLostsWithUsersQueryVariables,
+    GetUserLosts,
+    GetUserLostsQuery,
+    GetUserLostsQueryVariables,
 } from "../../generated/graphql";
 
 export function useGetLosts() {
-    const [result] = useQuery<GetLostsQuery, GetLostsQueryVariables>({
+    return useQuery<GetLostsQuery, GetLostsQueryVariables>({
         query: GetLosts
-    })
+    })[0]
+}
 
-    return result
+export function useGetLostById(id: string) {
+    return useQuery<GetLostByIdQuery, GetLostByIdQueryVariables>({
+        query: GetLostById,
+        variables: {id}
+    })[0]
 }
 
 export function useGetLostsWithUsers() {
-    const [result] = useQuery<GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables>({
+    return useQuery<GetLostsWithUsersQuery, GetLostsWithUsersQueryVariables>({
         query: GetLostsWithUsers
-    })
-
-    return result
+    })[0]
 }
 
 export function useGetLostsByUser(id: string) {
-    const [result] = useQuery<GetUserLostsQuery, GetUserLostsQueryVariables>({
+    return useQuery<GetUserLostsQuery, GetUserLostsQueryVariables>({
         query: GetUserLosts,
         variables: {userId: id}
-    })
-
-    return result
+    })[0]
 }
 
 export function useInsertLost() {
-    const [, mutate] = useMutation<AddLostMutation, AddLostMutationVariables>(AddLost)
-
-    return mutate
+    return useMutation<AddLostMutation, AddLostMutationVariables>(AddLost)[1]
 }

@@ -3592,6 +3592,13 @@ export type GetUserFindsQueryVariables = Exact<{
 
 export type GetUserFindsQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, time?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
 
+export type GetFindByIdQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetFindByIdQuery = { __typename?: 'query_root', finds: Array<{ __typename?: 'finds', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, time?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+
 export type GetFindsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3618,7 +3625,14 @@ export type GetLostsWithUsersQuery = { __typename?: 'query_root', losts: Array<{
 export type GetLostsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+export type GetLostsQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
+
+export type GetLostByIdQueryVariables = Exact<{
+  id: Scalars['uuid']['input'];
+}>;
+
+
+export type GetLostByIdQuery = { __typename?: 'query_root', losts: Array<{ __typename?: 'losts', id: any, title?: string | null, user_id?: any | null, photo?: string | null, description?: string | null, location?: string | null, time?: string | null, City?: { __typename?: 'City', id: number, name: string } | null }> };
 
 export type GetUserLostsQueryVariables = Exact<{
   userId: Scalars['uuid']['input'];
@@ -3725,6 +3739,23 @@ export const GetUserFinds = gql`
   }
 }
     `;
+export const GetFindById = gql`
+    query GetFindById($id: uuid!) {
+  finds(where: {id: {_eq: $id}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
 export const GetFinds = gql`
     query GetFinds {
   finds {
@@ -3780,6 +3811,7 @@ export const GetLostsWithUsers = gql`
 export const GetLosts = gql`
     query GetLosts {
   losts {
+    id
     title
     user_id
     photo
@@ -3787,6 +3819,23 @@ export const GetLosts = gql`
     description
     location
     title
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+export const GetLostById = gql`
+    query GetLostById($id: uuid!) {
+  losts(where: {id: {_eq: $id}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
     City {
       id
       name
@@ -12460,6 +12509,27 @@ export const GetUserFindsDocument = gql`
 export function useGetUserFindsQuery(options: Omit<Urql.UseQueryArgs<GetUserFindsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetUserFindsQuery, GetUserFindsQueryVariables>({ query: GetUserFindsDocument, ...options });
 };
+export const GetFindByIdDocument = gql`
+    query GetFindById($id: uuid!) {
+  finds(where: {id: {_eq: $id}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetFindByIdQuery(options: Omit<Urql.UseQueryArgs<GetFindByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetFindByIdQuery, GetFindByIdQueryVariables>({ query: GetFindByIdDocument, ...options });
+};
 export const GetFindsDocument = gql`
     query GetFinds {
   finds {
@@ -12527,6 +12597,7 @@ export function useGetLostsWithUsersQuery(options?: Omit<Urql.UseQueryArgs<GetLo
 export const GetLostsDocument = gql`
     query GetLosts {
   losts {
+    id
     title
     user_id
     photo
@@ -12544,6 +12615,27 @@ export const GetLostsDocument = gql`
 
 export function useGetLostsQuery(options?: Omit<Urql.UseQueryArgs<GetLostsQueryVariables>, 'query'>) {
   return Urql.useQuery<GetLostsQuery, GetLostsQueryVariables>({ query: GetLostsDocument, ...options });
+};
+export const GetLostByIdDocument = gql`
+    query GetLostById($id: uuid!) {
+  losts(where: {id: {_eq: $id}}) {
+    id
+    title
+    user_id
+    photo
+    description
+    location
+    time
+    City {
+      id
+      name
+    }
+  }
+}
+    `;
+
+export function useGetLostByIdQuery(options: Omit<Urql.UseQueryArgs<GetLostByIdQueryVariables>, 'query'>) {
+  return Urql.useQuery<GetLostByIdQuery, GetLostByIdQueryVariables>({ query: GetLostByIdDocument, ...options });
 };
 export const GetUserLostsDocument = gql`
     query GetUserLosts($userId: uuid!) {

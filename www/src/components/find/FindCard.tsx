@@ -1,8 +1,10 @@
 import {Button, Card, Center, Group, Image, Text} from '@mantine/core';
 import {IconBuilding, IconClock, IconMap} from '@tabler/icons-react';
 import classes from './FindCard.module.css';
+import Link from "next/link";
 
 interface Props {
+    id?: string
     title?: string | null
     photo?: string | null
     description?: string | null
@@ -13,7 +15,7 @@ interface Props {
     } | null
 }
 
-export function FindCard({title, photo, description, location, time, City}: Props) {
+export function FindCard({id, title, photo, description, location, time, City}: Props) {
     const badges = [
         {label: time, icon: IconClock},
         {label: location, icon: IconMap},
@@ -63,9 +65,11 @@ export function FindCard({title, photo, description, location, time, City}: Prop
 
             <Card.Section className={classes.section}>
                 <Group gap={30}>
-                    <Button radius="xl" style={{flex: 1}}>
-                        Детальніше
-                    </Button>
+                    <Link href={`/find/${id}`}>
+                        <Button radius="xl" style={{flex: 1}}>
+                            Детальніше
+                        </Button>
+                    </Link>
                 </Group>
             </Card.Section>
         </Card>

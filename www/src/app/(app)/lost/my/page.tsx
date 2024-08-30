@@ -15,6 +15,7 @@ export default function LostPage() {
         return <Loading/>
     }
 
+
     return (
         <AppContainer title="Мої загублені речі">
             <ItemsContainer>

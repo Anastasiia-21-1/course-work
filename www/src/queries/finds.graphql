@@ -32,6 +32,22 @@ query GetUserFinds($userId: uuid!) {
     }
 }
 
+query GetFindById($id: uuid!) {
+    finds(where: { id: {_eq: $id }}) {
+        id
+        title
+        user_id
+        photo
+        description
+        location
+        time
+        City {
+            id
+            name
+        }
+    }
+}
+
 query GetFinds {
     finds {
         id

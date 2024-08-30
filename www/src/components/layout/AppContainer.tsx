@@ -2,7 +2,7 @@ import {PropsWithChildren} from "react";
 import {Text} from "@mantine/core";
 
 interface Props extends PropsWithChildren {
-    title?: string
+    title?: string | null
 }
 
 export function AppContainer({children, title}: Props) {
