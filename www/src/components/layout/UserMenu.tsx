@@ -53,7 +53,7 @@ export function UserMenu({session}: Props) {
                     }
                     onClick={() => router.push("/find/my")}
                 >
-                    Your finds
+                    Мої знахідки
                 </Menu.Item>
                 <Menu.Item
                     leftSection={
@@ -65,7 +65,7 @@ export function UserMenu({session}: Props) {
                     }
                     onClick={() => router.push("/lost/my")}
                 >
-                    Your losts
+                    Мої втрати
                 </Menu.Item>
 
                 <Divider/>
@@ -77,7 +77,7 @@ export function UserMenu({session}: Props) {
                     }
                     onClick={() => router.push("/settings")}
                 >
-                    Account settings
+                    Налаштування
                 </Menu.Item>
                 <Menu.Item
                     leftSection={
@@ -85,7 +85,7 @@ export function UserMenu({session}: Props) {
                     }
                     onClick={logoutHandle}
                 >
-                    Logout
+                    Вийти
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>
