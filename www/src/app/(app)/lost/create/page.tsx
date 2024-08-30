@@ -41,7 +41,7 @@ export default function CreateLostPage() {
             category_id: +data.category,
             city_id: +data.city,
         })
-        router.push('/Lost')
+        router.push('/lost')
     }
 
     return (

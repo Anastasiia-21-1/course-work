@@ -65,7 +65,7 @@ export function FindCard({id, title, photo, description, location, time, City}: 
 
             <Card.Section className={classes.section}>
                 <Group gap={30}>
-                    <Link href={`find/${id}`}>
+                    <Link href={`/find/${id}`}>
                         <Button radius="xl" style={{flex: 1}}>
                             Детальніше
                         </Button>

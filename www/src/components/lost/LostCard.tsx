@@ -65,7 +65,7 @@ export function LostCard({id, title, photo, description, location, time, City}: 
 
             <Card.Section className={classes.section}>
                 <Group gap={30}>
-                    <Link href={`lost/${id}`}>
+                    <Link href={`/lost/${id}`}>
                         <Button radius="xl" style={{flex: 1}}>
                             Детальніше
                         </Button>

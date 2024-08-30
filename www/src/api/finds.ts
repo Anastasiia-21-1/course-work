@@ -2,7 +2,7 @@ import {useMutation, useQuery} from "urql";
 import {
     AddFind,
     AddFindMutation,
-    AddFindMutationVariables,
+    AddFindMutationVariables, GetFindById, GetFindByIdQuery, GetFindByIdQueryVariables,
     GetFinds,
     GetFindsQuery,
     GetFindsQueryVariables,
@@ -17,6 +17,13 @@ import {
 export function useGetFinds() {
     return useQuery<GetFindsQuery, GetFindsQueryVariables>({
         query: GetFinds
+    })[0]
+}
+
+export function useGetFindById(id: string) {
+    return useQuery<GetFindByIdQuery, GetFindByIdQueryVariables>({
+        query: GetFindById,
+        variables: {id}
     })[0]
 }
 
