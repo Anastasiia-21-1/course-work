@@ -1,0 +1,20 @@
+name: Linter
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [ 20.11.1 ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install modules
+        run: npm i -f
+        working-directory: www
+      - name: Run linter
+        run: npm run lint
+        working-directory: www
