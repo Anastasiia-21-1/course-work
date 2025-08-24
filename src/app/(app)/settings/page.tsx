@@ -80,7 +80,7 @@ export default function SettingsPage() {
                     <Title order={4} mb={5}>
                         Профіль
                     </Title>
-                    <div>Please log in to view your profile</div>
+                    <div>Будь ласка увійдіть в обліковий запис щоб переглянути профіль</div>
                 </Paper>
             </Container>
         )

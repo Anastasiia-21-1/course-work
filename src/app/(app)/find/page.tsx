@@ -6,6 +6,8 @@ import {FindCard} from "@/components/find/FindCard";
 import { AppContainer } from "@/components/layout/AppContainer";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
 import { usePagedListParams } from "@/hooks/useQueryParams";
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function FindPage() {
     const { params, setParams, isPending } = usePagedListParams();
@@ -19,6 +21,19 @@ export default function FindPage() {
     function updateParams(next: Partial<typeof params>, resetPage = true) {
         setParams(next, { resetPage, replace: true });
     }
+
+    const [search, setSearch] = useState(q ?? "");
+    useEffect(() => {
+        setSearch(q ?? "");
+    }, [q]);
+    const debouncedSearch = useDebounce(search, 1_000);
+    useEffect(() => {
+        const current = q ?? "";
+        if (debouncedSearch !== current) {
+            updateParams({ q: debouncedSearch || undefined }, true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedSearch]);
 
     if (isLoading) {
         return <Loading/>
@@ -38,8 +53,8 @@ export default function FindPage() {
                 <input
                     type="text"
                     placeholder="Пошук..."
-                    defaultValue={q || ''}
-                    onChange={(e) => updateParams({ q: e.target.value })}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     className="border rounded px-3 py-2"
                 />
                 <select

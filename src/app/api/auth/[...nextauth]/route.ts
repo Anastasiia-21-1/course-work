@@ -11,7 +11,6 @@ import { env } from "@/utils/env.mjs";
 
 const handler = NextAuth({
     secret: env.NEXTAUTH_SECRET,
-    url: env.NEXTAUTH_URL,
     providers: [
         GithubProvider({
             clientId: env.NEXT_PUBLIC_GITHUB_CLIENT_ID,

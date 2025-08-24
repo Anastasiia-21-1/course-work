@@ -7,7 +7,7 @@ interface Props extends PropsWithChildren {
 
 export function AppContainer({children, title}: Props) {
     return (
-        <div className="p-4 max-w-screen-lg mx-auto sm:px-6 lg:px-8">
+        <div className="p-2 max-w-9/10 mx-auto sm:px-3 lg:px-4">
             {title && (
                 <Text size='xl' className="font-medium bg-blue-400 text-white px-8 w-max rounded-full mb-5">{title}</Text>
             )}

@@ -25,7 +25,7 @@ export default function MyLostPage() {
     if (!session?.user?.id) {
         return (
             <AppContainer title="Мої втрати">
-                <div>Please log in to view your lost items</div>
+                <div>Будь ласка увійдіть в обліковий запис щоб переглянути свої втрачені речі</div>
             </AppContainer>
         )
     }
