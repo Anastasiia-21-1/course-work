@@ -1,13 +1,20 @@
-import {
-  useFinds,
-  useFind,
-  useCreateFind,
-  useUpdateFind,
-  useDeleteFind
-} from '../hooks/useTRPC';
+import {useCreateFind, useDeleteFind, useFind, useFinds, usePagedFinds, useUpdateFind} from '@/hooks/useTRPC';
 
 export function useGetFinds(params?: { userId?: string; includeUser?: boolean }) {
   return useFinds(params);
+}
+
+export function useGetFindsPaged(input?: {
+  page?: number;
+  limit?: number;
+  q?: string;
+  userId?: string;
+  cityId?: number;
+  categoryId?: number;
+  sortBy?: 'id' | 'title' | 'time' | 'location';
+  sortOrder?: 'asc' | 'desc';
+}) {
+  return usePagedFinds(input);
 }
 
 export function useGetFindsByUser(userId: string) {

@@ -3,7 +3,7 @@ import {
   useCreateCategory,
   useUpdateCategory,
   useDeleteCategory
-} from '../hooks/useTRPC';
+} from '@/hooks/useTRPC';
 
 export function useGetCategories() {
   return useCategories();

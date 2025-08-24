@@ -4,7 +4,7 @@ import {
   useCreateUser,
   useUpdateUser,
   useDeleteUser
-} from '../hooks/useTRPC';
+} from '@/hooks/useTRPC';
 
 export function useGetUsers() {
   return useUsers();

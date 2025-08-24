@@ -42,6 +42,19 @@ export function useLosts(params?: { userId?: string; includeUser?: boolean }) {
   return trpc.lost.getAll.useQuery();
 }
 
+export function usePagedLosts(input?: {
+  page?: number;
+  limit?: number;
+  q?: string;
+  userId?: string;
+  cityId?: number;
+  categoryId?: number;
+  sortBy?: 'id' | 'title' | 'time' | 'location';
+  sortOrder?: 'asc' | 'desc';
+}) {
+  return trpc.lost.getPaged.useQuery(input);
+}
+
 export function useLost(id: string) {
   return trpc.lost.getById.useQuery({ id });
 }
@@ -78,6 +91,19 @@ export function useFinds(params?: { userId?: string; includeUser?: boolean }) {
     return trpc.find.getByUserId.useQuery({ userId: params.userId });
   }
   return trpc.find.getAll.useQuery();
+}
+
+export function usePagedFinds(input?: {
+  page?: number;
+  limit?: number;
+  q?: string;
+  userId?: string;
+  cityId?: number;
+  categoryId?: number;
+  sortBy?: 'id' | 'title' | 'time' | 'location';
+  sortOrder?: 'asc' | 'desc';
+}) {
+  return trpc.find.getPaged.useQuery(input);
 }
 
 export function useFind(id: string) {

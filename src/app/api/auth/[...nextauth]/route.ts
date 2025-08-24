@@ -9,13 +9,6 @@ import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 import { env } from "@/utils/env.mjs";
 
-console.log('NextAuth Environment Variables:', {
-    GOOGLE_CLIENT_ID: env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: env.GOOGLE_CLIENT_SECRET,
-    NEXTAUTH_SECRET: env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: env.NEXTAUTH_URL,
-});
-
 const handler = NextAuth({
     secret: env.NEXTAUTH_SECRET,
     url: env.NEXTAUTH_URL,

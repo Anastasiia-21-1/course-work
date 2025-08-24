@@ -22,8 +22,6 @@ export const env = createEnv({
         NEXTAUTH_URL: z.string().url(),
     },
     client: {
-        NEXT_PUBLIC_GRAPHQL_ENDPOINT: z.string().url(),
-        
         NEXT_PUBLIC_GITHUB_CLIENT_ID: z.string(),
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string(),
     },
@@ -51,7 +49,6 @@ export const env = createEnv({
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET || process.env.JWT_SECRET,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL || "http://localhost:3000",
         
-        NEXT_PUBLIC_GRAPHQL_ENDPOINT: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
         NEXT_PUBLIC_GITHUB_CLIENT_ID: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
     },
