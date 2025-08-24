@@ -62,7 +62,7 @@ export default function CreateFindPage() {
                     <Title order={4} mb={5}>
                         Додати знахідку
                     </Title>
-                    <div>Please log in to create a find item</div>
+                    <div>Будь ласка увійдіть в обліковий запис щоб додати знахідку</div>
                 </Paper>
             </Container>
         )

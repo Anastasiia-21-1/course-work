@@ -46,7 +46,7 @@ export function LostCard({id, title, photo, description, location, time, city}: 
                 <Image className="w-full h-48" src={photo ?? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'} alt={"" + title}/>
             </Card.Section>
 
-            <Group justify="space-between" mt="md" h={40}>
+            <Group className="line-clamp-3" justify="space-between" mt="md" h={80}>
                 <div>
                     <Text fw={500}>{title}</Text>
                     {description && (

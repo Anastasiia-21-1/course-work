@@ -62,7 +62,7 @@ export default function CreateLostPage() {
                     <Title order={4} mb={5}>
                         Додати втрату
                     </Title>
-                    <div>Please log in to create a lost item</div>
+                    <div>Будь ласка увійдіть в обліковий запис щоб додати втрачену річ</div>
                 </Paper>
             </Container>
         )

@@ -6,6 +6,8 @@ import {LostCard} from "@/components/lost/LostCard";
 import { AppContainer } from "@/components/layout/AppContainer";
 import {ItemsContainer} from "@/components/layout/ItemsContainer";
 import { usePagedListParams } from "@/hooks/useQueryParams";
+import { useEffect, useState } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function LostPage() {
     const { params, setParams, isPending } = usePagedListParams();
@@ -19,6 +21,22 @@ export default function LostPage() {
     function updateParams(next: Partial<typeof params>, resetPage = true) {
         setParams(next, { resetPage, replace: true });
     }
+
+    // Controlled, debounced search input for better UX
+    const [search, setSearch] = useState(q ?? "");
+    // Keep local state in sync if q changes via navigation/history
+    useEffect(() => {
+        setSearch(q ?? "");
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [q]);
+    const debouncedSearch = useDebounce(search, 400);
+    useEffect(() => {
+        const current = q ?? "";
+        if (debouncedSearch !== current) {
+            updateParams({ q: debouncedSearch || undefined }, true);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedSearch]);
 
     if (isLoading) {
         return <Loading/>
@@ -38,8 +56,8 @@ export default function LostPage() {
                 <input
                     type="text"
                     placeholder="Пошук..."
-                    defaultValue={q || ''}
-                    onChange={(e) => updateParams({ q: e.target.value })}
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                     className="border rounded px-3 py-2"
                 />
                 <select

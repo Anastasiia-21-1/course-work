@@ -25,7 +25,7 @@ export default function MyFindPage() {
     if (!session?.user?.id) {
         return (
             <AppContainer title="Мої знахідки">
-                <div>Please log in to view your finds</div>
+                <div>Будь ласка увійдіть в обліковий запис щоб переглянути свої знахідки</div>
             </AppContainer>
         )
     }
