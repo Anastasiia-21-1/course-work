@@ -56,4 +56,4 @@ export interface LoginResponse {
 
 export interface VerifyPasswordResponse {
   isValid: boolean;
-} 
+}

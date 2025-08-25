@@ -1,9 +1,10 @@
 import {
-    useLosts,
-    useLost,
-    useCreateLost,
-    useUpdateLost,
-    useDeleteLost, usePagedLosts
+  useLosts,
+  useLost,
+  useCreateLost,
+  useUpdateLost,
+  useDeleteLost,
+  usePagedLosts,
 } from '@/hooks/useTRPC';
 
 export function useGetLosts(params?: { userId?: string; includeUser?: boolean }) {

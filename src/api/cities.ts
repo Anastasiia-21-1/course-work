@@ -1,9 +1,4 @@
-import {
-  useCities,
-  useCreateCity,
-  useUpdateCity,
-  useDeleteCity
-} from '@/hooks/useTRPC';
+import { useCities, useCreateCity, useUpdateCity, useDeleteCity } from '@/hooks/useTRPC';
 
 export function useGetCities() {
   return useCities();

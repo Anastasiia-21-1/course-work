@@ -197,4 +197,4 @@ export function useDeleteCity() {
       utils.city.getAll.invalidate();
     },
   });
-} 
+}

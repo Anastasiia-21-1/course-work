@@ -16,15 +16,24 @@ async function main() {
 
   console.log('🏙️ Creating cities...');
   const cities = [
-    'Київ', 'Львів', 'Харків', 'Одеса', 'Дніпро', 'Запоріжжя', 'Івано-Франківськ', 'Тернопіль', 'Рівне', 'Луцьк'
+    'Київ',
+    'Львів',
+    'Харків',
+    'Одеса',
+    'Дніпро',
+    'Запоріжжя',
+    'Івано-Франківськ',
+    'Тернопіль',
+    'Рівне',
+    'Луцьк',
   ];
-  
+
   const createdCities = await Promise.all(
-    cities.map(name => 
+    cities.map((name) =>
       prisma.city.create({
-        data: { name }
-      })
-    )
+        data: { name },
+      }),
+    ),
   );
 
   console.log('📂 Creating categories...');
@@ -36,15 +45,15 @@ async function main() {
     { name: 'Гаманець', icon: '👛' },
     { name: 'Телефон', icon: '📞' },
     { name: 'Книги', icon: '📚' },
-    { name: 'Інше', icon: '❓' }
+    { name: 'Інше', icon: '❓' },
   ];
 
   const createdCategories = await Promise.all(
-    categories.map(cat => 
+    categories.map((cat) =>
       prisma.category.create({
-        data: cat
-      })
-    )
+        data: cat,
+      }),
+    ),
   );
 
   console.log('👥 Creating users...');
@@ -53,7 +62,7 @@ async function main() {
     const firstName = faker.person.firstName();
     const lastName = faker.person.lastName();
     const hashedPassword = await bcrypt.hash('password123', 10);
-    
+
     const user = await prisma.user.create({
       data: {
         email: faker.internet.email({ firstName, lastName }),
@@ -62,7 +71,7 @@ async function main() {
         last_name: lastName,
         name: `${firstName} ${lastName}`,
         image: faker.image.avatar(),
-      }
+      },
     });
     users.push(user);
   }
@@ -80,7 +89,7 @@ async function main() {
         user_id: faker.helpers.arrayElement(users).id,
         city_id: faker.helpers.arrayElement(createdCities).id,
         category_id: faker.helpers.arrayElement(createdCategories).id,
-      }
+      },
     });
     lostItems.push(lost);
   }
@@ -98,7 +107,7 @@ async function main() {
         user_id: faker.helpers.arrayElement(users).id,
         city_id: faker.helpers.arrayElement(createdCities).id,
         category_id: faker.helpers.arrayElement(createdCategories).id,
-      }
+      },
     });
     foundItems.push(found);
   }
@@ -118,4 +127,4 @@ main()
   })
   .finally(async () => {
     await prisma.$disconnect();
-  }); 
+  });

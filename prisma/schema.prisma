@@ -18,10 +18,13 @@ model User {
   password      String?
 
   // Relations
-  accounts      Account[]
-  sessions      Session[]
-  losts         Lost[]
-  finds         Find[]
+  accounts         Account[]
+  sessions         Session[]
+  losts            Lost[]
+  finds            Find[]
+  sentMessages     Message[]  @relation("SentMessages")
+  receivedMessages Message[]  @relation("ReceivedMessages")
+  chats            UserChat[]
 
   @@map("users")
 }
@@ -32,14 +35,14 @@ model Account {
   provider                 String
   providerAccountId        String
   refresh_token            String?
-  access_token            String?
-  expires_at              BigInt?
-  token_type             String?
-  scope                   String?
-  id_token               String?
-  session_state          String?
-  oauth_token_secret     String?
-  oauth_token            String?
+  access_token             String?
+  expires_at               BigInt?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  oauth_token_secret       String?
+  oauth_token              String?
   refresh_token_expires_in Int?
 
   userId String
@@ -50,18 +53,60 @@ model Account {
 }
 
 model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique
+  id           String    @id @default(cuid())
+  sessionToken String    @unique
   userId       String
   expires      DateTime?
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
 
+model Chat {
+  id           String     @id @default(cuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  findItem     Find?      @relation("FindChats", fields: [findId], references: [id])
+  findId       String?
+  lostItem     Lost?      @relation("LostChats", fields: [lostId], references: [id])
+  lostId       String?
+  messages     Message[]
+  participants UserChat[]
+
+  @@map("chats")
+}
+
+model UserChat {
+  id        String   @id @default(cuid())
+  userId    String
+  chatId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, chatId])
+  @@map("user_chats")
+}
+
+model Message {
+  id          String   @id @default(cuid())
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  chat        Chat     @relation(fields: [chatId], references: [id])
+  chatId      String
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id])
+  senderId    String
+  recipient   User     @relation("ReceivedMessages", fields: [recipientId], references: [id])
+  recipientId String
+  read        Boolean  @default(false)
+
+  @@map("messages")
+}
+
 model VerificationToken {
   identifier String
-  token      String   @unique
+  token      String    @unique
   expires    DateTime?
 
   @@id([identifier, token])
@@ -69,8 +114,8 @@ model VerificationToken {
 }
 
 model City {
-  id    Int     @id @default(autoincrement())
-  name  String  @unique
+  id   Int    @id @default(autoincrement())
+  name String @unique
 
   // Relations
   losts Lost[]
@@ -80,8 +125,8 @@ model City {
 }
 
 model Category {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id   Int     @id @default(autoincrement())
+  name String  @unique
   icon String?
 
   // Relations
@@ -92,7 +137,7 @@ model Category {
 }
 
 model Lost {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String?
   description String?
   photo       String?
@@ -100,20 +145,23 @@ model Lost {
   location    String?
 
   // Relations
-  user_id     String?
-  user        User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  
-  city_id     Int?
-  city        City?    @relation(fields: [city_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
-  
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  city_id Int?
+  city    City? @relation(fields: [city_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+
   category_id Int?
   category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: Restrict)
+
+  // Chat relation
+  chats Chat[] @relation("LostChats")
 
   @@map("losts")
 }
 
 model Find {
-  id          String   @id @default(cuid())
+  id          String  @id @default(cuid())
   title       String?
   description String?
   photo       String?
@@ -121,14 +169,17 @@ model Find {
   location    String?
 
   // Relations
-  user_id     String?
-  user        User?    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-  
-  city_id     Int?
-  city        City?    @relation(fields: [city_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
-  
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  city_id Int?
+  city    City? @relation(fields: [city_id], references: [id], onDelete: SetNull, onUpdate: SetNull)
+
   category_id Int?
   category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: Restrict)
 
+  // Chat relation
+  chats Chat[] @relation("FindChats")
+
   @@map("finds")
-} 
+}

@@ -1,10 +1,4 @@
-import {
-  useUsers,
-  useUser,
-  useCreateUser,
-  useUpdateUser,
-  useDeleteUser
-} from '@/hooks/useTRPC';
+import { useUsers, useUser, useCreateUser, useUpdateUser, useDeleteUser } from '@/hooks/useTRPC';
 
 export function useGetUsers() {
   return useUsers();

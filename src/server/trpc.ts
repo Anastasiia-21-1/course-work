@@ -17,8 +17,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
       ...shape,
       data: {
         ...shape.data,
-        zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
+        zodError: error.cause instanceof ZodError ? error.cause.flatten() : null,
       },
     };
   },
@@ -29,4 +28,4 @@ export const createTRPCRouter = t.router;
 export const publicProcedure = t.procedure;
 
 export type TRPCRouter = typeof createTRPCRouter;
-export type TRPCProcedure = typeof publicProcedure; 
+export type TRPCProcedure = typeof publicProcedure;

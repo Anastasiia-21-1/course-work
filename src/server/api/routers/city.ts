@@ -11,23 +11,21 @@ export const cityRouter = createTRPCRouter({
     });
   }),
 
-  getById: publicProcedure
-    .input(z.object({ id: z.number() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.city.findUnique({
-        where: { id: input.id },
-        include: {
-          losts: true,
-          finds: true,
-        },
-      });
-    }),
+  getById: publicProcedure.input(z.object({ id: z.number() })).query(async ({ ctx, input }) => {
+    return await ctx.prisma.city.findUnique({
+      where: { id: input.id },
+      include: {
+        losts: true,
+        finds: true,
+      },
+    });
+  }),
 
   create: publicProcedure
     .input(
       z.object({
         name: z.string().min(1),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.city.create({
@@ -40,7 +38,7 @@ export const cityRouter = createTRPCRouter({
       z.object({
         id: z.number(),
         name: z.string().min(1),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
@@ -50,11 +48,9 @@ export const cityRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
-    .input(z.object({ id: z.number() }))
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.city.delete({
-        where: { id: input.id },
-      });
-    }),
-}); 
+  delete: publicProcedure.input(z.object({ id: z.number() })).mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.city.delete({
+      where: { id: input.id },
+    });
+  }),
+});

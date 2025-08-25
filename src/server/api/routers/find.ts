@@ -15,18 +15,16 @@ export const findRouter = createTRPCRouter({
     });
   }),
 
-  getById: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.find.findUnique({
-        where: { id: input.id },
-        include: {
-          user: true,
-          city: true,
-          category: true,
-        },
-      });
-    }),
+  getById: publicProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return await ctx.prisma.find.findUnique({
+      where: { id: input.id },
+      include: {
+        user: true,
+        city: true,
+        category: true,
+      },
+    });
+  }),
 
   getByUserId: publicProcedure
     .input(z.object({ userId: z.string() }))
@@ -87,7 +85,7 @@ export const findRouter = createTRPCRouter({
         user_id: z.string().optional(),
         city_id: z.number().optional(),
         category_id: z.number().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.find.create({
@@ -111,7 +109,7 @@ export const findRouter = createTRPCRouter({
         location: z.string().optional(),
         city_id: z.number().optional(),
         category_id: z.number().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
@@ -126,13 +124,11 @@ export const findRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.find.delete({
-        where: { id: input.id },
-      });
-    }),
+  delete: publicProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.find.delete({
+      where: { id: input.id },
+    });
+  }),
 
   getPaged: publicProcedure
     .input(
@@ -147,7 +143,7 @@ export const findRouter = createTRPCRouter({
           sortBy: z.enum(['id', 'title', 'time', 'location']).default('id').optional(),
           sortOrder: z.enum(['asc', 'desc']).default('desc').optional(),
         })
-        .optional()
+        .optional(),
     )
     .query(async ({ ctx, input }) => {
       const {
@@ -200,7 +196,12 @@ export const findRouter = createTRPCRouter({
         hasPrev: page > 1,
         sortBy,
         sortOrder,
-        filters: { q: q ?? null, userId: userId ?? null, cityId: cityId ?? null, categoryId: categoryId ?? null },
+        filters: {
+          q: q ?? null,
+          userId: userId ?? null,
+          cityId: cityId ?? null,
+          categoryId: categoryId ?? null,
+        },
       };
     }),
 });

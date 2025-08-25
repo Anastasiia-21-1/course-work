@@ -11,17 +11,15 @@ export const userRouter = createTRPCRouter({
     });
   }),
 
-  getById: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .query(async ({ ctx, input }) => {
-      return await ctx.prisma.user.findUnique({
-        where: { id: input.id },
-        include: {
-          losts: true,
-          finds: true,
-        },
-      });
-    }),
+  getById: publicProcedure.input(z.object({ id: z.string() })).query(async ({ ctx, input }) => {
+    return await ctx.prisma.user.findUnique({
+      where: { id: input.id },
+      include: {
+        losts: true,
+        finds: true,
+      },
+    });
+  }),
 
   getByEmail: publicProcedure
     .input(z.object({ email: z.string().email() }))
@@ -39,7 +37,7 @@ export const userRouter = createTRPCRouter({
         first_name: z.string().optional(),
         last_name: z.string().optional(),
         name: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       return await ctx.prisma.user.create({
@@ -56,7 +54,7 @@ export const userRouter = createTRPCRouter({
         last_name: z.string().optional(),
         name: z.string().optional(),
         image: z.string().optional(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input;
@@ -66,11 +64,9 @@ export const userRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure
-    .input(z.object({ id: z.string() }))
-    .mutation(async ({ ctx, input }) => {
-      return await ctx.prisma.user.delete({
-        where: { id: input.id },
-      });
-    }),
-}); 
+  delete: publicProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
+    return await ctx.prisma.user.delete({
+      where: { id: input.id },
+    });
+  }),
+});

@@ -8,14 +8,11 @@ export async function POST(request: NextRequest) {
     const { email, password } = body;
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (!user) {
@@ -27,10 +24,10 @@ export async function POST(request: NextRequest) {
     }
 
     const isValid = await bcrypt.compare(password, user.password);
-    
+
     return NextResponse.json({ isValid });
   } catch (error) {
     console.error('Error verifying password:', error);
     return NextResponse.json({ isValid: false });
   }
-} 
+}
