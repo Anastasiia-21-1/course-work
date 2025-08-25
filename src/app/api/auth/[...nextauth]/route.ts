@@ -1,5 +1,4 @@
 import NextAuth from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { JWT } from 'next-auth/jwt';
@@ -12,11 +11,6 @@ import { env } from '@/utils/env.mjs';
 const handler = NextAuth({
   secret: env.NEXTAUTH_SECRET,
   providers: [
-    GithubProvider({
-      clientId: env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-      allowDangerousEmailAccountLinking: true,
-    }),
     GoogleProvider({
       clientId: env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
       clientSecret: env.GOOGLE_CLIENT_SECRET,

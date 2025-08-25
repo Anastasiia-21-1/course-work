@@ -4,11 +4,13 @@ import { useGetCategories } from '@/api/categories';
 import { Select, TextInput } from 'react-hook-form-mantine';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button, Container, Group, Paper, Title } from '@mantine/core';
+import { Button, Container, Group, Paper, Title, Image, FileInput, Loader, Text } from '@mantine/core';
 import { useInsertFind } from '@/api/finds';
 import { useGetCities } from '@/api/cities';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
+import { useState } from 'react';
+import { uploadFileToBlob } from '@/lib/upload';
 
 const schema = z.object({
   title: z.string(),
@@ -29,9 +31,22 @@ export default function CreateFindPage() {
   const mutation = useInsertFind();
   const router = useRouter();
 
-  const { control } = useForm<CreateFindForm>({
+  const { control, setValue, watch } = useForm<CreateFindForm>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      title: '',
+      description: '',
+      category: '',
+      city: '',
+      location: '',
+      time: '',
+      photo: '',
+    },
   });
+
+  const photoUrl = watch('photo');
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const onSubmit: FormSubmitHandler<CreateFindForm> = async ({ data }) => {
     if (!session?.user?.id) {
@@ -99,7 +114,40 @@ export default function CreateFindPage() {
               label: category.name,
             }))}
           />
-          <TextInput label="Фото" name="photo" control={control} />
+          <div style={{ marginTop: 12 }}>
+            <FileInput
+              label="Фото"
+              placeholder="Оберіть файл"
+              onChange={async (file) => {
+                if (!file) return;
+                setUploadError(null);
+                setUploading(true);
+                try {
+                  const url = await uploadFileToBlob(file);
+                  setValue('photo', url, { shouldValidate: true, shouldDirty: true });
+                } catch (e: any) {
+                  setUploadError(e?.message || 'Помилка завантаження');
+                } finally {
+                  setUploading(false);
+                }
+              }}
+              accept="image/*"
+            />
+            {uploading && (
+              <Group gap="xs" mt={6}>
+                <Loader size="sm" />
+                <Text size="sm">Завантаження...</Text>
+              </Group>
+            )}
+            {uploadError && (
+              <Text size="sm" c="red" mt={6}>
+                {uploadError}
+              </Text>
+            )}
+            {photoUrl && (
+              <Image src={photoUrl} alt="Preview" mt={8} radius="sm" h={160} fit="contain" />)
+            }
+          </div>
           <TextInput label="Місце" name="location" control={control} />
           <TextInput label="Час" name="time" control={control} />
           <Group mt="md">

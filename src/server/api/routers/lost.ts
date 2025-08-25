@@ -88,8 +88,19 @@ export const lostRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      let resolvedUserId = input.user_id && input.user_id.trim() !== '' ? input.user_id : undefined;
+
+      if (resolvedUserId) {
+        const userExists = await ctx.prisma.user.findUnique({ where: { id: resolvedUserId } });
+        if (!userExists) {
+          // eslint-disable-next-line no-console
+          console.warn('Provided user_id does not exist; creating lost without user relation');
+          resolvedUserId = undefined;
+        }
+      }
+
       return await ctx.prisma.lost.create({
-        data: input,
+        data: { ...input, user_id: resolvedUserId },
         include: {
           user: true,
           city: true,
