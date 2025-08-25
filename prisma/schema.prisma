@@ -17,7 +17,6 @@ model User {
   email         String    @unique
   password      String?
 
-  // Relations
   accounts         Account[]
   sessions         Session[]
   losts            Lost[]
@@ -117,7 +116,6 @@ model City {
   id   Int    @id @default(autoincrement())
   name String @unique
 
-  // Relations
   losts Lost[]
   finds Find[]
 
@@ -129,7 +127,6 @@ model Category {
   name String  @unique
   icon String?
 
-  // Relations
   losts Lost[]
   finds Find[]
 
@@ -144,7 +141,6 @@ model Lost {
   time        String?
   location    String?
 
-  // Relations
   user_id String?
   user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
@@ -154,7 +150,6 @@ model Lost {
   category_id Int?
   category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: Restrict)
 
-  // Chat relation
   chats Chat[] @relation("LostChats")
 
   @@map("losts")
@@ -168,7 +163,6 @@ model Find {
   time        String?
   location    String?
 
-  // Relations
   user_id String?
   user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
@@ -178,7 +172,6 @@ model Find {
   category_id Int?
   category    Category? @relation(fields: [category_id], references: [id], onDelete: SetNull, onUpdate: Restrict)
 
-  // Chat relation
   chats Chat[] @relation("FindChats")
 
   @@map("finds")

@@ -1,8 +1,6 @@
 import { prisma } from '@/lib/prisma';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
-export async function getOrCreateChat(findId?: string, lostId?: string, userId: string) {
+export async function getOrCreateChat(userId: string, findId?: string, lostId?: string) {
   if (!findId && !lostId) {
     throw new Error('Either findId or lostId must be provided');
   }
@@ -33,7 +31,6 @@ export async function getOrCreateChat(findId?: string, lostId?: string, userId: 
     return existingChat;
   }
 
-  // Create a new chat
   const newChat = await prisma.chat.create({
     data: {
       ...(findId && { findId }),
@@ -122,7 +119,6 @@ export async function sendMessage(
   recipientId: string,
   content: string,
 ) {
-  // Get the chat to ensure it exists and user has access
   const chat = await prisma.chat.findUnique({
     where: {
       id: chatId,
@@ -138,7 +134,6 @@ export async function sendMessage(
     throw new Error('Chat not found or access denied');
   }
 
-  // Create the message
   const message = await prisma.message.create({
     data: {
       content,
@@ -153,7 +148,6 @@ export async function sendMessage(
     },
   });
 
-  // Update chat's updatedAt
   await prisma.chat.update({
     where: { id: chatId },
     data: { updatedAt: new Date() },
@@ -175,69 +169,64 @@ export async function markMessagesAsRead(chatId: string, userId: string) {
   });
 }
 
-// API Route Handlers
-export async function GET(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
-  }
-
-  const { searchParams } = new URL(req.url);
-  const chatId = searchParams.get('chatId');
-
-  try {
-    if (chatId) {
-      const chat = await getChat(chatId, session.user.id);
-      if (chat) {
-        // Mark messages as read when fetching a specific chat
-        await markMessagesAsRead(chatId, session.user.id);
-      }
-      return new Response(JSON.stringify(chat), { status: 200 });
-    } else {
-      const chats = await getChats(session.user.id);
-      return new Response(JSON.stringify(chats), { status: 200 });
-    }
-  } catch (error) {
-    return new Response(JSON.stringify({ error: 'Error fetching chats' }), { status: 500 });
-  }
-}
-
-export async function POST(req: Request) {
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
-    return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
-  }
-
-  try {
-    const { findId, lostId, recipientId, content } = await req.json();
-
-    if (!recipientId) {
-      return new Response(JSON.stringify({ error: 'Recipient ID is required' }), { status: 400 });
-    }
-
-    // Get or create chat
-    const chat = await getOrCreateChat(findId, lostId, session.user.id);
-
-    // Add recipient to chat if not already a participant
-    const isRecipientInChat = chat.participants.some((p) => p.userId === recipientId);
-    if (!isRecipientInChat) {
-      await prisma.userChat.create({
-        data: {
-          userId: recipientId,
-          chatId: chat.id,
-        },
-      });
-    }
-
-    // If this is a message, send it
-    if (content) {
-      const message = await sendMessage(chat.id, session.user.id, recipientId, content);
-      return new Response(JSON.stringify({ chat, message }), { status: 201 });
-    }
-
-    return new Response(JSON.stringify(chat), { status: 200 });
-  } catch (error) {
-    console.error('Error in chat API:', error);
-    return new Response(JSON.stringify({ error: 'Error processing request' }), { status: 500 });
-  }
-}
+// export async function GET(req: Request) {
+//   const session = await getServerSession(authOptions);
+//   if (!session?.user?.email) {
+//     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+//   }
+//
+//   const { searchParams } = new URL(req.url);
+//   const chatId = searchParams.get('chatId');
+//
+//   try {
+//     if (chatId) {
+//       const chat = await getChat(chatId, session.user.id);
+//       if (chat) {
+//         await markMessagesAsRead(chatId, session.user.id);
+//       }
+//       return new Response(JSON.stringify(chat), { status: 200 });
+//     } else {
+//       const chats = await getChats(session.user.id);
+//       return new Response(JSON.stringify(chats), { status: 200 });
+//     }
+//   } catch (error) {
+//     return new Response(JSON.stringify({ error: 'Error fetching chats' }), { status: 500 });
+//   }
+// }
+//
+// export async function POST(req: Request) {
+//   const session = await getServerSession(authOptions);
+//   if (!session?.user?.email) {
+//     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+//   }
+//
+//   try {
+//     const { findId, lostId, recipientId, content } = await req.json();
+//
+//     if (!recipientId) {
+//       return new Response(JSON.stringify({ error: 'Recipient ID is required' }), { status: 400 });
+//     }
+//
+//     const chat = await getOrCreateChat(session.user.id, findId, lostId);
+//
+//     const isRecipientInChat = chat.participants.some((p) => p.userId === recipientId);
+//     if (!isRecipientInChat) {
+//       await prisma.userChat.create({
+//         data: {
+//           userId: recipientId,
+//           chatId: chat.id,
+//         },
+//       });
+//     }
+//
+//     if (content) {
+//       const message = await sendMessage(chat.id, session.user.id, recipientId, content);
+//       return new Response(JSON.stringify({ chat, message }), { status: 201 });
+//     }
+//
+//     return new Response(JSON.stringify(chat), { status: 200 });
+//   } catch (error) {
+//     console.error('Error in chat API:', error);
+//     return new Response(JSON.stringify({ error: 'Error processing request' }), { status: 500 });
+//   }
+// }

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { MouseEvent } from 'react';
 
 interface Props {
   id?: string;
@@ -27,7 +28,7 @@ export function FindCard({ id, title, photo, description, location, time, city, 
     id: string;
   }
 
-  const handleStartChat = async (e: React.MouseEvent) => {
+  const handleStartChat = async (e: MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -104,16 +105,18 @@ export function FindCard({ id, title, photo, description, location, time, city, 
               Детальніше
             </Button>
           </Link>
-          <ActionIcon
-            variant="filled"
-            color="blue"
-            size="lg"
-            radius="xl"
-            onClick={handleStartChat}
-            title="Написати повідомлення"
-          >
-            <IconMessage size={20} />
-          </ActionIcon>
+          {userId && (
+            <ActionIcon
+              variant="filled"
+              color="blue"
+              size="lg"
+              radius="xl"
+              onClick={handleStartChat}
+              title="Написати повідомлення"
+            >
+              <IconMessage size={20} />
+            </ActionIcon>
+          )}
         </Group>
       </Card.Section>
     </Card>

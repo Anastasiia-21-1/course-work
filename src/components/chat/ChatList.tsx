@@ -101,8 +101,7 @@ export function ChatList({ onSelectChat, selectedChatId }: ChatListProps) {
       }
     };
 
-    fetchChats();
-    // Refresh chats every 30 seconds
+    void fetchChats();
     const interval = setInterval(fetchChats, 30000);
     return () => clearInterval(interval);
   }, [currentUser?.id, session?.user?.id]);
