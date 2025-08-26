@@ -1,5 +1,8 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '@/server/trpc';
+import FindWhereInput = Prisma.FindWhereInput;
+import { Prisma } from '@prisma/client';
+import FindOrderByWithRelationInput = Prisma.FindOrderByWithRelationInput;
 
 export const findRouter = createTRPCRouter({
   getAll: publicProcedure.query(async ({ ctx }) => {
@@ -168,7 +171,7 @@ export const findRouter = createTRPCRouter({
         sortOrder = 'desc',
       } = input ?? {};
 
-      const where = {
+      const where: FindWhereInput = {
         ...(q
           ? {
               OR: [
@@ -181,11 +184,11 @@ export const findRouter = createTRPCRouter({
         ...(userId ? { user_id: userId } : {}),
         ...(cityId ? { city_id: cityId } : {}),
         ...(categoryId ? { category_id: categoryId } : {}),
-      } as const;
+      };
 
       const total = await ctx.prisma.find.count({ where });
 
-      const orderBy: any = { [sortBy]: sortOrder };
+      const orderBy: FindOrderByWithRelationInput = { [sortBy]: sortOrder };
 
       const items = await ctx.prisma.find.findMany({
         where,

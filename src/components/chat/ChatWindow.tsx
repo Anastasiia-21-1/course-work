@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, FormEvent } from 'react';
 import {
   Box,
   Text,
@@ -83,7 +83,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
     message: Message;
   }
 
-  const handleSendMessage = async (e: React.FormEvent) => {
+  const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
     if (!newMessage.trim() || !chatId || !session?.user) return;
 
@@ -196,7 +196,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSendMessage();
+            void handleSendMessage(e);
           }}
         >
           <Group gap="sm">
@@ -208,7 +208,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
-                  handleSendMessage();
+                  void handleSendMessage(e);
                 }
               }}
             />

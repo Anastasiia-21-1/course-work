@@ -1,4 +1,5 @@
 'use client';
+import { Suspense } from 'react';
 import { useGetFindsPaged } from '@/api/finds';
 import { useCategories, useCities } from '@/hooks/useTRPC';
 import { Loading } from '@/components/layout/Loading';
@@ -10,6 +11,14 @@ import { useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
 
 export default function FindPage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <FindPageInner />
+    </Suspense>
+  );
+}
+
+function FindPageInner() {
   const { params, setParams, isPending } = usePagedListParams();
   const { page, limit, q, cityId, categoryId, sortBy, sortOrder } = params;
 
