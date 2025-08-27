@@ -222,7 +222,7 @@ async function main() {
       const category = createdCategories[i % createdCategories.length];
       return prisma.lost.create({
         data: {
-          title: `${pick(productTitles, i)} — втрачено`,
+          title: pick(productTitles, i),
           description: pick(descriptions, i + 3),
           photo: pick(imageUrls, i + 1),
           time: isoRecentDaysAgo(pick(timeOffsets, i)),
@@ -242,7 +242,7 @@ async function main() {
       const category = createdCategories[(i + 7) % createdCategories.length];
       return prisma.find.create({
         data: {
-          title: `${pick(productTitles, i)} — знайдено`,
+          title: pick(productTitles, i),
           description: pick(descriptions, i + 1),
           photo: pick(imageUrls, i + 2),
           time: isoRecentDaysAgo(pick(timeOffsets, i + 1)),
