@@ -1,4 +1,4 @@
-import { Button, Card, Center, Group, Image, Text, ActionIcon } from '@mantine/core';
+import { Button, Card, Center, Group, Text, ActionIcon } from '@mantine/core';
 import { IconBuilding, IconClock, IconMap, IconMessage } from '@tabler/icons-react';
 import classes from './FindCard.module.css';
 import Link from 'next/link';
@@ -74,10 +74,10 @@ export function FindCard({ id, title, photo, description, location, time, city, 
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image
-          className="w-full h-48"
+        <img
+          className="w-full h-48 object-cover"
           src={
-            photo ?? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
+            photo || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
           }
           alt={'' + title}
         />

@@ -1,4 +1,4 @@
-import { ActionIcon, Button, Card, Center, Group, Image, Text } from '@mantine/core';
+import { ActionIcon, Button, Card, Center, Group, Text } from '@mantine/core';
 import { IconBuilding, IconClock, IconMap, IconMessage } from '@tabler/icons-react';
 import classes from './LostCard.module.css';
 import Link from 'next/link';
@@ -69,12 +69,18 @@ export function LostCard({ id, title, photo, description, location, time, city, 
   return (
     <Card withBorder radius="md" className={classes.card}>
       <Card.Section className={classes.imageSection}>
-        <Image
-          className="w-full h-48"
+        <img
+          className="w-full h-48 object-cover"
           src={
-            photo ?? 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
+            photo || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
           }
           alt={'' + title}
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            const fallback =
+              'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg';
+            if (target.src !== fallback) target.src = fallback;
+          }}
         />
       </Card.Section>
 

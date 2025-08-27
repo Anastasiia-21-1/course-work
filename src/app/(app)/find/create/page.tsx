@@ -4,7 +4,17 @@ import { useGetCategories } from '@/api/categories';
 import { Select, TextInput } from 'react-hook-form-mantine';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Button, Container, Group, Paper, Title, Image, FileInput, Loader, Text } from '@mantine/core';
+import {
+  Button,
+  Container,
+  Group,
+  Paper,
+  Title,
+  Image,
+  FileInput,
+  Loader,
+  Text,
+} from '@mantine/core';
 import { useInsertFind } from '@/api/finds';
 import { useGetCities } from '@/api/cities';
 import { useRouter } from 'next/navigation';
@@ -145,13 +155,17 @@ export default function CreateFindPage() {
               </Text>
             )}
             {photoUrl && (
-              <Image src={photoUrl} alt="Preview" mt={8} radius="sm" h={160} fit="contain" />)
-            }
+              <img src={photoUrl} alt="Preview" className="mt-8 h-40 w-full object-cover" />
+            )}
           </div>
           <TextInput label="Місце" name="location" control={control} />
           <TextInput label="Час" name="time" control={control} />
           <Group mt="md">
-            <Button type="submit" loading={mutation.isPending}>
+            <Button
+              type="submit"
+              loading={mutation.isPending}
+              disabled={mutation.isPending || uploading || uploadError !== null}
+            >
               Опублікувати
             </Button>
           </Group>

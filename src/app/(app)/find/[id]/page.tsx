@@ -48,7 +48,12 @@ export default function Page({ params }: { params: { id: string } }) {
   return (
     <AppContainer title="Знахідка">
       <div className="flex gap-5">
-        <Image src={find?.photo ?? ''} alt="" className="w-80 h-96 object-cover rounded-lg" />
+        <Image
+          src={find?.photo || 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'}
+          alt={find?.title || ''}
+          className="w-80 h-96 object-cover rounded-lg"
+          fallbackSrc="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+        />
         <div className="space-y-2">
           <h1 className="text-3xl">{find?.title}</h1>
           <p>{find?.description}</p>
