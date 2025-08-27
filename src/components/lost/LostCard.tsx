@@ -78,7 +78,7 @@ export function LostCard({ id, title, photo, description, location, time, city, 
         />
       </Card.Section>
 
-      <Group justify="space-between" className="line-clamp-3" mt="md" h={40}>
+      <Group justify="space-between" className="line-clamp-3" mt="md" h={90}>
         <div>
           <Text fw={500}>{title}</Text>
           {description && (
