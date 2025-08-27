@@ -1,5 +1,4 @@
 import { withSentryConfig } from '@sentry/nextjs';
-import { env } from './src/utils/env.mjs';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -11,7 +10,7 @@ const nextConfig = {
 export default withSentryConfig(nextConfig, {
   org: 'asiia',
   project: 'javascript-nextjs',
-  silent: !env.CI,
+  silent: !process.env.CI,
   widenClientFileUpload: true,
   reactComponentAnnotation: {
     enabled: true,
