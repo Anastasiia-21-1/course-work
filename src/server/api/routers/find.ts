@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { TRPCError } from '@trpc/server';
 import { createTRPCRouter, publicProcedure } from '@/server/trpc';
 import FindWhereInput = Prisma.FindWhereInput;
 import { Prisma } from '@prisma/client';
@@ -138,11 +139,20 @@ export const findRouter = createTRPCRouter({
       });
     }),
 
-  delete: publicProcedure.input(z.object({ id: z.string() })).mutation(async ({ ctx, input }) => {
-    return await ctx.prisma.find.delete({
-      where: { id: input.id },
-    });
-  }),
+  delete: publicProcedure
+    .input(z.object({ id: z.string(), userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const record = await ctx.prisma.find.findUnique({ where: { id: input.id } });
+      if (!record) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Find record not found' });
+      }
+      if (!record.user_id || record.user_id !== input.userId) {
+        throw new TRPCError({ code: 'FORBIDDEN', message: 'You can delete only your own find record' });
+      }
+      return await ctx.prisma.find.delete({
+        where: { id: input.id },
+      });
+    }),
 
   getPaged: publicProcedure
     .input(
