@@ -69,6 +69,7 @@ export default function CreateFindPage() {
         title: data.title,
         description: data.description || undefined,
         location: data.location || undefined,
+        time: data.time || undefined,
         photo: data.photo || undefined,
         category_id: +data.category,
         city_id: +data.city,
