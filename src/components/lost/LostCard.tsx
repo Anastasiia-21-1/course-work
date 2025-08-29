@@ -36,8 +36,8 @@ export function LostCard({ id, title, photo, description, location, time, city, 
     if (!userId) return;
 
     try {
-      const { id: chatId } = await startChat.mutateAsync({ recipientId: userId, lostId: id! });
-      router.push(`/messages/${chatId}`);
+      await startChat.mutateAsync({ recipientId: userId, lostId: id! });
+      router.push(`/messages`);
     } catch (error) {}
   };
   const badges = [

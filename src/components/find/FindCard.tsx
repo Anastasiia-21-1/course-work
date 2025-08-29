@@ -40,8 +40,8 @@ export function FindCard({ id, title, photo, description, location, time, city, 
     }
 
     try {
-      const { id: chatId } = await startChat.mutateAsync({ findId: id!, recipientId: userId });
-      router.push(`/messages/${chatId}`);
+      await startChat.mutateAsync({ findId: id!, recipientId: userId });
+      router.push(`/messages`);
     } catch (error) {
       console.error('Error creating chat:', error);
     }

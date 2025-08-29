@@ -41,8 +41,8 @@ export default function Page({ params }: { params: { id: string } }) {
     const recipientId = lost?.user_id;
     if (!recipientId) return;
     try {
-      const { id } = await startChat.mutateAsync({ lostId: params.id, recipientId });
-      router.push(`/messages/${id}`);
+      await startChat.mutateAsync({ lostId: params.id, recipientId });
+      router.push(`/messages`);
     } catch (err) {
       console.error('Error starting chat:', err);
       alert('Не вдалося створити чат. Спробуйте пізніше.');
@@ -58,7 +58,7 @@ export default function Page({ params }: { params: { id: string } }) {
   if (isLoading) {
     return (
       <AppContainer title="Втрата">
-        <div>Loading...</div>
+        <div>Завантаження...</div>
       </AppContainer>
     );
   }

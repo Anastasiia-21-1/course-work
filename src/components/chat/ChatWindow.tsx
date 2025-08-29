@@ -110,7 +110,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
         p="md"
         style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
       >
-        <Text>Loading messages...</Text>
+        <Text>Завантаження...</Text>
       </Box>
     );
   }
@@ -121,7 +121,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
         <Group justify="space-between">
           <Group gap="xs">
             <IconMessage />
-            <Text fw={500}>Chat</Text>
+            <Text fw={500}>Чат</Text>
           </Group>
           {onClose && (
             <ActionIcon onClick={onClose} size="sm" variant="subtle">
@@ -135,7 +135,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
         <Stack gap="md">
           {messages.length === 0 ? (
             <Text c="dimmed" style={{ textAlign: 'center', marginTop: '1.5rem' }}>
-              No messages yet. Send a message to start the conversation!
+              Ще немає повідомлень. Відправте повідомлення щоб почати розмову!
             </Text>
           ) : (
             messages.map((message) => (
@@ -155,7 +155,9 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
                   }}
                 >
                   <Text size="sm" color="dimmed">
-                    {message.senderId === effectiveUserId ? 'You' : message.sender?.name || 'User'}
+                    {message.senderId === effectiveUserId
+                      ? 'Ви'
+                      : message.sender?.name || 'Користувач'}
                   </Text>
                   <Text>{message.content}</Text>
                   <Text size="xs" color="dimmed" style={{ textAlign: 'right' }} mt={4}>
@@ -181,7 +183,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
         >
           <Group gap="sm">
             <TextInput
-              placeholder="Type a message..."
+              placeholder="Введіть повідомлення..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               style={{ flex: 1 }}
@@ -197,7 +199,7 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
               leftSection={<IconSend size={16} />}
               disabled={!newMessage.trim()}
             >
-              Send
+              Надіслати
             </Button>
           </Group>
         </form>
