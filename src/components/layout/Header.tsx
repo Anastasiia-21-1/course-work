@@ -1,10 +1,10 @@
 'use client';
 import {
+  Badge,
   Box,
   Burger,
   Button,
   Center,
-  Collapse,
   Divider,
   Drawer,
   Group,
@@ -24,26 +24,22 @@ import {
   IconArrowUpLeftCircle,
   IconArrowUpRightCircle,
   IconChevronDown,
-  IconMessage,
+  IconPlus,
 } from '@tabler/icons-react';
 import classes from '@/style/Header.module.css';
 import { useSession } from 'next-auth/react';
 import { UserMenu } from '@/components/layout/UserMenu';
 import Link from 'next/link';
+import { trpc } from '@/lib/trpc';
 
-const allLinks = [
-  {
-    icon: IconArrowDownRightCircle,
-    title: 'Втрати',
-    description: 'Побачити всі втрати',
-    href: '/lost',
-  },
-  {
-    icon: IconArrowDownLeftCircle,
-    title: 'Мої втрати',
-    description: 'Побачити свої втрати',
-    href: '/lost/my',
-  },
+type LinksMenu = {
+  icon: any;
+  title: string;
+  description: string;
+  href: string;
+}[];
+
+const findLinksMenu: LinksMenu = [
   {
     icon: IconArrowUpRightCircle,
     title: 'Знахідки',
@@ -57,12 +53,33 @@ const allLinks = [
     href: '/find/my',
   },
   {
-    icon: IconMessage,
-    title: 'Повідомлення',
-    description: 'Мої чати',
-    href: '/messages',
+    icon: IconPlus,
+    title: 'Я втратив річ',
+    description: 'Додати новий запис',
+    href: '/find/create',
   },
-] as const;
+];
+
+const lostLinksMenu: LinksMenu = [
+  {
+    icon: IconArrowDownRightCircle,
+    title: 'Втрати',
+    description: 'Побачити всі втрати',
+    href: '/lost',
+  },
+  {
+    icon: IconArrowDownLeftCircle,
+    title: 'Мої втрати',
+    description: 'Побачити свої втрати',
+    href: '/lost/my',
+  },
+  {
+    icon: IconPlus,
+    title: 'Я знайшов річ',
+    description: 'Додати новий запис',
+    href: '/lost/create',
+  },
+];
 
 function GuestMenu() {
   return (
@@ -77,19 +94,13 @@ function GuestMenu() {
   );
 }
 
-export function Header() {
-  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
-  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-  const theme = useMantineTheme();
-
-  const { data: session, status } = useSession();
-
-  const links = allLinks.map((item, index) => (
+function getLinksMenu(links: LinksMenu, color: string) {
+  return links.map((item, index) => (
     <Link href={item.href} key={index}>
       <UnstyledButton className={classes.subLink} key={item.title}>
         <Group wrap="nowrap" align="flex-start">
           <ThemeIcon size={34} variant="default" radius="md">
-            <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
+            <item.icon style={{ width: rem(22), height: rem(22) }} color={color} />
           </ThemeIcon>
           <span>
             <Text size="sm" fw={500}>
@@ -103,6 +114,22 @@ export function Header() {
       </UnstyledButton>
     </Link>
   ));
+}
+
+export function Header() {
+  const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
+  const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
+  const theme = useMantineTheme();
+
+  const { data: session, status } = useSession();
+  const { data: unreadData } = trpc.chats.unreadCount.useQuery(undefined, {
+    refetchInterval: 5000,
+    enabled: !!session?.user?.id,
+  });
+  const unreadCount = unreadData?.count ?? 0;
+
+  const findLinks = getLinksMenu(findLinksMenu, theme.colors.blue[6]);
+  const lostLinks = getLinksMenu(lostLinksMenu, theme.colors.blue[6]);
 
   return (
     <Box>
@@ -117,7 +144,7 @@ export function Header() {
                 <a href="#" className={classes.link}>
                   <Center inline>
                     <Box component="span" mr={5}>
-                      Категорії
+                      Втрати
                     </Box>
                     <IconChevronDown
                       style={{ width: rem(16), height: rem(16) }}
@@ -129,15 +156,43 @@ export function Header() {
 
               <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
                 <SimpleGrid cols={2} spacing={0}>
-                  {links}
+                  {lostLinks}
                 </SimpleGrid>
               </HoverCard.Dropdown>
             </HoverCard>
-            <Link href="/find/create" className={classes.link}>
-              Я знайшов річ
-            </Link>
-            <Link href="/lost/create" className={classes.link}>
-              Я втратив річ
+            <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+              <HoverCard.Target>
+                <a href="#" className={classes.link}>
+                  <Center inline>
+                    <Box component="span" mr={5}>
+                      Знахідки
+                    </Box>
+                    <IconChevronDown
+                      style={{ width: rem(16), height: rem(16) }}
+                      color={theme.colors.blue[6]}
+                    />
+                  </Center>
+                </a>
+              </HoverCard.Target>
+
+              <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
+                <SimpleGrid cols={2} spacing={0}>
+                  {findLinks}
+                </SimpleGrid>
+              </HoverCard.Dropdown>
+            </HoverCard>
+            <Link href="/messages" className={classes.link}>
+              <Box
+                component="span"
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
+              >
+                Повідомлення
+                {unreadCount > 0 && (
+                  <Badge size="xs" color="red">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </Badge>
+                )}
+              </Box>
             </Link>
           </Group>
 
@@ -173,14 +228,6 @@ export function Header() {
               />
             </Center>
           </UnstyledButton>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <Link href="/lost/create" className={classes.link}>
-            Я знайшов річ
-          </Link>
-          <Link href="/find/create" className={classes.link}>
-            Я втратив річ
-          </Link>
-
           <Divider my="sm" />
 
           <Group justify="center" grow pb="xl" px="md">

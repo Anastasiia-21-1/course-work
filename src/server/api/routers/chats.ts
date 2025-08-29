@@ -23,6 +23,15 @@ export const chatsRouter = createTRPCRouter({
     });
     return chats;
   }),
+  unreadCount: publicProcedure.query(async () => {
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.id) {
+      throw new TRPCError({ code: 'UNAUTHORIZED' });
+    }
+    const userId = session.user.id;
+    const count = await prisma.message.count({ where: { recipientId: userId, read: false } });
+    return { count };
+  }),
   messages: publicProcedure
     .input(z.object({ chatId: z.string() }))
     .query(async ({ input }) => {
