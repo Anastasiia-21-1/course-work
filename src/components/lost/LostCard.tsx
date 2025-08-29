@@ -4,8 +4,8 @@ import classes from './LostCard.module.css';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { MouseEvent } from 'react';
+import { trpc } from '@/lib/trpc';
 
 interface Props {
   id?: string;
@@ -23,10 +23,7 @@ interface Props {
 export function LostCard({ id, title, photo, description, location, time, city, userId }: Props) {
   const { data: session } = useSession();
   const router = useRouter();
-
-  interface ChatResponse {
-    id: string;
-  }
+  const startChat = trpc.chats.startForItem.useMutation();
 
   const handleStartChat = async (e: MouseEvent) => {
     e.stopPropagation();
@@ -39,14 +36,9 @@ export function LostCard({ id, title, photo, description, location, time, city, 
     if (!userId) return;
 
     try {
-      const { data: chat } = await axios.post<ChatResponse>('/api/chats', {
-        recipientId: userId,
-        lostId: id,
-      });
-      router.push(`/messages/${chat.id}`);
-    } catch (error) {
-      console.error('Error starting chat:', error);
-    }
+      const { id: chatId } = await startChat.mutateAsync({ recipientId: userId, lostId: id! });
+      router.push(`/messages/${chatId}`);
+    } catch (error) {}
   };
   const badges = [
     { label: time, icon: IconClock },

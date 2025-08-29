@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Avatar, Badge, Box, Group, Paper, ScrollArea, Skeleton, Stack, Text } from '@mantine/core';
 import { IconMessage } from '@tabler/icons-react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { trpc } from '@/lib/trpc';
 
 interface Chat {
   id: string;
@@ -76,48 +76,26 @@ interface ChatListProps {
 }
 
 export function ChatList({ onSelectChat, selectedChatId }: ChatListProps) {
-  const [chats, setChats] = useState<ChatWithRelations[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
   const router = useRouter();
+  const { data: chats = [], isLoading } = trpc.chats.list.useQuery(undefined, {
+    refetchInterval: 5000,
+  });
 
   const currentUser = session?.user;
-
-  useEffect(() => {
-    const fetchChats = async () => {
-      if (!currentUser?.id) return;
-
-      try {
-        setIsLoading(true);
-        const response = await fetch('/api/chats');
-        if (response.ok) {
-          const data = await response.json();
-          setChats(data);
-        }
-      } catch (error) {
-        console.error('Error fetching chats:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void fetchChats();
-    const interval = setInterval(fetchChats, 30000);
-    return () => clearInterval(interval);
-  }, [currentUser?.id, session?.user?.id]);
 
   if (!session?.user) {
     return (
       <Box p="md" style={{ textAlign: 'center' }}>
-        <Text>Please sign in to view your messages</Text>
+        <Text>Увійдіть щоб побачити чати</Text>
       </Box>
     );
   }
 
   const getChatTitle = (chat: ChatWithRelations) => {
-    if (chat.findItem) return `Found: ${chat.findItem.title || 'Unknown Item'}`;
-    if (chat.lostItem) return `Lost: ${chat.lostItem.title || 'Unknown Item'}`;
-    return 'Chat';
+    if (chat.findItem) return `Знайдено: ${chat.findItem.title || 'Невідома річ'}`;
+    if (chat.lostItem) return `Втрачено: ${chat.lostItem.title || 'Невідома річ'}`;
+    return 'Чат';
   };
 
   const getOtherParticipant = (chat: ChatWithRelations) => {
@@ -135,7 +113,7 @@ export function ChatList({ onSelectChat, selectedChatId }: ChatListProps) {
     );
   }
 
-  if (chats.length === 0) {
+  if (!chats?.length) {
     return (
       <Box p="md" style={{ textAlign: 'center' }}>
         <IconMessage size={48} style={{ opacity: 0.3, marginBottom: '1rem' }} />
@@ -150,7 +128,7 @@ export function ChatList({ onSelectChat, selectedChatId }: ChatListProps) {
   return (
     <ScrollArea style={{ height: '100%' }}>
       <Stack gap="xs" p="xs">
-        {chats.map((chat) => {
+        {chats.map((chat: ChatWithRelations) => {
           const lastMessage = chat.messages[0];
           const otherParticipant = getOtherParticipant(chat);
           const isUnread =

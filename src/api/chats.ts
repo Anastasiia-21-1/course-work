@@ -83,7 +83,7 @@ export async function getChats(userId: string) {
 }
 
 export async function getChat(chatId: string, userId: string) {
-  return prisma.chat.findUnique({
+  return prisma.chat.findFirst({
     where: {
       id: chatId,
       participants: {
@@ -168,65 +168,3 @@ export async function markMessagesAsRead(chatId: string, userId: string) {
     },
   });
 }
-
-// export async function GET(req: Request) {
-//   const session = await getServerSession(authOptions);
-//   if (!session?.user?.email) {
-//     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
-//   }
-//
-//   const { searchParams } = new URL(req.url);
-//   const chatId = searchParams.get('chatId');
-//
-//   try {
-//     if (chatId) {
-//       const chat = await getChat(chatId, session.user.id);
-//       if (chat) {
-//         await markMessagesAsRead(chatId, session.user.id);
-//       }
-//       return new Response(JSON.stringify(chat), { status: 200 });
-//     } else {
-//       const chats = await getChats(session.user.id);
-//       return new Response(JSON.stringify(chats), { status: 200 });
-//     }
-//   } catch (error) {
-//     return new Response(JSON.stringify({ error: 'Error fetching chats' }), { status: 500 });
-//   }
-// }
-//
-// export async function POST(req: Request) {
-//   const session = await getServerSession(authOptions);
-//   if (!session?.user?.email) {
-//     return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
-//   }
-//
-//   try {
-//     const { findId, lostId, recipientId, content } = await req.json();
-//
-//     if (!recipientId) {
-//       return new Response(JSON.stringify({ error: 'Recipient ID is required' }), { status: 400 });
-//     }
-//
-//     const chat = await getOrCreateChat(session.user.id, findId, lostId);
-//
-//     const isRecipientInChat = chat.participants.some((p) => p.userId === recipientId);
-//     if (!isRecipientInChat) {
-//       await prisma.userChat.create({
-//         data: {
-//           userId: recipientId,
-//           chatId: chat.id,
-//         },
-//       });
-//     }
-//
-//     if (content) {
-//       const message = await sendMessage(chat.id, session.user.id, recipientId, content);
-//       return new Response(JSON.stringify({ chat, message }), { status: 201 });
-//     }
-//
-//     return new Response(JSON.stringify(chat), { status: 200 });
-//   } catch (error) {
-//     console.error('Error in chat API:', error);
-//     return new Response(JSON.stringify({ error: 'Error processing request' }), { status: 500 });
-//   }
-// }

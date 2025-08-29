@@ -15,7 +15,7 @@ import {
 } from '@mantine/core';
 import { IconSend, IconMessage } from '@tabler/icons-react';
 import { useSession } from 'next-auth/react';
-import axios from 'axios';
+import { trpc } from '@/lib/trpc';
 
 interface Message {
   id: string;
@@ -47,41 +47,26 @@ interface ChatWindowProps {
 export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { data: session } = useSession();
+  const effectiveUserId = currentUserId || session?.user?.id || '';
 
-  interface FetchMessagesResponse {
-    messages: Message[];
-  }
+  const messagesQuery = trpc.chats.messages.useQuery(
+    { chatId },
+    { refetchInterval: 5000, enabled: !!chatId },
+  );
 
   useEffect(() => {
-    if (!chatId) return;
-
-    const fetchMessages = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get<FetchMessagesResponse>(`/api/chats?chatId=${chatId}`);
-        setMessages(data.messages || []);
-      } catch (error) {
-        console.error('Error fetching messages:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchMessages();
-    const interval = setInterval(fetchMessages, 5000);
-    return () => clearInterval(interval);
-  }, [chatId]);
+    if (messagesQuery.data?.messages) {
+      setMessages(messagesQuery.data.messages as Message[]);
+    }
+  }, [messagesQuery.data]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  interface SendMessageResponse {
-    message: Message;
-  }
+  const sendMutation = trpc.chats.send.useMutation();
 
   const handleSendMessage = async (e: FormEvent) => {
     e.preventDefault();
@@ -105,26 +90,21 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
     };
 
     setMessages((prev) => [...prev, tempMessage as Message]);
+    const contentToSend = newMessage;
     setNewMessage('');
 
     try {
-      const { data } = await axios.post<SendMessageResponse>('/api/chats', {
-        chatId,
-        content: newMessage,
-        recipientId: messages[0]?.recipientId,
-      });
-
+      const { message } = await sendMutation.mutateAsync({ chatId, content: contentToSend });
       setMessages((prev) => {
         const filtered = prev.filter((m) => m.id !== tempId);
-        return [...filtered, data.message];
+        return [...filtered, message as unknown as Message];
       });
     } catch (error) {
-      console.error('Error sending message:', error);
       setMessages((prev) => prev.filter((m) => m.id !== tempId));
     }
   };
 
-  if (isLoading) {
+  if (messagesQuery.isLoading && !messages?.length) {
     return (
       <Box
         p="md"
@@ -163,19 +143,19 @@ export function ChatWindow({ chatId, currentUserId, onClose }: ChatWindowProps) 
                 key={message.id}
                 style={{
                   display: 'flex',
-                  justifyContent: message.senderId === currentUserId ? 'flex-end' : 'flex-start',
+                  justifyContent: message.senderId === effectiveUserId ? 'flex-end' : 'flex-start',
                 }}
               >
                 <Paper
                   p="md"
                   style={{
                     maxWidth: '80%',
-                    backgroundColor: message.senderId === currentUserId ? '#e3f2fd' : '#f5f5f5',
+                    backgroundColor: message.senderId === effectiveUserId ? '#e3f2fd' : '#f5f5f5',
                     borderRadius: '8px',
                   }}
                 >
                   <Text size="sm" color="dimmed">
-                    {message.senderId === currentUserId ? 'You' : message.sender?.name || 'User'}
+                    {message.senderId === effectiveUserId ? 'You' : message.sender?.name || 'User'}
                   </Text>
                   <Text>{message.content}</Text>
                   <Text size="xs" color="dimmed" style={{ textAlign: 'right' }} mt={4}>

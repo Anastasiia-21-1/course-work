@@ -4,8 +4,8 @@ import classes from './FindCard.module.css';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { MouseEvent } from 'react';
+import { trpc } from '@/lib/trpc';
 
 interface Props {
   id?: string;
@@ -23,10 +23,7 @@ interface Props {
 export function FindCard({ id, title, photo, description, location, time, city, userId }: Props) {
   const { data: session } = useSession();
   const router = useRouter();
-
-  interface ChatResponse {
-    id: string;
-  }
+  const startChat = trpc.chats.startForItem.useMutation();
 
   const handleStartChat = async (e: MouseEvent) => {
     e.preventDefault();
@@ -43,11 +40,8 @@ export function FindCard({ id, title, photo, description, location, time, city, 
     }
 
     try {
-      const { data: chat } = await axios.post<ChatResponse>('/api/chats', {
-        findId: id,
-        recipientId: userId,
-      });
-      router.push(`/messages/${chat.id}`);
+      const { id: chatId } = await startChat.mutateAsync({ findId: id!, recipientId: userId });
+      router.push(`/messages/${chatId}`);
     } catch (error) {
       console.error('Error creating chat:', error);
     }

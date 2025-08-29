@@ -4,6 +4,7 @@ import { categoryRouter } from './routers/category';
 import { cityRouter } from './routers/city';
 import { lostRouter } from './routers/lost';
 import { findRouter } from './routers/find';
+import { chatsRouter } from './routers/chats';
 
 export const appRouter = createTRPCRouter({
   user: userRouter,
@@ -11,6 +12,7 @@ export const appRouter = createTRPCRouter({
   city: cityRouter,
   lost: lostRouter,
   find: findRouter,
+  chats: chatsRouter,
 });
 
 export type AppRouter = typeof appRouter;
